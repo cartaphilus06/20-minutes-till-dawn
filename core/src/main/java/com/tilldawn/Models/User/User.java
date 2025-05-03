@@ -41,12 +41,18 @@ public class User {
             ObjectMapper mapper = new ObjectMapper();
             FileHandle file = Gdx.files.local("data/users.json");
 
-            if (file.exists()) {
+            if (file.exists() && file.length() > 0) {  // Check both existence and content
                 allUsers = mapper.readValue(file.file(),
                     mapper.getTypeFactory().constructCollectionType(ArrayList.class, User.class));
+            } else {
+                // Initialize empty list if file is empty/missing
+                allUsers = new ArrayList<>();
+                Gdx.app.log("User", "No existing user data found, initializing empty list");
             }
         } catch (Exception e) {
             Gdx.app.error("User", "Failed to load users", e);
+            // Fallback to empty list
+            allUsers = new ArrayList<>();
         }
     }
     public String getUsername() {
