@@ -29,4 +29,10 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
     }
+    public static Main getMain() {
+        return main;
+    }
+    public static SpriteBatch getBatch() {
+        return batch;
+    }
 }
