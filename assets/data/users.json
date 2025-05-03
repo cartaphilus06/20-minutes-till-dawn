@@ -1,0 +1,10 @@
+[ {
+  "username" : "player1",
+  "password" : "p@ssw0rd123"
+}, {
+  "username" : "game_master",
+  "password" : "admin#secure!"
+}, {
+  "username" : "mahed",
+  "password" : "abdi"
+} ]

@@ -1,8 +1,10 @@
 package com.tilldawn.View;
 
 import com.badlogic.gdx.Screen;
+import com.tilldawn.Controller.RegisterMenuController;
 
 public class RegisterMenu implements Screen {
+    private final RegisterMenuController controller=new RegisterMenuController(this);
     @Override
     public void show() {
 
