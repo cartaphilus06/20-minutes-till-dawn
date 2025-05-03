@@ -10,10 +10,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.RegisterMenu;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
     private static Main main;
-    private static SpriteBatch batch;
+    private SpriteBatch batch;
 
     @Override
     public void create() {
@@ -37,7 +36,7 @@ public class Main extends Game {
     public static Main getMain() {
         return main;
     }
-    public static SpriteBatch getBatch() {
+    public SpriteBatch getBatch() {
         return batch;
     }
 }

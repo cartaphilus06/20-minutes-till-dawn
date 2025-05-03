@@ -4,27 +4,28 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.tilldawn.Controller.RegisterMenuController;
+import com.tilldawn.Controller.SettingsController;
 
-public class RegisterMenu implements Screen {
-    private final RegisterMenuController controller=new RegisterMenuController(this);
+import java.util.Stack;
+
+public class Settings implements Screen {
+    private final SettingsController controller=new SettingsController(this);
     private Stage stage;
     private final Game game;
-    public RegisterMenu(Game game) {
+    public Settings(Game game) {
         this.game=game;
     }
     @Override
     public void show() {
-        stage=new Stage(new FitViewport(800,600));
+        stage=new Stage(new FitViewport(800, 600));
         Gdx.input.setInputProcessor(stage);
-        setUpUI();
     }
 
     @Override
     public void render(float v) {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+
     }
 
     @Override
@@ -49,9 +50,6 @@ public class RegisterMenu implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-    public void setUpUI(){
 
     }
 }
