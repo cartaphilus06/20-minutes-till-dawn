@@ -7,7 +7,7 @@ public class AssetManager {
     private final static AssetManager assetManager=new AssetManager();
     private Skin skin;
     private AssetManager(){
-        skin=new Skin(Gdx.files.internal("skin/uiskin.json"));
+        skin=new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     }
     public static Skin getSkin(){
         return assetManager.skin;

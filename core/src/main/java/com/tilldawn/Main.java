@@ -1,13 +1,9 @@
 package com.tilldawn;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.tilldawn.Models.User.User;
+import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.RegisterMenu;
 
 public class Main extends Game {
@@ -19,14 +15,13 @@ public class Main extends Game {
         main = this;
         batch = new SpriteBatch();
         User.loadUsers();
-        setScreen(new RegisterMenu(this));
+        setScreen(new MainMenu(this));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.end();
+        handleFullScreenToggle();
+        super.render();
     }
 
     @Override
@@ -38,5 +33,12 @@ public class Main extends Game {
     }
     public SpriteBatch getBatch() {
         return batch;
+    }
+    public void handleFullScreenToggle(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F11)){
+            if(Gdx.graphics.isFullscreen()){
+                Gdx.graphics.setWindowedMode(1280, 720);
+            }
+        }
     }
 }

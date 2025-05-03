@@ -1,8 +1,13 @@
 package com.tilldawn.View;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
 public class LoginMenu implements Screen {
+    private final Game game;
+    public LoginMenu(Game game) {
+        this.game = game;
+    }
     @Override
     public void show() {
 
