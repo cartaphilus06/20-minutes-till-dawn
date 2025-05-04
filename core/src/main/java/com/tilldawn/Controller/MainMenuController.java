@@ -1,5 +1,6 @@
 package com.tilldawn.Controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.View.LoginMenu;
@@ -21,6 +22,14 @@ public class MainMenuController {
             public void clicked(InputEvent event, float x, float y) {
                 view.getGame().setScreen(new LoginMenu(view.getGame()));
             }
+        });
+        view.getExit().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+        view.getSettings().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {}
         });
     }
 }

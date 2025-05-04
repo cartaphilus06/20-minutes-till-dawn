@@ -2,8 +2,6 @@ package com.tilldawn.Models.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +11,7 @@ public class User {
     private static ArrayList<User> allUsers = new ArrayList<>();
     private String username;
     private String password;
-    private Question securityQuestion=new Question("age?","18");
+    private Question securityQuestion;
 
     public User() {}
 
@@ -53,9 +51,7 @@ public class User {
         File file = new File("assets/data/users.json");
 
         try {
-            // Create parent directories if they don't exist
             file.getParentFile().mkdirs();
-            // Write the allUsers list to JSON file
             mapper.writeValue(file, allUsers);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +65,6 @@ public class User {
 
         try {
             if (file.exists()) {
-                // Read the JSON file into the allUsers list
                 allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
             } else {
                 System.out.println("Users file doesn't exist, starting with empty user list");
@@ -77,7 +72,6 @@ public class User {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Failed to load users from JSON file");
-            // Start with empty list if loading fails
             allUsers = new ArrayList<>();
         }
     }

@@ -65,6 +65,7 @@ public class LoginMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        background.dispose();
     }
     public void setUpUI(){
         Table table=new Table();
