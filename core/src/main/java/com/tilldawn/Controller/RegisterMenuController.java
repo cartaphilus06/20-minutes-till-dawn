@@ -1,17 +1,12 @@
 package com.tilldawn.Controller;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.tilldawn.AlertGenerator;
-import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.Enums.Register;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.RegisterMenu;
-
-import java.awt.*;
 
 public class RegisterMenuController {
     private final RegisterMenu view;

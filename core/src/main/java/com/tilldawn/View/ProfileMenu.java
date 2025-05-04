@@ -27,6 +27,13 @@ public class ProfileMenu implements Screen {
     public void show() {
         stage=new Stage();
         Gdx.input.setInputProcessor(stage);
+        Skin skin= AssetManager.getSkin();
+        background=new Texture(Gdx.files.internal("images/bg.png"));
+        changeUsername=new TextButton("change username",skin);
+        changePassword=new TextButton("change password",skin);
+        deleteAccount=new TextButton("delete account",skin);
+        changeAvatar=new TextButton("change avatar",skin);
+        back=new TextButton("BACK",skin);
         setUpUI();
         controller.handleClickedButtons();
     }
@@ -69,16 +76,10 @@ public class ProfileMenu implements Screen {
         background.dispose();
     }
     public void setUpUI(){
+        stage.clear();
         Table table=new Table();
         table.setFillParent(true);
         table.center();
-        Skin skin= AssetManager.getSkin();
-        background=new Texture(Gdx.files.internal("images/bg.png"));
-        changeUsername=new TextButton("change username",skin);
-        changePassword=new TextButton("change password",skin);
-        deleteAccount=new TextButton("delete account",skin);
-        changeAvatar=new TextButton("change avatar",skin);
-        back=new TextButton("BACK",skin);
         table.row();
         table.add(changeUsername);
         table.row();
@@ -90,5 +91,71 @@ public class ProfileMenu implements Screen {
         table.row();
         table.add(back);
         stage.addActor(table);
+    }
+    public TextButton getChangeUsername() {
+        return changeUsername;
+    }
+    public TextButton getChangePassword() {
+        return changePassword;
+    }
+    public TextButton getDeleteAccount() {
+        return deleteAccount;
+    }
+    public TextButton getChangeAvatar() {
+        return changeAvatar;
+    }
+    public TextButton getBack() {
+        return back;
+    }
+    public Game getGame() {
+        return game;
+    }
+    public Stage getStage() {
+        return stage;
+    }
+    public void setUpChangeUsernamePageUI(){
+        stage.clear();
+        Skin skin= AssetManager.getSkin();
+        Table table=new Table();
+        table.setFillParent(true);
+        table.center();
+        Label instruction=new Label("enter you new username:",skin);
+        TextField changeUsername=new TextField("",skin);
+        TextButton confirm=new TextButton("confirm",skin);
+        TextButton cancel=new TextButton("cancel",skin);
+        table.row();
+        table.add(instruction);
+        table.row();
+        table.add(changeUsername).width(300);
+        table.row();
+        table.add(confirm);
+        table.add(cancel);
+        stage.addActor(table);
+        controller.handleChangeUsername(confirm,changeUsername,cancel);
+    }
+    public void setUpChangePasswordPageUI(){
+        stage.clear();
+        Skin skin= AssetManager.getSkin();
+        Table table=new Table();
+        table.setFillParent(true);
+        table.center();
+        Label instruction=new Label("enter you new password:",skin);
+        TextField changePassword=new TextField("",skin);
+        TextField confirmPassword=new TextField("",skin);
+        TextButton confirm=new TextButton("confirm",skin);
+        TextButton cancel=new TextButton("back",skin);
+        changePassword.setPasswordMode(true);
+        confirmPassword.setPasswordMode(true);
+        table.row();
+        table.add(instruction);
+        table.row();
+        table.add(changePassword).width(300);
+        table.row();
+        table.add(confirmPassword).width(300);
+        table.row();
+        table.add(confirm);
+        table.add(cancel);
+        stage.addActor(table);
+        controller.handleChangePassword(confirm,changePassword,confirmPassword,cancel);
     }
 }

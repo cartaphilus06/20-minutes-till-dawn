@@ -1,9 +1,8 @@
-package com.tilldawn;
+package com.tilldawn.Models;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.tilldawn.Models.AssetManager;
 
 public class AlertGenerator {
     public static void showAlert(String title, String message,Stage stage) {

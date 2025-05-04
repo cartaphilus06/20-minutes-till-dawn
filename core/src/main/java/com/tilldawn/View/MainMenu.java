@@ -25,6 +25,7 @@ public class MainMenu implements Screen {
     private TextButton register;
     private TextButton login;
     private TextButton settings;
+    private TextButton profile;
     private TextButton exit;
     public MainMenu(Game game) {
         this.game=game;
@@ -85,10 +86,12 @@ public class MainMenu implements Screen {
         login=new TextButton("LOGIN", skin);
         settings=new TextButton("SETTINGS", skin);
         exit=new TextButton("EXIT", skin);
+        profile=new TextButton("PROFILE", skin);
         table.add(title).colspan(2).padBottom(30).row();
         table.add(register);
         table.add(login);
         table.add(settings);
+        table.add(profile);
         table.add(exit);
         stage.addActor(table);
     }
@@ -103,6 +106,9 @@ public class MainMenu implements Screen {
     }
     public TextButton getExit() {
         return exit;
+    }
+    public TextButton getProfile() {
+        return profile;
     }
     public Game getGame() {
         return game;

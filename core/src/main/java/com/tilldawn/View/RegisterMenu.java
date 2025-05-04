@@ -31,7 +31,7 @@ public class RegisterMenu implements Screen {
     }
     @Override
     public void show() {
-        stage=new Stage(new FitViewport(800,600));
+        stage=new Stage();
         Gdx.input.setInputProcessor(stage);
         setUpUI();
         controller.handleClickedButtons();
