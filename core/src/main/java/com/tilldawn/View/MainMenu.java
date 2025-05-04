@@ -75,26 +75,29 @@ public class MainMenu implements Screen {
 
     }
     public void setUpUI(){
-        Table table=new Table();
+        Table table = new Table();
         table.setFillParent(true);
-        table.center();
-        background=new Texture(Gdx.files.internal("images/bg.png"));
-        Skin skin= AssetManager.getSkin();
-        Label title=new Label("20 MINUTES\nTILL DAWN", skin);
-        title.setAlignment(Align.center);
-        register=new TextButton("REGISTER", skin);
-        login=new TextButton("LOGIN", skin);
-        settings=new TextButton("SETTINGS", skin);
-        exit=new TextButton("EXIT", skin);
-        profile=new TextButton("PROFILE", skin);
-        table.add(title).colspan(2).padBottom(30).row();
-        table.add(register);
-        table.add(login);
-        table.add(settings);
-        table.add(profile);
-        table.add(exit);
+        table.center().padTop(400).padRight(1200);
+        background = new Texture(Gdx.files.internal("images/background.png"));
+        Skin skin = AssetManager.getSkin();
+        register = new TextButton("REGISTER", skin);
+        login = new TextButton("LOGIN", skin);
+        settings = new TextButton("SETTINGS", skin);
+        profile = new TextButton("PROFILE", skin);
+        exit = new TextButton("EXIT", skin);
+        float buttonSpacing = 20f;
+        table.add(register).padBottom(buttonSpacing).width(300).height(60);
+        table.row();
+        table.add(login).padBottom(buttonSpacing).width(300).height(60);
+        table.row();
+        table.add(settings).padBottom(buttonSpacing).width(300).height(60);
+        table.row();
+        table.add(profile).padBottom(buttonSpacing).width(300).height(60);
+        table.row();
+        table.add(exit).width(300).height(60);
         stage.addActor(table);
     }
+
     public TextButton getRegister() {
         return register;
     }
