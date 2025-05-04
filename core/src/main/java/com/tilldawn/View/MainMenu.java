@@ -77,7 +77,7 @@ public class MainMenu implements Screen {
     public void setUpUI(){
         Table table = new Table();
         table.setFillParent(true);
-        table.center().padTop(400).padRight(1200);
+        table.center().padTop(350).padRight(1250);
         background = new Texture(Gdx.files.internal("images/background.png"));
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);
@@ -85,7 +85,7 @@ public class MainMenu implements Screen {
         settings = new TextButton("SETTINGS", skin);
         profile = new TextButton("PROFILE", skin);
         exit = new TextButton("EXIT", skin);
-        float buttonSpacing = 20f;
+        float buttonSpacing = 15f;
         table.add(register).padBottom(buttonSpacing).width(300).height(60);
         table.row();
         table.add(login).padBottom(buttonSpacing).width(300).height(60);
