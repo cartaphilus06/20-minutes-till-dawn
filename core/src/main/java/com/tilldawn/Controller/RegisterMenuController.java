@@ -26,8 +26,8 @@ public class RegisterMenuController {
         });
     }
     public void register(){
-        String username=view.getUsername().getText();
-        String password=view.getPassword().getText();
+        String username=view.getUsernameField().getText();
+        String password=view.getPasswordField().getText();
         if(!Register.USERNAME.matches(username)){
             AlertGenerator.showAlert("Username error!","Username format is invalid!",view.getStage());
             return;

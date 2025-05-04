@@ -7,115 +7,119 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.Controller.RegisterMenuController;
-import com.tilldawn.Main;
 import com.tilldawn.Models.AssetManager;
 
-import java.awt.*;
-
 public class RegisterMenu implements Screen {
-    private final RegisterMenuController controller=new RegisterMenuController(this);
-    private Stage stage;
+
     private final Game game;
+    private final RegisterMenuController controller;
+    private Stage stage;
     private Texture background;
-    TextField usernameField;
-    TextField passwordField;
-    TextButton register;
-    TextButton back;
+
+    private TextField usernameField;
+    private TextField passwordField;
+    private TextButton registerButton;
+    private TextButton backButton;
+
     public RegisterMenu(Game game) {
-        this.game=game;
+        this.game = game;
+        this.controller = new RegisterMenuController(this);
     }
+
     @Override
     public void show() {
-        stage=new Stage();
+        stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        background = new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
         setUpUI();
         controller.handleClickedButtons();
     }
 
+    private void setUpUI() {
+        Skin skin = AssetManager.getSkin();
+        Table table = new Table();
+        table.setFillParent(true);
+        table.center().padTop(300);
+
+        // Create UI elements
+        Label usernameLabel = new Label("USERNAME", skin);
+        Label passwordLabel = new Label("PASSWORD", skin);
+
+        usernameField = new TextField("", AssetManager.getTextFieldStyle());
+        passwordField = new TextField("", skin);
+        passwordField.setPasswordMode(true);
+        passwordField.setPasswordCharacter('*');
+
+        registerButton = new TextButton("REGISTER", skin);
+        backButton = new TextButton("BACK", skin);
+
+        // Configure table layout
+        table.defaults().pad(10); // Add padding to all elements
+
+        table.add(usernameLabel).colspan(2).row();
+        table.add(usernameField).width(300).height(80).colspan(2).row();
+
+        // Password section
+        table.add(passwordLabel).colspan(2).row();
+        table.add(passwordField).width(300).height(80).colspan(2).padBottom(30).row();
+
+        // Buttons in a horizontal row
+        Table buttonTable = new Table();
+        buttonTable.add(registerButton).width(300).height(70).padRight(20);
+        buttonTable.add(backButton).width(300).height(70);
+
+        table.add(buttonTable).colspan(2).row();
+
+        stage.addActor(table);
+    }
+
     @Override
-    public void render(float v) {
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0,
-            stage.getViewport().getWorldWidth(),
-            stage.getViewport().getWorldHeight());
+        stage.getBatch().draw(background, 0, 0, stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
         stage.getBatch().end();
-        stage.act(v);
+
+        stage.act(delta);
         stage.draw();
     }
 
-    @Override
-    public void resize(int i, int i1) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
+    @Override public void resize(int width, int height) {}
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void hide() {}
 
     @Override
     public void dispose() {
         stage.dispose();
         background.dispose();
     }
-    public void setUpUI(){
-        Table table=new Table();
-        table.setFillParent(true);
-        table.center();
-        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
-        Skin skin= AssetManager.getSkin();
-        Label username=new Label("USERNAME",skin);
-        Label password=new Label("PASSWORD",skin);
-        usernameField=new TextField("",skin);
-        passwordField=new TextField("",skin);
-        passwordField.setPasswordMode(true);
-        register=new TextButton("REGISTER",skin);
-        back=new TextButton("BACK",skin);
-        table.row();
-        table.add(username).width(300).padBottom(20);
-        table.row();
-        table.add(usernameField).width(300).padBottom(20);
-        table.row();
-        table.add(password).width(300).padBottom(20);
-        table.row();
-        table.add(passwordField).width(300).padBottom(20);
-        table.row();
-        table.add(register).padRight(10);
-        table.add(back);
-        stage.addActor(table);
-    }
-    public TextField getUsername() {
+
+    public TextField getUsernameField() {
         return usernameField;
     }
-    public TextField getPassword() {
+
+    public TextField getPasswordField() {
         return passwordField;
     }
+
     public TextButton getRegisterButton() {
-        return register;
+        return registerButton;
     }
+
     public TextButton getBackButton() {
-        return back;
+        return backButton;
     }
+
     public Stage getStage() {
         return stage;
     }
-    public Game getGame(){
+
+    public Game getGame() {
         return game;
     }
 }
