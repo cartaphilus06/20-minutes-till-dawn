@@ -34,6 +34,7 @@ public class MainMenu implements Screen {
         stage=new Stage(new FitViewport(1920,1080));
         Gdx.input.setInputProcessor(stage);
         setUpUI();
+        controller.handleClickedButtons();
     }
 
     @Override
@@ -89,7 +90,6 @@ public class MainMenu implements Screen {
         table.add(login);
         table.add(settings);
         table.add(exit);
-        controller.handleClickedButtons();
         stage.addActor(table);
     }
     public TextButton getRegister() {
