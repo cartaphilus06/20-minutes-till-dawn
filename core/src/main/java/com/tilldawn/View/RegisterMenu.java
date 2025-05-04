@@ -96,7 +96,7 @@ public class RegisterMenu implements Screen {
         table.row();
         table.add(passwordField).width(300).padBottom(20);
         table.row();
-        table.add(register).padLeft(10);
+        table.add(register).padRight(10);
         table.add(back);
         stage.addActor(table);
     }
