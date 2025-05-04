@@ -3,6 +3,8 @@ package com.tilldawn.Controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.tilldawn.App;
+import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.View.LoginMenu;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.ProfileMenu;
@@ -39,6 +41,10 @@ public class MainMenuController {
         view.getProfile().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(App.getCurrentUser()==null){
+                    AlertGenerator.showAlert("","you haven't logged in yet!",view.getStage());
+                    return;
+                }
                 view.getGame().setScreen(new ProfileMenu(view.getGame()));
             }
         });

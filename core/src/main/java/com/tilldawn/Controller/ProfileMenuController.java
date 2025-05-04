@@ -126,5 +126,6 @@ public class ProfileMenuController {
         }
         user.deleteUser();
         App.setCurrentUser(null);
+        view.getGame().setScreen(new MainMenu(view.getGame()));
     }
 }

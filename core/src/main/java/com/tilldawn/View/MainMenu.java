@@ -116,4 +116,7 @@ public class MainMenu implements Screen {
     public Game getGame() {
         return game;
     }
+    public Stage getStage(){
+        return stage;
+    }
 }

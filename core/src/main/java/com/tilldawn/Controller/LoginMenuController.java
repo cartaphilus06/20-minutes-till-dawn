@@ -27,19 +27,24 @@ public class LoginMenuController {
             }
         });
     }
-    public void login(){
+    public void login() {
         String username = view.getUsernameField().getText();
         String password = view.getPasswordField().getText();
-        User user=User.getUser(username);
-        if(user==null){
-            AlertGenerator.showAlert("Error!","User not found!",view.getStage());
+        User user = User.getUser(username);
+
+        if (user == null) {
+            AlertGenerator.showAlert("Error!", "User not found!", view.getStage());
             return;
         }
-        if(!user.getPassword().equals(password)){
-            AlertGenerator.showAlert("Error!","Provided password is wrong!",view.getStage());
+        if (!user.getPassword().equals(password)) {
+            AlertGenerator.showAlert("Error!", "Provided password is wrong!", view.getStage());
             return;
         }
+
         App.setCurrentUser(user);
-        AlertGenerator.showAlert("Success!",user.getUsername()+" successfully logged in!",view.getStage());
+        AlertGenerator.showAlert("Success!", user.getUsername() + " successfully logged in!", view.getStage(), () -> {
+            view.getGame().setScreen(new MainMenu(view.getGame()));
+        });
     }
+
 }
