@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.ConfirmDialog;
 import com.tilldawn.Models.Enums.Register;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
@@ -41,6 +42,18 @@ public class ProfileMenuController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 view.setUpChangePasswordPageUI();
+            }
+        });
+        view.getDeleteAccount().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ConfirmDialog confirm=new ConfirmDialog(
+                    "Are you sure you want to delete your account?",
+                    AssetManager.getSkin(),
+                    () -> deleteAccount(),
+                    System.out::println
+                );
+                view.getStage().addActor(confirm);
             }
         });
     }
@@ -104,5 +117,14 @@ public class ProfileMenuController {
                 view.setUpUI();
             }
         });
+    }
+    public void deleteAccount(){
+        User user=App.getCurrentUser();
+        if(user==null){
+            AlertGenerator.showAlert("","you haven't logged in yet!",view.getStage());
+            return;
+        }
+        user.deleteUser();
+        App.setCurrentUser(null);
     }
 }

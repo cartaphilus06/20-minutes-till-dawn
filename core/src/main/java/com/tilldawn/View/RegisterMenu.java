@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.Controller.RegisterMenuController;
 import com.tilldawn.Models.AssetManager;
 
@@ -55,23 +54,19 @@ public class RegisterMenu implements Screen {
         registerButton = new TextButton("REGISTER", skin);
         backButton = new TextButton("BACK", skin);
 
-        // Configure table layout
-        table.defaults().pad(10); // Add padding to all elements
+        table.defaults().pad(10);
 
         table.add(usernameLabel).colspan(2).row();
         table.add(usernameField).width(300).height(80).colspan(2).row();
 
-        // Password section
         table.add(passwordLabel).colspan(2).row();
         table.add(passwordField).width(300).height(80).colspan(2).padBottom(30).row();
 
-        // Buttons in a horizontal row
         Table buttonTable = new Table();
         buttonTable.add(registerButton).width(300).height(70).padRight(20);
         buttonTable.add(backButton).width(300).height(70);
 
         table.add(buttonTable).colspan(2).row();
-
         stage.addActor(table);
     }
 

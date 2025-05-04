@@ -28,11 +28,11 @@ public class ProfileMenu implements Screen {
         stage=new Stage();
         Gdx.input.setInputProcessor(stage);
         Skin skin= AssetManager.getSkin();
-        background=new Texture(Gdx.files.internal("images/bg.png"));
-        changeUsername=new TextButton("change username",skin);
-        changePassword=new TextButton("change password",skin);
-        deleteAccount=new TextButton("delete account",skin);
-        changeAvatar=new TextButton("change avatar",skin);
+        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
+        changeUsername=new TextButton("CHANGE USERNAME",skin);
+        changePassword=new TextButton("CHANGE PASSWORD",skin);
+        deleteAccount=new TextButton("DELETE ACCOUNT",skin);
+        changeAvatar=new TextButton("CHANGE AVATAR",skin);
         back=new TextButton("BACK",skin);
         setUpUI();
         controller.handleClickedButtons();
@@ -79,17 +79,13 @@ public class ProfileMenu implements Screen {
         stage.clear();
         Table table=new Table();
         table.setFillParent(true);
-        table.center();
-        table.row();
-        table.add(changeUsername);
-        table.row();
-        table.add(changePassword);
-        table.row();
-        table.add(deleteAccount);
-        table.row();
-        table.add(changeAvatar);
-        table.row();
-        table.add(back);
+        table.center().padTop(350);
+        table.defaults().pad(5);
+        table.add(changeUsername).width(500).height(70).row();
+        table.add(changePassword).width(500).height(70).row();
+        table.add(deleteAccount).width(500).height(70).row();
+        table.add(changeAvatar).width(500).height(70).row();
+        table.add(back).width(500).height(70).row();
         stage.addActor(table);
     }
     public TextButton getChangeUsername() {
@@ -118,18 +114,19 @@ public class ProfileMenu implements Screen {
         Skin skin= AssetManager.getSkin();
         Table table=new Table();
         table.setFillParent(true);
-        table.center();
-        Label instruction=new Label("enter you new username:",skin);
-        TextField changeUsername=new TextField("",skin);
+        table.center().padTop(300);
+        Label instruction=new Label("NEW USERNAME",skin);
+        TextField changeUsername=new TextField("",AssetManager.getTextFieldStyle());
         TextButton confirm=new TextButton("confirm",skin);
         TextButton cancel=new TextButton("cancel",skin);
-        table.row();
-        table.add(instruction);
-        table.row();
-        table.add(changeUsername).width(300);
-        table.row();
-        table.add(confirm);
-        table.add(cancel);
+        table.defaults().pad(10);
+        table.add(instruction).colspan(2).row();
+        table.add(changeUsername).width(300).height(80).colspan(2).row();
+
+        Table buttonTable=new Table();
+        buttonTable.add(confirm).width(300).height(60);
+        buttonTable.add(cancel).width(300).height(60);
+        table.add(buttonTable).colspan(2).row();
         stage.addActor(table);
         controller.handleChangeUsername(confirm,changeUsername,cancel);
     }
@@ -138,24 +135,26 @@ public class ProfileMenu implements Screen {
         Skin skin= AssetManager.getSkin();
         Table table=new Table();
         table.setFillParent(true);
-        table.center();
-        Label instruction=new Label("enter you new password:",skin);
-        TextField changePassword=new TextField("",skin);
-        TextField confirmPassword=new TextField("",skin);
+        table.center().padTop(300);
+        Label instruction=new Label("NEW PASSWORD",skin);
+        Label confirmPassword=new Label("CONFIRM PASSWORD",skin);
+        TextField changePasswordField=new TextField("",AssetManager.getTextFieldStyle());
+        TextField confirmPasswordField=new TextField("",AssetManager.getTextFieldStyle());
         TextButton confirm=new TextButton("confirm",skin);
-        TextButton cancel=new TextButton("back",skin);
-        changePassword.setPasswordMode(true);
-        confirmPassword.setPasswordMode(true);
-        table.row();
-        table.add(instruction);
-        table.row();
-        table.add(changePassword).width(300);
-        table.row();
-        table.add(confirmPassword).width(300);
-        table.row();
-        table.add(confirm);
-        table.add(cancel);
+        TextButton cancel=new TextButton("cancel",skin);
+        table.defaults().pad(10);
+
+        table.add(instruction).colspan(2).row();
+        table.add(changePasswordField).width(300).height(80).colspan(2).row();
+
+        table.add(confirmPassword).colspan(2).row();
+        table.add(confirmPasswordField).width(300).height(80).colspan(2).row();
+
+        Table buttonTable=new Table();
+        buttonTable.add(confirm).width(300).height(60);
+        buttonTable.add(cancel).width(300).height(60);
+        table.add(buttonTable).colspan(2).row();
         stage.addActor(table);
-        controller.handleChangePassword(confirm,changePassword,confirmPassword,cancel);
+        controller.handleChangePassword(confirm,changePasswordField,confirmPasswordField,cancel);
     }
 }

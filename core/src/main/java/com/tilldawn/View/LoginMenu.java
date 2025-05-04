@@ -70,27 +70,32 @@ public class LoginMenu implements Screen {
     public void setUpUI(){
         Table table=new Table();
         table.setFillParent(true);
-        table.center();
-        background=new Texture(Gdx.files.internal("images/bg.png"));
+        table.center().padTop(300);
+        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
         Skin skin= AssetManager.getSkin();
         Label username=new Label("USERNAME",skin);
         Label password=new Label("PASSWORD",skin);
-        usernameField=new TextField("",skin);
-        passwordField=new TextField("",skin);
+        usernameField=new TextField("",AssetManager.getTextFieldStyle());
+        passwordField=new TextField("",AssetManager.getTextFieldStyle());
         passwordField.setPasswordMode(true);
         loginButton=new TextButton("LOGIN",skin);
         back=new TextButton("BACK",skin);
-        table.row();
-        table.add(username).width(300).padBottom(20);
-        table.row();
-        table.add(usernameField).width(300).padBottom(20);
-        table.row();
-        table.add(password).width(300).padBottom(20);
-        table.row();
-        table.add(passwordField).width(300).padBottom(20);
-        table.row();
-        table.add(loginButton).padRight(10);
-        table.add(back);
+        table.defaults().pad(10);
+
+        table.add(username).colspan(2).row();
+        table.add(usernameField).width(300).height(80).colspan(2).row();
+
+        table.add(password).colspan(2).row();
+        passwordField.setPasswordMode(true);
+        passwordField.setPasswordCharacter('*');
+        table.add(passwordField).width(300).height(80).colspan(2).row();
+
+        Table buttonTable=new Table();
+        buttonTable.add(loginButton).width(300).height(70).padRight(20);
+        buttonTable.add(back).width(300).height(70);
+
+        table.add(buttonTable).colspan(2).row();
+
         stage.addActor(table);
     }
     public TextButton getLoginButton() {
