@@ -13,6 +13,7 @@ public class User {
     private static ArrayList<User> allUsers = new ArrayList<>();
     private String username;
     private String password;
+    private Question securityQuestion=new Question("age?","18");
 
     public User() {}
 
@@ -39,6 +40,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
         saveUsers();
+    }
+    public Question getSecurityQuestion() {
+        return securityQuestion;
+    }
+    public void setSecurityQuestion(Question securityQuestion) {
+        this.securityQuestion = securityQuestion;
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;
