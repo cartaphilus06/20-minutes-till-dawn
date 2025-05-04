@@ -2,6 +2,7 @@ package com.tilldawn.Models.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tilldawn.Models.Enums.Weapon;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ public class User {
     private String username;
     private String password;
     private Question securityQuestion;
+    private Character character;
 
     public User() {}
 
@@ -48,6 +50,14 @@ public class User {
     }
     public void setSecurityQuestion(Question securityQuestion) {
         this.securityQuestion = securityQuestion;
+        saveUsers();
+    }
+    public Character getCharacter() {
+        return character;
+    }
+    public void setCharacter(Character character) {
+        this.character = character;
+        saveUsers();
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;
@@ -69,7 +79,12 @@ public class User {
 
         try {
             if (file.exists()) {
-                allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
+                if(file.length()>0) {
+                    allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
+                }
+                else {
+                    allUsers = new ArrayList<>();
+                }
             } else {
                 System.out.println("Users file doesn't exist, starting with empty user list");
             }

@@ -1,1 +1,7 @@
-[{"username":"mahed","password":"Mahed@12","securityQuestion":{"question":"age?","answer":"18"}}]
+[{"username":"mahed",
+  "password":"Mahed@12",
+  "securityQuestion":{"question":"age?","answer":"18"},
+  "character":{"hero":"SHANA","weapon":"SMGSDUAL",
+  "ability": {"type": "Damager"}
+  }
+}]

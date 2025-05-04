@@ -2,9 +2,12 @@ package com.tilldawn;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.tilldawn.Models.Enums.Hero;
+import com.tilldawn.Models.Enums.Weapon;
+import com.tilldawn.Models.User.Character;
+import com.tilldawn.Models.User.Question;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
-import com.tilldawn.View.RegisterMenu;
 
 public class Main extends Game {
     private static Main main;
