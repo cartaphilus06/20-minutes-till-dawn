@@ -107,4 +107,7 @@ public class LoginMenu implements Screen {
     public Stage getStage() {
         return stage;
     }
+    public Game getGame() {
+        return game;
+    }
 }

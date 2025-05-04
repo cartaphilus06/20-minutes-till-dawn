@@ -41,6 +41,7 @@ public class User {
         saveUsers();
     }
     public static void saveUsers() {
+        if(allUsers.isEmpty()) return;
         ObjectMapper mapper = new ObjectMapper();
         File file = new File("assets/data/users.json");
 

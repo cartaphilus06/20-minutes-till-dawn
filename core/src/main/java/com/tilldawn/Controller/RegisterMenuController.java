@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.tilldawn.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Register;
 import com.tilldawn.Models.User.User;
@@ -33,35 +34,19 @@ public class RegisterMenuController {
         String username=view.getUsername().getText();
         String password=view.getPassword().getText();
         if(!Register.USERNAME.matches(username)){
-            showAlert("Username error!","Username format is invalid!");
+            AlertGenerator.showAlert("Username error!","Username format is invalid!",view.getStage());
             return;
         }
         if(!Register.PASSWORD.matches(password)){
-            showAlert("Password error!","Password format is invalid!");
+            AlertGenerator.showAlert("Password error!","Password format is invalid!",view.getStage());
             return;
         }
         User user=User.getUser(username);
         if(user!=null){
-            showAlert("Error!","Username already exists!");
+            AlertGenerator.showAlert("Error!","Username already exists!",view.getStage());
             return;
         }
-        showAlert("Success","Successfully registered!");
+        AlertGenerator.showAlert("Success","Successfully registered!",view.getStage());
         new User(username,password);
-    }
-    private void showAlert(String title, String message) {
-        showAlert(title, message, null);
-    }
-
-    private void showAlert(String title, String message, Runnable callback) {
-        Dialog dialog = new Dialog(title, AssetManager.getSkin()) {
-            @Override
-            protected void result(Object object) {
-                if (callback != null) callback.run();
-            }
-        };
-        dialog.text(message).padTop(20);
-        dialog.button("OK", true);
-        dialog.key(Input.Keys.ENTER, true); // Enter to confirm
-        dialog.show(view.getStage());
     }
 }
