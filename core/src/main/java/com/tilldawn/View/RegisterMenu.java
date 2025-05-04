@@ -78,7 +78,7 @@ public class RegisterMenu implements Screen {
         Table table=new Table();
         table.setFillParent(true);
         table.center();
-        background=new Texture(Gdx.files.internal("images/bg.png"));
+        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
         Skin skin= AssetManager.getSkin();
         Label username=new Label("USERNAME",skin);
         Label password=new Label("PASSWORD",skin);

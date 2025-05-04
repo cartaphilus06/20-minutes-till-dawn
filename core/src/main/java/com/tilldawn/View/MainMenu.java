@@ -78,7 +78,7 @@ public class MainMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.center().padTop(350).padRight(1250);
-        background = new Texture(Gdx.files.internal("images/background.png"));
+        background = new Texture(Gdx.files.internal("images/backgrounds/registerBackground.png"));
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);
         login = new TextButton("LOGIN", skin);
