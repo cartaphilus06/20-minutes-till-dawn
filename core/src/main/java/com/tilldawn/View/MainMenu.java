@@ -26,6 +26,7 @@ public class MainMenu implements Screen {
     private TextButton login;
     private TextButton settings;
     private TextButton profile;
+    private TextButton scoreBoard;
     private TextButton exit;
     public MainMenu(Game game) {
         this.game=game;
@@ -84,17 +85,20 @@ public class MainMenu implements Screen {
         login = new TextButton("LOGIN", skin);
         settings = new TextButton("SETTINGS", skin);
         profile = new TextButton("PROFILE", skin);
+        scoreBoard=new TextButton("SCORE BOARD", skin);
         exit = new TextButton("EXIT", skin);
         float buttonSpacing = 15f;
-        table.add(register).padBottom(buttonSpacing).width(300).height(60);
+        table.add(register).padBottom(buttonSpacing).width(350).height(60);
         table.row();
-        table.add(login).padBottom(buttonSpacing).width(300).height(60);
+        table.add(login).padBottom(buttonSpacing).width(350).height(60);
         table.row();
-        table.add(settings).padBottom(buttonSpacing).width(300).height(60);
+        table.add(settings).padBottom(buttonSpacing).width(350).height(60);
         table.row();
-        table.add(profile).padBottom(buttonSpacing).width(300).height(60);
+        table.add(profile).padBottom(buttonSpacing).width(350).height(60);
         table.row();
-        table.add(exit).width(300).height(60);
+        table.add(scoreBoard).width(350).height(60);
+        table.row();
+        table.add(exit).width(350).height(60);
         stage.addActor(table);
     }
 
@@ -112,6 +116,9 @@ public class MainMenu implements Screen {
     }
     public TextButton getProfile() {
         return profile;
+    }
+    public TextButton getScoreBoard() {
+        return scoreBoard;
     }
     public Game getGame() {
         return game;
