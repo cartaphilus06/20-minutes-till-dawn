@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.Controller.MainMenuController;
 import com.tilldawn.Main;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.Avatar;
 
 public class MainMenu implements Screen {
     private final MainMenuController controller=new MainMenuController(this);
@@ -27,7 +29,8 @@ public class MainMenu implements Screen {
     private TextButton scoreBoard;
     private TextButton exit;
     private Label username;
-    private TextureRegion avatar;
+    private Animation<TextureRegion> walkAnimation;
+    private float stateTime=0f;
     public MainMenu(Game game) {
         this.game=game;
     }
@@ -38,6 +41,7 @@ public class MainMenu implements Screen {
         setUpUI();
         controller.handleClickedButtons();
         controller.handleUsernameLabel();
+        controller.handleAvatar();
     }
 
     @Override
@@ -50,6 +54,7 @@ public class MainMenu implements Screen {
         stage.getBatch().end();
         stage.act(v);
         stage.draw();
+        controller.handleAvatarAnimation();
     }
 
     @Override
@@ -90,11 +95,10 @@ public class MainMenu implements Screen {
         exit = new TextButton("EXIT", skin);
         username=new Label("USERNAME: ", skin);
         username.setAlignment(Align.topLeft);
-        avatar=AssetManager.getAvatar();
-        Image avatarImage=new Image(avatar);
-        float avatarImageYPosition=stage.getViewport().getWorldHeight()-avatarImage.getHeight()-10;
+        //avatar=AssetManager.getAvatar();
+        float avatarImageYPosition=stage.getViewport().getWorldHeight()- Avatar.getHeight();
         float avatarImageXPosition=30;
-        avatarImage.setPosition(avatarImageXPosition,avatarImageYPosition);
+        //avatarImage.setPosition(avatarImageXPosition,avatarImageYPosition);
         username.setPosition(avatarImageXPosition,avatarImageYPosition-40);
         float buttonSpacing = 15f;
         table.add(register).padBottom(buttonSpacing).width(350).height(60);
@@ -110,7 +114,7 @@ public class MainMenu implements Screen {
         table.add(exit).width(350).height(60);
         stage.addActor(table);
         stage.addActor(username);
-        stage.addActor(avatarImage);
+        //stage.addActor(avatarImage);
     }
 
     public TextButton getRegister() {
@@ -134,8 +138,17 @@ public class MainMenu implements Screen {
     public Label getUsername() {
         return username;
     }
-    public TextureRegion getAvatar() {
-        return avatar;
+    public Animation<TextureRegion> getWalkAnimation() {
+        return walkAnimation;
+    }
+    public void setAnimation(Animation<TextureRegion> walkAnimation) {
+        this.walkAnimation = walkAnimation;
+    }
+    public float getStateTime(){
+        return stateTime;
+    }
+    public void setStateTime(float delta){
+        this.stateTime+=delta;
     }
     public Game getGame() {
         return game;

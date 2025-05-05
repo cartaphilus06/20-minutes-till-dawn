@@ -3,6 +3,7 @@ package com.tilldawn.Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -38,19 +39,15 @@ public class AssetManager {
 
         return textFieldStyle;
     }
-    public static TextureRegion getAvatar(){
-//        Texture texture=new Texture(Gdx.files.internal("images/avatars/zombie_tilesheet.png"));
-//        TextureRegion[][] tiles=TextureRegion.split(texture,80,110);
-//        return tiles[0][0];
+    public static TextureRegion[][] getAvatarTiles(){
         User currentUser= App.getCurrentUser();
         Texture texture;
-        if(currentUser==null) {
-            texture=new Texture(Gdx.files.internal(Avatar.PLAYER.getInternalPath()));
+        if(currentUser==null || currentUser.getAvatar()==null) {
+            texture=new Texture(Gdx.files.internal(Avatar.PLAYER.getInternalPath())); //default avatar
         }
         else{
             texture=new Texture(Gdx.files.internal(currentUser.getAvatar().getInternalPath()));
         }
-        TextureRegion[][] tiles=TextureRegion.split(texture, Avatar.getWidth(), Avatar.getHeight());
-        return tiles[0][0];
+        return TextureRegion.split(texture, Avatar.getWidth(), Avatar.getHeight());
     }
 }

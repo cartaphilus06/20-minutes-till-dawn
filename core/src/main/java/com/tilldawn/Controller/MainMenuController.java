@@ -1,11 +1,16 @@
 package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
+import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.*;
 
@@ -66,6 +71,17 @@ public class MainMenuController {
         }
     }
     public void handleAvatar(){
-
+        TextureRegion[][] tiles= AssetManager.getAvatarTiles();
+        TextureRegion[] walkFrames=new TextureRegion[6];
+        for(int i=0;i<6;i++) walkFrames[i]=tiles[0][i];
+        view.setAnimation(new Animation<>(0.1f, walkFrames));
+    }
+    public void handleAvatarAnimation(){
+        view.setStateTime(Gdx.graphics.getDeltaTime());
+        TextureRegion currentFrame=view.getWalkAnimation().getKeyFrame(view.getStateTime(),true);
+        Batch batch=view.getStage().getBatch();
+        batch.begin();
+        batch.draw(currentFrame,30,view.getStage().getViewport().getWorldHeight()- Avatar.getHeight());
+        batch.end();
     }
 }
