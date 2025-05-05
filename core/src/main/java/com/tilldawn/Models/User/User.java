@@ -2,6 +2,7 @@ package com.tilldawn.Models.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.Weapon;
 
 import java.io.File;
@@ -14,6 +15,7 @@ public class User {
     private String password;
     private Question securityQuestion;
     private Character character;
+    private Avatar avatar;
 
     public User() {}
 
@@ -58,6 +60,12 @@ public class User {
     public void setCharacter(Character character) {
         this.character = character;
         saveUsers();
+    }
+    public Avatar getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;

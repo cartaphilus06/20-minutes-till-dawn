@@ -2,10 +2,14 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
+import com.tilldawn.Models.User.User;
 import com.tilldawn.View.*;
+
+import java.awt.*;
 
 public class MainMenuController {
     private final MainMenu view;
@@ -50,5 +54,18 @@ public class MainMenuController {
                 view.getGame().setScreen(new Scoreboard(view.getGame()));
             }
         });
+    }
+    public void handleUsernameLabel(){
+        Label username=view.getUsername();
+        User currentUser = App.getCurrentUser();
+        if(currentUser!=null){
+            username.setText(username.getText()+currentUser.getUsername());
+        }
+        else {
+            username.setText("not logged in yet!");
+        }
+    }
+    public void handleAvatar(){
+
     }
 }

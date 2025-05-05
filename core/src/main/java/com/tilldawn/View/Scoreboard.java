@@ -88,7 +88,7 @@ public class Scoreboard implements Screen {
         sortByUsername=new TextButton("USERNAME", skin);
         sortByKills=new TextButton("KILLS", skin);
         sortByScore=new TextButton("SCORE", skin);
-        exit=new TextButton("EXIT", skin);
+        exit=new TextButton("BACK", skin);
         buttonTables.row();
         buttonTables.add(sort);
         int buttonWidth=300;

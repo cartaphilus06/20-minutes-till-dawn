@@ -5,11 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,6 +26,8 @@ public class MainMenu implements Screen {
     private TextButton profile;
     private TextButton scoreBoard;
     private TextButton exit;
+    private Label username;
+    private TextureRegion avatar;
     public MainMenu(Game game) {
         this.game=game;
     }
@@ -37,6 +37,7 @@ public class MainMenu implements Screen {
         Gdx.input.setInputProcessor(stage);
         setUpUI();
         controller.handleClickedButtons();
+        controller.handleUsernameLabel();
     }
 
     @Override
@@ -87,6 +88,14 @@ public class MainMenu implements Screen {
         profile = new TextButton("PROFILE", skin);
         scoreBoard=new TextButton("SCORE BOARD", skin);
         exit = new TextButton("EXIT", skin);
+        username=new Label("USERNAME: ", skin);
+        username.setAlignment(Align.topLeft);
+        avatar=AssetManager.getAvatar();
+        Image avatarImage=new Image(avatar);
+        float avatarImageYPosition=stage.getViewport().getWorldHeight()-avatarImage.getHeight()-10;
+        float avatarImageXPosition=30;
+        avatarImage.setPosition(avatarImageXPosition,avatarImageYPosition);
+        username.setPosition(avatarImageXPosition,avatarImageYPosition-40);
         float buttonSpacing = 15f;
         table.add(register).padBottom(buttonSpacing).width(350).height(60);
         table.row();
@@ -100,6 +109,8 @@ public class MainMenu implements Screen {
         table.row();
         table.add(exit).width(350).height(60);
         stage.addActor(table);
+        stage.addActor(username);
+        stage.addActor(avatarImage);
     }
 
     public TextButton getRegister() {
@@ -119,6 +130,12 @@ public class MainMenu implements Screen {
     }
     public TextButton getScoreBoard() {
         return scoreBoard;
+    }
+    public Label getUsername() {
+        return username;
+    }
+    public TextureRegion getAvatar() {
+        return avatar;
     }
     public Game getGame() {
         return game;
