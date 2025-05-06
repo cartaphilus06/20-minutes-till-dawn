@@ -9,6 +9,7 @@ import com.tilldawn.Models.Enums.Weapon;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class User {
     private static ArrayList<User> allUsers = new ArrayList<>();
@@ -24,10 +25,10 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        avatar=Avatar.values()[(new Random()).nextInt(Avatar.values().length)];
         allUsers.add(this);
         saveUsers();
     }
-
     public String getUsername() {
         return username;
     }

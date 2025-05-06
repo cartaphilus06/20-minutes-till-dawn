@@ -19,6 +19,8 @@ public class RegisterMenu implements Screen {
 
     private TextField usernameField;
     private TextField passwordField;
+    private TextField securityQuestionField;
+    private TextField securityAnswerField;
     private TextButton registerButton;
     private TextButton backButton;
 
@@ -40,14 +42,19 @@ public class RegisterMenu implements Screen {
         Skin skin = AssetManager.getSkin();
         Table table = new Table();
         table.setFillParent(true);
-        table.center().padTop(300);
+        table.center().padTop(500);
 
         // Create UI elements
-        Label usernameLabel = new Label("USERNAME", skin);
-        Label passwordLabel = new Label("PASSWORD", skin);
+        Label security=new Label("CHOOSE A SECURITY QUESTION", skin);
 
         usernameField = new TextField("", AssetManager.getTextFieldStyle());
-        passwordField = new TextField("", skin);
+        usernameField.setMessageText("USERNAME");
+        passwordField = new TextField("", AssetManager.getTextFieldStyle());
+        passwordField.setMessageText("PASSWORD");
+        securityQuestionField = new TextField("", AssetManager.getTextFieldStyle());
+        securityQuestionField.setMessageText("QUESTION");
+        securityAnswerField = new TextField("", AssetManager.getTextFieldStyle());
+        securityAnswerField.setMessageText("ANSWER");
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
 
@@ -56,11 +63,13 @@ public class RegisterMenu implements Screen {
 
         table.defaults().pad(10);
 
-        table.add(usernameLabel).colspan(2).row();
         table.add(usernameField).width(300).height(80).colspan(2).row();
 
-        table.add(passwordLabel).colspan(2).row();
         table.add(passwordField).width(300).height(80).colspan(2).padBottom(30).row();
+
+        table.add(security).colspan(2).row();
+        table.add(securityQuestionField).width(300).height(80).colspan(2).colspan(2).padBottom(30).row();
+        table.add(securityAnswerField).width(300).height(80).colspan(2).padBottom(30).row();
 
         Table buttonTable = new Table();
         buttonTable.add(registerButton).width(300).height(70).padRight(20);
@@ -108,6 +117,14 @@ public class RegisterMenu implements Screen {
 
     public TextButton getBackButton() {
         return backButton;
+    }
+
+    public TextField getSecurityQuestionField() {
+        return securityQuestionField;
+    }
+
+    public TextField getSecurityAnswerField() {
+        return securityAnswerField;
     }
 
     public Stage getStage() {

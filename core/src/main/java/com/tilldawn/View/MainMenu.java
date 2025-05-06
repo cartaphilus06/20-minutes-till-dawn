@@ -71,7 +71,7 @@ public class MainMenu implements Screen {
         stage.getBatch().draw(shana, 1920 - width, yOffset, width, height);
 
         //Draw title
-        float titleYPosition=600f+(float)Math.sin(stateTime * 2.5f) * 10f;
+        float titleYPosition=650f+(float)Math.sin(stateTime * 2.5f) * 10f;
         float titleXPosition=100f+(float)Math.cos(stateTime * 2.5f) * 10f;
         Texture title=AssetManager.get20minutesTillDawnLogo();
         stage.getBatch().draw(title, titleXPosition, titleYPosition,title.getWidth()*1.5f, title.getHeight()*1.5f);
@@ -110,7 +110,7 @@ public class MainMenu implements Screen {
     public void setUpUI(){
         Table table = new Table();
         table.setFillParent(true);
-        table.center().padTop(500).padRight(1250);
+        table.center().padTop(400).padRight(1250);
         background = AssetManager.getMainMenuBackground();
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);

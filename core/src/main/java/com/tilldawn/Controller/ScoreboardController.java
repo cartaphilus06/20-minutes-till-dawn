@@ -21,20 +21,28 @@ public class ScoreboardController {
     public void handleClickedButtons(){
         view.getExit().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
         view.getSortByKills().addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {}
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+            }
         });
         view.getSortByScore().addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {}
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+            }
         });
         view.getSortBySurvival().addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {}
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+            }
         });
         view.getSortByUsername().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 ArrayList<Label> users=view.getUsers();
                 users.sort(Comparator.comparing(o -> o.getText().toString()));
             }
@@ -48,8 +56,5 @@ public class ScoreboardController {
             usersLabel.add(label);
         }
         return usersLabel;
-    }
-    private int compareStrings(String s1,String s2){
-        return s1.compareTo(s2);
     }
 }

@@ -26,24 +26,28 @@ public class ProfileMenuController {
         view.getBack().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
         view.getChangeUsername().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpChangeUsernamePageUI();
             }
         });
         view.getChangePassword().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpChangePasswordPageUI();
             }
         });
         view.getDeleteAccount().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 ConfirmDialog confirm=new ConfirmDialog(
                     "Are you sure you want to delete your account?",
                     AssetManager.getSkin(),
@@ -56,6 +60,7 @@ public class ProfileMenuController {
         view.getChangeAvatar().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpChangeAvatarPageUI();
             }
         });
@@ -63,6 +68,7 @@ public class ProfileMenuController {
     public void handleChangeUsername(TextButton button, TextField username,TextButton cancel){
         button.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 String newUsername=username.getText();
                 if(!Register.USERNAME.matches(newUsername)){
                     AlertGenerator.showAlert("", "new username format is wrong!",view.getStage());
@@ -84,6 +90,7 @@ public class ProfileMenuController {
         });
         cancel.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpUI();
             }
         });
@@ -91,6 +98,7 @@ public class ProfileMenuController {
     public void handleChangePassword(TextButton confirm, TextField newPassword,TextField confirmPassword,TextButton cancel){
         confirm.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 String newPass=newPassword.getText();
                 String confirmPass=confirmPassword.getText();
                 User currentUser=App.getCurrentUser();
@@ -117,6 +125,7 @@ public class ProfileMenuController {
         });
         cancel.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpUI();
             }
         });
@@ -136,6 +145,7 @@ public class ProfileMenuController {
             int index=i;
             buttons[i].addListener(new ClickListener(){
                 public void clicked(InputEvent event, float x, float y) {
+                    AssetManager.getUiClickSound().play();
                     App.getCurrentUser().setAvatar(Avatar.values()[index]);
                     Drawable imageDown=drawables[index][2];
                     buttons[index].getStyle().imageUp=imageDown;
@@ -153,6 +163,7 @@ public class ProfileMenuController {
     public void handleChangeAvatarButtons(TextButton back){
         back.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.setUpUI();
                 System.gc();
             }

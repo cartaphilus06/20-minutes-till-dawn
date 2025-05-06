@@ -26,28 +26,34 @@ public class MainMenuController {
         view.getRegister().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new RegisterMenu(view.getGame()));
             }
         });
         view.getLogin().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new LoginMenu(view.getGame()));
             }
         });
         view.getExit().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 Gdx.app.exit();
             }
         });
         view.getSettings().addListener(new ClickListener(){
             @Override
-            public void clicked(InputEvent event, float x, float y) {}
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+            }
         });
         view.getProfile().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 if(App.getCurrentUser()==null){
                     AlertGenerator.showAlert("","you haven't logged in yet!",view.getStage());
                     return;
@@ -57,7 +63,13 @@ public class MainMenuController {
         });
         view.getScoreBoard().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new Scoreboard(view.getGame()));
+            }
+        });
+        view.getPreGame().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
             }
         });
     }
@@ -74,7 +86,7 @@ public class MainMenuController {
     public void handleAvatar(){
         TextureRegion[][] tiles= AssetManager.getAvatarTiles();
         TextureRegion[] walkFrames=new TextureRegion[6];
-        for(int i=0;i<6;i++) walkFrames[i]=tiles[0][i];
+        System.arraycopy(tiles[0], 0, walkFrames, 0, 6);
         view.setAnimation(new Animation<>(0.2f, walkFrames));
     }
     public void setCursor(){

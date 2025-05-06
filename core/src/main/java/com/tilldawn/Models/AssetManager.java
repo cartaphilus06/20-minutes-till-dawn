@@ -1,6 +1,7 @@
 package com.tilldawn.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -61,5 +62,8 @@ public class AssetManager {
     }
     public static Texture get20minutesTillDawnLogo(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));
+    }
+    public static Music getUiClickSound(){
+        return Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.App;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.LoginMenu;
 import com.tilldawn.View.MainMenu;
@@ -17,12 +18,14 @@ public class LoginMenuController {
         view.getLoginButton().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 login();
             }
         });
         view.getBackButton().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
