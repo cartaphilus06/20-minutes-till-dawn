@@ -23,7 +23,7 @@ public class Lwjgl3Launcher {
         configuration.setWindowedMode(1920, 1080);
         configuration.setDecorated(false);
         configuration.setResizable(false);
-        configuration.setWindowIcon(Files.FileType.Internal, "images/Texture2D/icon.png");
+        configuration.setWindowIcon("libgdx16.png", "libgdx32.png", "libgdx64.png", "libgdx128.png");
         return configuration;
     }
 }

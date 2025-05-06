@@ -42,14 +42,10 @@ public class AssetManager {
     }
     public static TextureRegion[][] getAvatarTiles(){
         User currentUser= App.getCurrentUser();
-        Texture texture;
         if(currentUser==null || currentUser.getAvatar()==null) {
-            texture=new Texture(Gdx.files.internal(Avatar.PLAYER.getInternalPath())); //default avatar
+            return Avatar.PLAYER.getTiles();
         }
-        else{
-            texture=new Texture(Gdx.files.internal(currentUser.getAvatar().getInternalPath()));
-        }
-        return TextureRegion.split(texture, Avatar.getWidth(), Avatar.getHeight());
+        return currentUser.getAvatar().getTiles();
     }
     public static Pixmap getCursorIcon(){
         return new Pixmap(Gdx.files.internal("images/Texture2D/T_Cursor.png"));
