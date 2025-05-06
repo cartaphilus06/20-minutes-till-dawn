@@ -48,6 +48,7 @@ public class MainMenuController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                view.getGame().setScreen(new Settings(view.getGame()));
             }
         });
         view.getProfile().addListener(new ClickListener(){

@@ -2,10 +2,7 @@ package com.tilldawn;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.tilldawn.Models.Enums.Hero;
-import com.tilldawn.Models.Enums.Weapon;
-import com.tilldawn.Models.User.Character;
-import com.tilldawn.Models.User.Question;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
 
@@ -18,6 +15,8 @@ public class Main extends Game {
         main = this;
         batch = new SpriteBatch();
         User.loadUsers();
+        if(App.getCurrentUser()==null) AssetManager.getDefaultMusic().play();
+        else App.getCurrentUser().getBackgroundMusic().getMusic().play();
         setScreen(new MainMenu(this));
     }
 

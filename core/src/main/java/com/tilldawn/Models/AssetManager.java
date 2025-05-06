@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -14,13 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
+import com.tilldawn.Models.Enums.BackgroundMusic;
 import com.tilldawn.Models.User.User;
 
 public class AssetManager {
     private final static AssetManager assetManager=new AssetManager();
-    private Skin skin;
+    private final Skin skin;
+    private final Music uiClicks;
     private AssetManager(){
         skin=new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
+        uiClicks=Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
+        uiClicks.setVolume(1f);
     }
     public static Skin getSkin(){
         return assetManager.skin;
@@ -28,17 +31,14 @@ public class AssetManager {
     public static TextFieldStyle getTextFieldStyle() {
         Skin skin = getSkin();
         TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20; // Adjust size as needed
         BitmapFont customFont = generator.generateFont(parameter);
         generator.dispose();
-
         textFieldStyle.font = customFont;
         textFieldStyle.fontColor = Color.BLACK;
         textFieldStyle.background = skin.getDrawable("textfield");
-
         return textFieldStyle;
     }
     public static TextureRegion[][] getAvatarTiles(){
@@ -64,6 +64,9 @@ public class AssetManager {
         return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));
     }
     public static Music getUiClickSound(){
-        return Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
+        return assetManager.uiClicks;
+    }
+    public static Music getDefaultMusic(){
+        return BackgroundMusic.PRETTY_DUNGEON.getMusic();
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
+import com.tilldawn.Models.Enums.BackgroundMusic;
 import com.tilldawn.Models.Enums.Weapon;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class User {
     private Character character;
     private Avatar avatar;
     private boolean stayLoggedIn;
+    private BackgroundMusic backgroundMusic=BackgroundMusic.PRETTY_DUNGEON;
 
     public User() {}
 
@@ -77,6 +79,12 @@ public class User {
     public void setStayLoggedIn(boolean stayLoggedIn) {
         this.stayLoggedIn = stayLoggedIn;
         saveUsers();
+    }
+    public BackgroundMusic getBackgroundMusic() {
+        return backgroundMusic;
+    }
+    public void setBackgroundMusic(BackgroundMusic backgroundMusic) {
+        this.backgroundMusic = backgroundMusic;
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;
