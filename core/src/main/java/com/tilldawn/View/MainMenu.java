@@ -33,6 +33,7 @@ public class MainMenu implements Screen {
     private Label username;
     private Animation<TextureRegion> walkAnimation;
     private float stateTime=0f;
+    private final Texture shanaPortrait=AssetManager.getShanaPortrait();
     public MainMenu(Game game) {
         this.game=game;
     }
@@ -48,17 +49,33 @@ public class MainMenu implements Screen {
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
+
+        // Draw background
         stage.getBatch().draw(background, 0, 0,
             stage.getViewport().getWorldWidth(),
             stage.getViewport().getWorldHeight());
+
+        // Update avatar frame
+        stateTime += delta;
+        TextureRegion avatarFrame = walkAnimation.getKeyFrame(stateTime, true);
+        stage.getBatch().draw(avatarFrame, 30, stage.getViewport().getWorldHeight() - Avatar.getHeight());
+
+        // Draw Shana floating
+        float yOffset = 300f + (float) Math.sin(stateTime * 2.5f) * 10f;
+        Texture shana = shanaPortrait;
+        float width = shana.getWidth() * 2.2f;
+        float height = shana.getHeight() * 2.2f;
+        stage.getBatch().draw(shana, 1920 - width, yOffset, width, height);
+
         stage.getBatch().end();
-        stage.act(v);
+
+        stage.act(delta);
         stage.draw();
-        controller.handleAvatarAnimation();
     }
+
 
     @Override
     public void resize(int i, int i1) {
@@ -88,7 +105,7 @@ public class MainMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.center().padTop(500).padRight(1250);
-        background = new Texture(Gdx.files.internal("images/backgrounds/registerBackground.png"));
+        background = AssetManager.getMainMenuBackground();
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);
         login = new TextButton("LOGIN", skin);
@@ -149,12 +166,6 @@ public class MainMenu implements Screen {
     }
     public void setAnimation(Animation<TextureRegion> walkAnimation) {
         this.walkAnimation = walkAnimation;
-    }
-    public float getStateTime(){
-        return stateTime;
-    }
-    public void setStateTime(float delta){
-        this.stateTime+=delta;
     }
     public TextButton getPreGame() {
         return preGame;

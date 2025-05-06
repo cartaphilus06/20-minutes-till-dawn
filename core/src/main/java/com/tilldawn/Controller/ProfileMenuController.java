@@ -29,12 +29,6 @@ public class ProfileMenuController {
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
-        view.getChangeAvatar().addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-            }
-        });
         view.getChangeUsername().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

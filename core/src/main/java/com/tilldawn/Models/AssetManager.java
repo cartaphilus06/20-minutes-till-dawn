@@ -50,4 +50,13 @@ public class AssetManager {
     public static Pixmap getCursorIcon(){
         return new Pixmap(Gdx.files.internal("images/Texture2D/T_Cursor.png"));
     }
+    public static Texture getMainMenuBackground(){
+        return new Texture(Gdx.files.internal("images/backgrounds/mainMenuBackground.png"));
+    }
+    public static Texture getMenusBackground(){
+        return new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
+    }
+    public static Texture getShanaPortrait(){
+        return new Texture(Gdx.files.internal("images/Texture2D/T_Shana_Portrait.png"));
+    }
 }
