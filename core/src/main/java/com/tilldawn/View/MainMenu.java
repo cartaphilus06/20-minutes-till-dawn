@@ -70,6 +70,12 @@ public class MainMenu implements Screen {
         float height = shana.getHeight() * 2.2f;
         stage.getBatch().draw(shana, 1920 - width, yOffset, width, height);
 
+        //Draw title
+        float titleYPosition=600f+(float)Math.sin(stateTime * 2.5f) * 10f;
+        float titleXPosition=100f+(float)Math.cos(stateTime * 2.5f) * 10f;
+        Texture title=AssetManager.get20minutesTillDawnLogo();
+        stage.getBatch().draw(title, titleXPosition, titleYPosition,title.getWidth()*1.5f, title.getHeight()*1.5f);
+
         stage.getBatch().end();
 
         stage.act(delta);

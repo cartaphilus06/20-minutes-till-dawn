@@ -59,4 +59,7 @@ public class AssetManager {
     public static Texture getShanaPortrait(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_Shana_Portrait.png"));
     }
+    public static Texture get20minutesTillDawnLogo(){
+        return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));
+    }
 }
