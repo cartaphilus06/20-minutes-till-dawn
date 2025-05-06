@@ -40,8 +40,17 @@ public class LoginMenuController {
             AlertGenerator.showAlert("Error!", "Provided password is wrong!", view.getStage());
             return;
         }
-
+        User lastUser =App.getCurrentUser();
+        if(lastUser!=null && lastUser.getUsername().equals(username)){
+            AlertGenerator.showAlert("","You are already logged in!",view.getStage());
+            return;
+        }
+        if(lastUser != null) {
+            lastUser.setStayLoggedIn(false);
+        }
+        user.setStayLoggedIn(true);
         App.setCurrentUser(user);
+
         AlertGenerator.showAlert("Success!", user.getUsername() + " successfully logged in!", view.getStage(), () -> {
             view.getGame().setScreen(new MainMenu(view.getGame()));
         });

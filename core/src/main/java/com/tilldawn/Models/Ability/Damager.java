@@ -1,5 +1,6 @@
 package com.tilldawn.Models.Ability;
 
+
 public class Damager implements Ability {
     @Override
     public int getHP() {

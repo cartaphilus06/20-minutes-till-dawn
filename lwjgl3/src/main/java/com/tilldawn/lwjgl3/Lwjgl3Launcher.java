@@ -1,5 +1,6 @@
 package com.tilldawn.lwjgl3;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.tilldawn.Main;
@@ -22,7 +23,7 @@ public class Lwjgl3Launcher {
         configuration.setWindowedMode(1920, 1080);
         configuration.setDecorated(false);
         configuration.setResizable(false);
-        configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+        configuration.setWindowIcon(Files.FileType.Internal, "images/Texture2D/icon.png");
         return configuration;
     }
 }

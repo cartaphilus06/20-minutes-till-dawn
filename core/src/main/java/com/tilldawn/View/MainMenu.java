@@ -27,6 +27,8 @@ public class MainMenu implements Screen {
     private TextButton settings;
     private TextButton profile;
     private TextButton scoreBoard;
+    private TextButton hints;
+    private TextButton preGame;
     private TextButton exit;
     private Label username;
     private Animation<TextureRegion> walkAnimation;
@@ -42,6 +44,7 @@ public class MainMenu implements Screen {
         controller.handleClickedButtons();
         controller.handleUsernameLabel();
         controller.handleAvatar();
+        controller.setCursor();
     }
 
     @Override
@@ -84,7 +87,7 @@ public class MainMenu implements Screen {
     public void setUpUI(){
         Table table = new Table();
         table.setFillParent(true);
-        table.center().padTop(350).padRight(1250);
+        table.center().padTop(500).padRight(1250);
         background = new Texture(Gdx.files.internal("images/backgrounds/registerBackground.png"));
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);
@@ -92,29 +95,32 @@ public class MainMenu implements Screen {
         settings = new TextButton("SETTINGS", skin);
         profile = new TextButton("PROFILE", skin);
         scoreBoard=new TextButton("SCORE BOARD", skin);
+        hints = new TextButton("HINTS", skin);
+        preGame=new TextButton("PRE-GAME", skin);
         exit = new TextButton("EXIT", skin);
         username=new Label("USERNAME: ", skin);
         username.setAlignment(Align.topLeft);
-        //avatar=AssetManager.getAvatar();
         float avatarImageYPosition=stage.getViewport().getWorldHeight()- Avatar.getHeight();
         float avatarImageXPosition=30;
-        //avatarImage.setPosition(avatarImageXPosition,avatarImageYPosition);
         username.setPosition(avatarImageXPosition,avatarImageYPosition-40);
         float buttonSpacing = 15f;
         table.add(register).padBottom(buttonSpacing).width(350).height(60);
         table.row();
         table.add(login).padBottom(buttonSpacing).width(350).height(60);
         table.row();
+        table.add(preGame).padBottom(buttonSpacing).width(350).height(60);
+        table.row();
         table.add(settings).padBottom(buttonSpacing).width(350).height(60);
         table.row();
         table.add(profile).padBottom(buttonSpacing).width(350).height(60);
         table.row();
-        table.add(scoreBoard).width(350).height(60);
+        table.add(scoreBoard).padBottom(buttonSpacing).width(350).height(60);
+        table.row();
+        table.add(hints).padBottom(buttonSpacing).width(350).height(60);
         table.row();
         table.add(exit).width(350).height(60);
         stage.addActor(table);
         stage.addActor(username);
-        //stage.addActor(avatarImage);
     }
 
     public TextButton getRegister() {
@@ -149,6 +155,12 @@ public class MainMenu implements Screen {
     }
     public void setStateTime(float delta){
         this.stateTime+=delta;
+    }
+    public TextButton getPreGame() {
+        return preGame;
+    }
+    public TextButton getHints() {
+        return hints;
     }
     public Game getGame() {
         return game;

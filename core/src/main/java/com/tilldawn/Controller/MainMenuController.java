@@ -1,6 +1,8 @@
 package com.tilldawn.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,8 +15,6 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.*;
-
-import java.awt.*;
 
 public class MainMenuController {
     private final MainMenu view;
@@ -74,14 +74,21 @@ public class MainMenuController {
         TextureRegion[][] tiles= AssetManager.getAvatarTiles();
         TextureRegion[] walkFrames=new TextureRegion[6];
         for(int i=0;i<6;i++) walkFrames[i]=tiles[0][i];
-        view.setAnimation(new Animation<>(0.1f, walkFrames));
+        view.setAnimation(new Animation<>(0.2f, walkFrames));
     }
     public void handleAvatarAnimation(){
+        if(App.getCurrentUser()==null) return;
         view.setStateTime(Gdx.graphics.getDeltaTime());
         TextureRegion currentFrame=view.getWalkAnimation().getKeyFrame(view.getStateTime(),true);
         Batch batch=view.getStage().getBatch();
         batch.begin();
         batch.draw(currentFrame,30,view.getStage().getViewport().getWorldHeight()- Avatar.getHeight());
         batch.end();
+    }
+    public void setCursor(){
+        Pixmap pixmap=AssetManager.getCursorIcon();
+        Cursor customCursor = Gdx.graphics.newCursor(pixmap, pixmap.getWidth()/2, pixmap.getHeight()/2);
+        Gdx.graphics.setCursor(customCursor);
+        pixmap.dispose();
     }
 }

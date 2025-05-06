@@ -1,5 +1,6 @@
 package com.tilldawn.Models.Ability;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = Amocrease.class, name = "Amocrease"),
     @JsonSubTypes.Type(value = DefaultAbility.class, name = "DefaultAbility"),
 })
+@JsonIgnoreProperties({"hp", "damage", "projectile", "reloadTime", "maxAmmo", "disappearingTime", "speed"})
 public interface Ability {
     int getHP();
     float getDamage(int damage);

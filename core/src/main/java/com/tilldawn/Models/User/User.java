@@ -2,6 +2,7 @@ package com.tilldawn.Models.User;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.Weapon;
 
@@ -16,6 +17,7 @@ public class User {
     private Question securityQuestion;
     private Character character;
     private Avatar avatar;
+    private boolean stayLoggedIn;
 
     public User() {}
 
@@ -66,6 +68,14 @@ public class User {
     }
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
+        saveUsers();
+    }
+    public boolean getStayLoggedIn() {
+        return stayLoggedIn;
+    }
+    public void setStayLoggedIn(boolean stayLoggedIn) {
+        this.stayLoggedIn = stayLoggedIn;
+        saveUsers();
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;
@@ -89,6 +99,9 @@ public class User {
             if (file.exists()) {
                 if(file.length()>0) {
                     allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
+                    for(User user : allUsers) {
+                        if(user.stayLoggedIn) App.setCurrentUser(user);
+                    }
                 }
                 else {
                     allUsers = new ArrayList<>();
@@ -110,7 +123,6 @@ public class User {
         }
         return null;
     }
-
     public static ArrayList<User> getAllUsers() {
         return new ArrayList<>(allUsers);
     }

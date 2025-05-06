@@ -2,6 +2,7 @@ package com.tilldawn.Models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -49,5 +50,8 @@ public class AssetManager {
             texture=new Texture(Gdx.files.internal(currentUser.getAvatar().getInternalPath()));
         }
         return TextureRegion.split(texture, Avatar.getWidth(), Avatar.getHeight());
+    }
+    public static Pixmap getCursorIcon(){
+        return new Pixmap(Gdx.files.internal("images/Texture2D/T_Cursor.png"));
     }
 }
