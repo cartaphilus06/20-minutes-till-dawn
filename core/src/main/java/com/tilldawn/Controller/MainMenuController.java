@@ -3,9 +3,7 @@ package com.tilldawn.Controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
-import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.*;
 
@@ -47,6 +44,9 @@ public class MainMenuController {
         view.getSettings().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(App.getCurrentUser()==null){
+                    AlertGenerator.showAlert("","Please login first!",view.getStage());
+                }
                 AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new Settings(view.getGame()));
             }
