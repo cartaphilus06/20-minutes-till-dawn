@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.tilldawn.Controller.LoginMenuController;
@@ -19,6 +21,10 @@ public class LoginMenu implements Screen {
     private TextField passwordField;
     private TextButton loginButton;
     private TextButton back;
+    private float stateTime=0f;
+    private final Texture title=AssetManager.get20minutesTillDawnLogo();
+    private final Animation<TextureRegion> rightEyesAnimation =new Animation<>(1,AssetManager.getMenusRightEyes());
+    private final Animation<TextureRegion> leftEyeAnimation =new Animation<>(1,AssetManager.getMenusLeftEyes());
     public LoginMenu(Game game) {
         this.game = game;
     }
@@ -31,14 +37,28 @@ public class LoginMenu implements Screen {
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0,
-            stage.getViewport().getWorldWidth(),
-            stage.getViewport().getWorldHeight());
+        stage.getBatch().draw(background, 0, 0, stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+        stateTime+=delta;
+        float titleYPosition=stage.getViewport().getWorldHeight()-title.getHeight()*1.7f+(float)Math.sin(stateTime*2.5f)*10f;
+        float titleXPosition=(stage.getViewport().getWorldWidth()-title.getWidth()*1.5f)/2+(float)Math.cos(stateTime*2.5f)*30f;
+        float upRightEyeYPosition=550f+(float)Math.sin(Math.PI*stateTime*0.5f)*30f;
+        float upRightEyeXPosition=1250f;
+        float downRightEyeYPosition=upRightEyeYPosition-200;
+        float downRightEyeXPosition=upRightEyeXPosition-30;
+        float upLeftEyeYPosition=upRightEyeYPosition;
+        float upLeftEyeXPosition=upRightEyeXPosition-770;
+        float downLeftEyeYPosition=downRightEyeYPosition;
+        float downLeftEyeXPosition=upLeftEyeXPosition+30;
+        stage.getBatch().draw(title, titleXPosition, titleYPosition,title.getWidth()*1.5f, title.getHeight()*1.5f);
+        stage.getBatch().draw(rightEyesAnimation.getKeyFrame(stateTime,true),upRightEyeXPosition,upRightEyeYPosition);
+        stage.getBatch().draw(rightEyesAnimation.getKeyFrame(stateTime,true),downRightEyeXPosition,downRightEyeYPosition);
+        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),upLeftEyeXPosition,upLeftEyeYPosition);
+        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),downLeftEyeXPosition,downLeftEyeYPosition);
         stage.getBatch().end();
-        stage.act(v);
+        stage.act(delta);
         stage.draw();
     }
 

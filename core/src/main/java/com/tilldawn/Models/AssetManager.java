@@ -63,6 +63,18 @@ public class AssetManager {
     public static Texture get20minutesTillDawnLogo(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));
     }
+    public static TextureRegion[] getMenusRightEyes(){
+        TextureRegion t1=new TextureRegion(new Texture(Gdx.files.internal("images/backgrounds/eyes/openRight.png")));
+        TextureRegion t2=new TextureRegion(new Texture(Gdx.files.internal("images/backgrounds/eyes/closeRight.png")));
+        return new TextureRegion[]{t1,t1,t1,t2};
+    }
+    public static TextureRegion[] getMenusLeftEyes(){
+        TextureRegion t1=new TextureRegion(new Texture(Gdx.files.internal("images/backgrounds/eyes/openRight.png")));
+        t1.flip(true, false);
+        TextureRegion t2=new TextureRegion(new Texture(Gdx.files.internal("images/backgrounds/eyes/closeRight.png")));
+        t2.flip(true, false);
+        return new TextureRegion[]{t1,t1,t1,t2};
+    }
     public static Music getUiClickSound(){
         return assetManager.uiClicks;
     }
