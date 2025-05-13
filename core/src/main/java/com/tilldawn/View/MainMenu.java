@@ -32,7 +32,7 @@ public class MainMenu implements Screen {
     private Label username;
     private Animation<TextureRegion> walkAnimation;
     private float stateTime=0f;
-    private final Texture[] portraits =AssetManager.getShanaPortrait();
+    private final Texture[] portraits =AssetManager.getHeroPortraits();
     private Image imagePortrait;
     public MainMenu(Game game) {
         this.game=game;

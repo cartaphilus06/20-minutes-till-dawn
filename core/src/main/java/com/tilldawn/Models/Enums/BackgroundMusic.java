@@ -8,7 +8,7 @@ public enum BackgroundMusic {
     RIVER("SFX/backgroundMusics/River.mp3","River"),
     WITHOUT_LOVE("SFX/backgroundMusics/Without Love.mp3","Without Love"),
     PARADOX("SFX/backgroundMusics/Paradox.mp3","Paradox"),
-    EMBER("SFX/backgroundMusics/Ember.mp3","Ember"),;
+    EMBER("SFX/backgroundMusics/Ember.mp3","Ember");
     private final String internalPath;
     private final Music music;
     private static float volume=1f;

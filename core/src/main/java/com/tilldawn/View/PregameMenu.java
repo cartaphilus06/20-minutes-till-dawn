@@ -5,17 +5,34 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.tilldawn.App;
 import com.tilldawn.Controller.PregameMenuController;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.Hero;
 
 public class PregameMenu implements Screen {
     private final PregameMenuController controller=new PregameMenuController(this);
     private final Game game;
     private Stage stage;
-    private Texture background;
+    private final Animation<TextureRegion>[] runFrames=new Animation[Hero.values().length];
+    private final Animation<TextureRegion>[] standFrames=new Animation[Hero.values().length];
+    private final Animation<TextureRegion>[] currentAnimations=new Animation[Hero.values().length];
+    private float stateTime=0;
+    private ImageButton[] heroButtons;
+    private TextButton back;
+    private final Texture[] portraits=AssetManager.getHeroPortraits();
+    private Texture currentPortrait;
 
     public PregameMenu(Game game) {
         this.game=game;
@@ -26,17 +43,26 @@ public class PregameMenu implements Screen {
         Gdx.input.setInputProcessor(stage);
         setUpUI();
         controller.handleClickedButtons();
+        controller.handleHoveredButtons();
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0.153f, 0.125f, 0.188f, 1); // Set background color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0,
-            stage.getViewport().getWorldWidth(),
-            stage.getViewport().getWorldHeight());
+        stateTime+=delta;
+        int index=0;
+        for(ImageButton heroButton:heroButtons){
+            TextureRegion currentFrame=currentAnimations[index++].getKeyFrame(stateTime,true);
+            float width=64;
+            float height=64;
+            stage.getBatch().draw(currentFrame,heroButton.getX()+(heroButton.getWidth()-width)/2,heroButton.getY()+(heroButton.getHeight()-height)/2,width,height);
+        }
+        float yOffSet=300f+(float)Math.sin(2.5f*stateTime)*10f;
+        stage.getBatch().draw(currentPortrait,stage.getViewport().getWorldWidth()-currentPortrait.getWidth()*2.2f-30,yOffSet,currentPortrait.getWidth()*2.2f,currentPortrait.getHeight()*2.2f);
         stage.getBatch().end();
-        stage.act(v);
+        stage.act(delta);
         stage.draw();
     }
 
@@ -51,10 +77,66 @@ public class PregameMenu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        background.dispose();
     }
     public void setUpUI(){
-        background=new Texture(Gdx.files.internal("images/backgrounds/registerBackground.png"));
         Skin skin= AssetManager.getSkin();
+        heroButtons=new ImageButton[Hero.values().length];
+        back=new TextButton("BACK", skin);
+        if(App.getCurrentUser().getCharacter().getHero()==null) currentPortrait=portraits[0];
+        for(int i=0;i<heroButtons.length;i++){
+            ImageButton.ImageButtonStyle style=new ImageButton.ImageButtonStyle();
+            Drawable imageUp=new TextureRegionDrawable(AssetManager.getSelectorBubbleDefault());
+            Drawable imageOver=new TextureRegionDrawable(AssetManager.getSelectorBubbleHover());
+            style.up=imageUp;
+            style.over=imageOver;
+            heroButtons[i]=new ImageButton(style);
+            if(App.getCurrentUser().getCharacter().getHero()!=null) {
+                if(Hero.values()[i].equals(App.getCurrentUser().getCharacter().getHero())){
+                    currentPortrait=portraits[i];
+                }
+            }
+        }
+        Table table=new Table();
+        table.setFillParent(true);
+        table.top().left().padTop(300).padLeft(100);
+        table.row();
+        for(ImageButton heroButton:heroButtons){
+            table.add(heroButton).width(120).height(120).pad(10);
+        }
+        table.row();
+        table.add(back).width(400).height(60).colspan(5).padTop(100);
+        for(int i=0;i<Hero.values().length;i++){
+            runFrames[i]=Hero.values()[i].getRunAnimation();
+            standFrames[i]=Hero.values()[i].getStandAnimation();
+            currentAnimations[i]=standFrames[i];
+        }
+        stage.addActor(table);
+    }
+    public Game getGame() {
+        return game;
+    }
+    public Stage getStage() {
+        return stage;
+    }
+    public Animation<TextureRegion>[] getRunFrames() {
+        return runFrames;
+    }
+    public Animation<TextureRegion>[] getStandFrames() {
+        return standFrames;
+    }
+    public ImageButton[] getHeroButtons() {
+        return heroButtons;
+    }
+    public Animation<TextureRegion>[] getCurrentAnimations() {
+        return currentAnimations;
+    }
+    public TextButton getBack() {
+        return back;
+    }
+    public Texture[] getPortraits() {
+        return portraits;
+    }
+    public void setCurrentPortrait(Texture portrait) {
+        this.currentPortrait=portrait;
     }
 }

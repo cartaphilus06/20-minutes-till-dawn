@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.BackgroundMusic;
+import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.User.User;
 
 public class AssetManager {
@@ -57,13 +58,12 @@ public class AssetManager {
     public static Texture getMenusBackground(){
         return new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
     }
-    public static Texture[] getShanaPortrait(){
-        return new Texture[]{new Texture(Gdx.files.internal("images/Texture2D/T_Shana_Portrait.png")),
-        new Texture(Gdx.files.internal("images/Texture2D/T_Abby_Portrait.png")),
-        new Texture(Gdx.files.internal("images/Texture2D/T_Dasher_Portrait.png")),
-        new Texture(Gdx.files.internal("images/Texture2D/T_Diamond_Portrait.png")),
-        new Texture(Gdx.files.internal("images/Texture2D/T_Hastur_Portrait.png")),
-        new Texture(Gdx.files.internal("images/Texture2D/T_Hina_Portrait.png"))};
+    public static Texture[] getHeroPortraits(){
+        Texture[] textures=new Texture[Hero.values().length];
+        for(int i=0;i<Hero.values().length;i++) {
+            textures[i]=Hero.values()[i].getHeroPortraitTexture();
+        }
+        return textures;
     }
     public static Texture get20minutesTillDawnLogo(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));
@@ -85,5 +85,11 @@ public class AssetManager {
     }
     public static Music getDefaultMusic(){
         return BackgroundMusic.PRETTY_DUNGEON.getMusic();
+    }
+    public static Texture getSelectorBubbleDefault(){
+        return new Texture(Gdx.files.internal("images/Sprite/T_SelectorBubble_0.png"));
+    }
+    public static Texture getSelectorBubbleHover(){
+        return new Texture(Gdx.files.internal("images/Sprite/T_SelectorBubble_1.png"));
     }
 }

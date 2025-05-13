@@ -74,6 +74,7 @@ public class MainMenuController {
         view.getPreGame().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                view.getGame().setScreen(new PregameMenu(view.getGame()));
             }
         });
         view.getPortraitImage().addListener(new ClickListener(){
