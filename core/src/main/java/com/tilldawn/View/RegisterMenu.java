@@ -99,15 +99,13 @@ public class RegisterMenu implements Screen {
         float upRightEyeXPosition=1250f;
         float downRightEyeYPosition=upRightEyeYPosition-200;
         float downRightEyeXPosition=upRightEyeXPosition-30;
-        float upLeftEyeYPosition=upRightEyeYPosition;
-        float upLeftEyeXPosition=upRightEyeXPosition-770;
-        float downLeftEyeYPosition=downRightEyeYPosition;
-        float downLeftEyeXPosition=upLeftEyeXPosition+30;
+        float upLeftEyeXPosition=stage.getViewport().getWorldWidth()-upRightEyeXPosition-AssetManager.getMenusLeftEyes()[0].getRegionWidth();
+        float downLeftEyeXPosition=stage.getViewport().getWorldWidth()-downRightEyeXPosition-AssetManager.getMenusLeftEyes()[0].getRegionWidth();
         stage.getBatch().draw(title, titleXPosition, titleYPosition,title.getWidth()*1.5f, title.getHeight()*1.5f);
         stage.getBatch().draw(rightEyesAnimation.getKeyFrame(stateTime,true),upRightEyeXPosition,upRightEyeYPosition);
         stage.getBatch().draw(rightEyesAnimation.getKeyFrame(stateTime,true),downRightEyeXPosition,downRightEyeYPosition);
-        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),upLeftEyeXPosition,upLeftEyeYPosition);
-        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),downLeftEyeXPosition,downLeftEyeYPosition);
+        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),upLeftEyeXPosition, upRightEyeYPosition);
+        stage.getBatch().draw(leftEyeAnimation.getKeyFrame(stateTime,true),downLeftEyeXPosition, downRightEyeYPosition);
         stage.getBatch().end();
 
         stage.act(delta);
