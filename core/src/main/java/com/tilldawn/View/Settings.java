@@ -2,14 +2,18 @@ package com.tilldawn.View;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.SettingsController;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.BackgroundMusic;
+import com.tilldawn.Models.User.User;
 
 
 public class Settings implements Screen {
@@ -22,6 +26,8 @@ public class Settings implements Screen {
     private final Label sfxVolumeLabel=new Label("",AssetManager.getSkin());
     private TextButton back;
     private SelectBox<String> musicPicker;
+    private Texture background;
+    private TextButton moveUp,moveDown,moveLeft,moveRight;
     public Settings(Game game) {
         this.game=game;
     }
@@ -32,6 +38,7 @@ public class Settings implements Screen {
         setUpUI();
         controller.handleMusicSlider();
         controller.handleClickedButtons();
+        controller.handleSelectBox();
     }
 
     @Override
@@ -40,6 +47,9 @@ public class Settings implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         musicVolumeLabel.setText("MUSIC: "+ (int) (App.getCurrentUser().getBackgroundMusic().getVolume() * 100));
         sfxVolumeLabel.setText("SFX: "+ (int) (AssetManager.getUiClickSound().getVolume() * 100));
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+        stage.getBatch().end();
         stage.act(delta);
         stage.draw();
     }
@@ -71,6 +81,16 @@ public class Settings implements Screen {
     public void setUpUI(){
         back=new TextButton("BACK",AssetManager.getSkin());
         Skin skin= AssetManager.getSkin();
+        User user=App.getCurrentUser();
+        moveUp=new TextButton("Move up key: "+ Input.Keys.toString(user.getMovingKeys().getMoveUp()),skin);
+        moveDown=new TextButton("Move down key: "+Input.Keys.toString(user.getMovingKeys().getMoveDown()),skin);
+        moveLeft=new TextButton("Move left key: "+Input.Keys.toString(user.getMovingKeys().getMoveLeft()),skin);
+        moveRight=new TextButton("Move right key: "+Input.Keys.toString(user.getMovingKeys().getMoveRight()),skin);
+        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
+        musicPicker=new SelectBox<>(skin);
+        String[] items= BackgroundMusic.getItems();
+        musicPicker.setItems(items);
+        musicPicker.setSelected(App.getCurrentUser().getBackgroundMusic().getDisplayName());
         Table table=new Table();
         table.setFillParent(true);
         table.top().pad(10);
@@ -85,7 +105,17 @@ public class Settings implements Screen {
         table.add(sfxVolumeLabel).width(150);
         table.add(sfxSlider).width(300);
         table.row();
-        table.add(back).width(300).height(60).colspan(2);
+        table.add(musicPicker).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(moveUp).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(moveDown).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(moveLeft).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(moveRight).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(back).width(300).height(60).colspan(2).padTop(10);
         stage.addActor(table);
     }
     public Slider getMusicSlider() {
@@ -102,5 +132,20 @@ public class Settings implements Screen {
     }
     public Game getGame() {
         return game;
+    }
+    public SelectBox<String> getMusicPicker() {
+        return musicPicker;
+    }
+    public TextButton getMoveUp(){
+        return moveUp;
+    }
+    public TextButton getMoveDown(){
+        return moveDown;
+    }
+    public TextButton getMoveLeft(){
+        return moveLeft;
+    }
+    public TextButton getMoveRight(){
+        return moveRight;
     }
 }

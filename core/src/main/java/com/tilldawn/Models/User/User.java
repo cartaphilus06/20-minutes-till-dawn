@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.BackgroundMusic;
-import com.tilldawn.Models.Enums.Weapon;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +20,7 @@ public class User {
     private Avatar avatar;
     private boolean stayLoggedIn;
     private BackgroundMusic backgroundMusic=BackgroundMusic.PRETTY_DUNGEON;
+    private MovingKeys movingKeys=new MovingKeys();
 
     public User() {}
 
@@ -85,6 +85,12 @@ public class User {
     }
     public void setBackgroundMusic(BackgroundMusic backgroundMusic) {
         this.backgroundMusic = backgroundMusic;
+    }
+    public MovingKeys getMovingKeys() {
+        return movingKeys;
+    }
+    public void setMovingKeys(MovingKeys movingKeys) {
+        this.movingKeys = movingKeys;
     }
     public static void saveUsers() {
         if(allUsers.isEmpty()) return;

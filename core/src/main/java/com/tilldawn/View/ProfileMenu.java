@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.tilldawn.Controller.ProfileMenuController;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Avatar;
-import com.tilldawn.Models.Enums.Hero;
 
 public class ProfileMenu implements Screen {
     private ProfileMenuController controller=new ProfileMenuController(this);
