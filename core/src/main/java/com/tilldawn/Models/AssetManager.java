@@ -57,8 +57,13 @@ public class AssetManager {
     public static Texture getMenusBackground(){
         return new Texture(Gdx.files.internal("images/backgrounds/menusBackground.png"));
     }
-    public static Texture getShanaPortrait(){
-        return new Texture(Gdx.files.internal("images/Texture2D/T_Shana_Portrait.png"));
+    public static Texture[] getShanaPortrait(){
+        return new Texture[]{new Texture(Gdx.files.internal("images/Texture2D/T_Shana_Portrait.png")),
+        new Texture(Gdx.files.internal("images/Texture2D/T_Abby_Portrait.png")),
+        new Texture(Gdx.files.internal("images/Texture2D/T_Dasher_Portrait.png")),
+        new Texture(Gdx.files.internal("images/Texture2D/T_Diamond_Portrait.png")),
+        new Texture(Gdx.files.internal("images/Texture2D/T_Hastur_Portrait.png")),
+        new Texture(Gdx.files.internal("images/Texture2D/T_Hina_Portrait.png"))};
     }
     public static Texture get20minutesTillDawnLogo(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_20Logo.png"));

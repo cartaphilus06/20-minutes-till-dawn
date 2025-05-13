@@ -10,6 +10,7 @@ public class Character {
     private Hero hero;
     private Weapon weapon;
     private Ability ability=new DefaultAbility();
+    private boolean autoReload=true;
     public Hero getHero() {
         return hero;
     }
@@ -27,6 +28,12 @@ public class Character {
     }
     public void setAbility(Ability ability) {
         this.ability = ability;
+    }
+    public boolean getAutoReload() {
+        return autoReload;
+    }
+    public void setAutoReload(boolean autoReload) {
+        this.autoReload = autoReload;
     }
     @JsonIgnore
     public int getHP(){

@@ -3,11 +3,13 @@ package com.tilldawn.Controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
@@ -16,6 +18,7 @@ import com.tilldawn.View.*;
 
 public class MainMenuController {
     private final MainMenu view;
+    private int currentPortraitIndex=0;
     public MainMenuController(MainMenu view) {
         this.view = view;
     }
@@ -71,6 +74,14 @@ public class MainMenuController {
         view.getPreGame().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+            }
+        });
+        view.getPortraitImage().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                Texture[] textures=view.getPortraits();
+                currentPortraitIndex++;
+                currentPortraitIndex%=textures.length;
+                view.getPortraitImage().setDrawable(new TextureRegionDrawable(new TextureRegion(textures[currentPortraitIndex])));
             }
         });
     }

@@ -28,6 +28,7 @@ public class Settings implements Screen {
     private SelectBox<String> musicPicker;
     private Texture background;
     private TextButton moveUp,moveDown,moveLeft,moveRight;
+    private TextButton autoReload;
     public Settings(Game game) {
         this.game=game;
     }
@@ -87,13 +88,14 @@ public class Settings implements Screen {
         moveLeft=new TextButton("Move left key: "+Input.Keys.toString(user.getMovingKeys().getMoveLeft()),skin);
         moveRight=new TextButton("Move right key: "+Input.Keys.toString(user.getMovingKeys().getMoveRight()),skin);
         background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
+        autoReload=new TextButton("Auto reload: "+(App.getCurrentUser().getCharacter().getAutoReload()?"On":"Off"),skin);
         musicPicker=new SelectBox<>(skin);
         String[] items= BackgroundMusic.getItems();
         musicPicker.setItems(items);
         musicPicker.setSelected(App.getCurrentUser().getBackgroundMusic().getDisplayName());
         Table table=new Table();
         table.setFillParent(true);
-        table.top().pad(10);
+        table.center().pad(10);
         sfxSlider=new Slider(0f,1f,0.01f,false,skin);
         sfxSlider.setValue(AssetManager.getUiClickSound().getVolume());
         musicSlider=new Slider(0f,1f,0.01f,false,skin);
@@ -114,6 +116,8 @@ public class Settings implements Screen {
         table.add(moveLeft).width(470).height(60).colspan(2).padTop(10);
         table.row();
         table.add(moveRight).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(autoReload).width(470).height(60).colspan(2).padTop(10);
         table.row();
         table.add(back).width(300).height(60).colspan(2).padTop(10);
         stage.addActor(table);
@@ -147,5 +151,8 @@ public class Settings implements Screen {
     }
     public TextButton getMoveRight(){
         return moveRight;
+    }
+    public TextButton getAutoReload(){
+        return autoReload;
     }
 }

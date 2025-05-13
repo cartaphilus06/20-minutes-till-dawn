@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
@@ -41,6 +42,15 @@ public class SettingsController {
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
+        view.getAutoReload().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                Character character=App.getCurrentUser().getCharacter();
+                character.setAutoReload(!character.getAutoReload());
+                view.getAutoReload().setText("Auto reload: "+(character.getAutoReload()?"On":"Off"));
+                User.saveUsers();
+            }
+        });
         view.getMoveUp().addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -48,6 +58,7 @@ public class SettingsController {
                 Gdx.input.setInputProcessor(new InputAdapter(){
                     @Override
                     public boolean keyDown(int keycode) {
+                        AssetManager.getUiClickSound().play();
                         user.getMovingKeys().setMoveUp(keycode);
                         view.getMoveUp().setText("Move up key: "+ Input.Keys.toString(keycode));
                         Gdx.input.setInputProcessor(view.getStage());
@@ -66,6 +77,7 @@ public class SettingsController {
                 Gdx.input.setInputProcessor(new InputAdapter(){
                     @Override
                     public boolean keyDown(int keycode) {
+                        AssetManager.getUiClickSound().play();
                         user.getMovingKeys().setMoveDown(keycode);
                         view.getMoveDown().setText("Move down key: "+ Input.Keys.toString(keycode));
                         Gdx.input.setInputProcessor(view.getStage());
@@ -84,6 +96,7 @@ public class SettingsController {
                 Gdx.input.setInputProcessor(new InputAdapter(){
                     @Override
                     public boolean keyDown(int keycode) {
+                        AssetManager.getUiClickSound().play();
                         user.getMovingKeys().setMoveLeft(keycode);
                         view.getMoveLeft().setText("Move left key: "+ Input.Keys.toString(keycode));
                         Gdx.input.setInputProcessor(view.getStage());
@@ -102,6 +115,7 @@ public class SettingsController {
                 Gdx.input.setInputProcessor(new InputAdapter(){
                     @Override
                     public boolean keyDown(int keycode) {
+                        AssetManager.getUiClickSound().play();
                         user.getMovingKeys().setMoveRight(keycode);
                         view.getMoveRight().setText("Move right key: "+ Input.Keys.toString(keycode));
                         Gdx.input.setInputProcessor(view.getStage());

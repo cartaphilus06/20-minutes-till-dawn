@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.Controller.MainMenuController;
-import com.tilldawn.Main;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Avatar;
 
@@ -33,7 +32,8 @@ public class MainMenu implements Screen {
     private Label username;
     private Animation<TextureRegion> walkAnimation;
     private float stateTime=0f;
-    private final Texture shanaPortrait=AssetManager.getShanaPortrait();
+    private final Texture[] portraits =AssetManager.getShanaPortrait();
+    private Image imagePortrait;
     public MainMenu(Game game) {
         this.game=game;
     }
@@ -64,11 +64,8 @@ public class MainMenu implements Screen {
         stage.getBatch().draw(avatarFrame, 30, stage.getViewport().getWorldHeight() - Avatar.getHeight());
 
         // Draw Shana floating
-        float yOffset = 300f + (float) Math.sin(stateTime * 2.5f) * 10f;
-        Texture shana = shanaPortrait;
-        float width = shana.getWidth() * 2.2f;
-        float height = shana.getHeight() * 2.2f;
-        stage.getBatch().draw(shana, 1920 - width, yOffset, width, height);
+        float yOffSet= 300f + (float)Math.sin(stateTime*2.5f)*10f;
+        imagePortrait.setY(yOffSet);
 
         //Draw title
         float titleYPosition=650f+(float)Math.sin(stateTime * 2.5f) * 10f;
@@ -112,6 +109,11 @@ public class MainMenu implements Screen {
         table.setFillParent(true);
         table.center().padTop(400).padRight(1250);
         background = AssetManager.getMainMenuBackground();
+        imagePortrait=new Image(new TextureRegionDrawable(new TextureRegion(portraits[0])));
+        float width=portraits[0].getWidth()*2.2f;
+        float height=portraits[0].getHeight()*2.2f;
+        imagePortrait.setSize(width,height);
+        imagePortrait.setPosition(stage.getViewport().getWorldWidth()-width,300f);
         Skin skin = AssetManager.getSkin();
         register = new TextButton("REGISTER", skin);
         login = new TextButton("LOGIN", skin);
@@ -144,6 +146,7 @@ public class MainMenu implements Screen {
         table.add(exit).width(350).height(60);
         stage.addActor(table);
         stage.addActor(username);
+        stage.addActor(imagePortrait);
     }
 
     public TextButton getRegister() {
@@ -184,5 +187,11 @@ public class MainMenu implements Screen {
     }
     public Stage getStage(){
         return stage;
+    }
+    public Texture[] getPortraits(){
+        return portraits;
+    }
+    public Image getPortraitImage(){
+        return imagePortrait;
     }
 }
