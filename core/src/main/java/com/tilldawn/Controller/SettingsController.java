@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.BackgroundMusic;
-import com.tilldawn.Models.User.Character;
+import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.Settings;

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.BackgroundMusic;
+import com.tilldawn.Models.Map.Character;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class User {
     private String username;
     private String password;
     private Question securityQuestion;
-    private Character character;
+    private com.tilldawn.Models.Map.Character character;
     private Avatar avatar;
     private boolean stayLoggedIn;
     private BackgroundMusic backgroundMusic=BackgroundMusic.PRETTY_DUNGEON;
@@ -28,6 +29,7 @@ public class User {
         this.username = username;
         this.password = password;
         avatar=Avatar.values()[(new Random()).nextInt(Avatar.values().length)];
+        character=new com.tilldawn.Models.Map.Character();
         allUsers.add(this);
         saveUsers();
     }
@@ -59,7 +61,7 @@ public class User {
         this.securityQuestion = securityQuestion;
         saveUsers();
     }
-    public Character getCharacter() {
+    public com.tilldawn.Models.Map.Character getCharacter() {
         return character;
     }
     public void setCharacter(Character character) {

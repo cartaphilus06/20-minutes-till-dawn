@@ -1,4 +1,4 @@
-package com.tilldawn.Models.User;
+package com.tilldawn.Models.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.Models.Ability.Ability;
@@ -6,11 +6,20 @@ import com.tilldawn.Models.Ability.DefaultAbility;
 import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.Enums.Weapon;
 
+import java.util.Random;
+
 public class Character {
     private Hero hero;
     private Weapon weapon;
     private Ability ability=new DefaultAbility();
+    private int score;
     private boolean autoReload=true;
+    public Character(){
+        Random rand = new Random();
+        hero=Hero.values()[rand.nextInt(Hero.values().length)];
+        weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
+        score=0;
+    }
     public Hero getHero() {
         return hero;
     }
@@ -34,6 +43,12 @@ public class Character {
     }
     public void setAutoReload(boolean autoReload) {
         this.autoReload = autoReload;
+    }
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
     }
     @JsonIgnore
     public int getHP(){
