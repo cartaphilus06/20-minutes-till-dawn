@@ -46,7 +46,7 @@ public class Settings implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        musicVolumeLabel.setText("MUSIC: "+ (int) (App.getCurrentUser().getBackgroundMusic().getVolume() * 100));
+        musicVolumeLabel.setText("MUSIC: "+ (int) (App.getMusicVolume() * 100));
         sfxVolumeLabel.setText("SFX: "+ (int) (AssetManager.getUiClickSound().getVolume() * 100));
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
@@ -99,7 +99,7 @@ public class Settings implements Screen {
         sfxSlider=new Slider(0f,1f,0.01f,false,skin);
         sfxSlider.setValue(AssetManager.getUiClickSound().getVolume());
         musicSlider=new Slider(0f,1f,0.01f,false,skin);
-        musicSlider.setValue(App.getCurrentUser().getBackgroundMusic().getVolume());
+        musicSlider.setValue(App.getMusicVolume());
         table.row();
         table.add(musicVolumeLabel).width(150);
         table.add(musicSlider).width(300);

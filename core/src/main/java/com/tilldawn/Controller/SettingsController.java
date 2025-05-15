@@ -136,6 +136,7 @@ public class SettingsController {
                 User currentUser=App.getCurrentUser();
                 currentUser.getBackgroundMusic().getMusic().stop();
                 currentUser.setBackgroundMusic(selectedMusic);
+                currentUser.getBackgroundMusic().setVolume(App.getMusicVolume());
                 currentUser.getBackgroundMusic().getMusic().play();
                 User.saveUsers();
             }

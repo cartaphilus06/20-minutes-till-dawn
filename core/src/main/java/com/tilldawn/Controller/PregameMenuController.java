@@ -27,8 +27,11 @@ public class PregameMenuController {
             int finalI = i;
             heroButton.addListener(new ClickListener(){
                 public void clicked(InputEvent event, float x, float y) {
+                    AssetManager.getUiClickSound().play();
                     App.getCurrentUser().getCharacter().setHero(Hero.values()[finalI]);
                     User.saveUsers();
+                    view.setSelectHero(false);
+                    view.setSelectWeaponUI();
                 }
             });
         }
@@ -36,6 +39,15 @@ public class PregameMenuController {
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new MainMenu(view.getGame()));
+            }
+        });
+    }
+    public void handleSelectWeaponButtons(){
+        view.getBackToSelectHero().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                view.setUpUI();
+                view.setSelectHero(true);
             }
         });
     }
