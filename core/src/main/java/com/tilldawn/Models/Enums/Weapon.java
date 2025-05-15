@@ -67,6 +67,10 @@ public enum Weapon{
         TextureRegion[] animations= Objects.requireNonNull(icons).toArray(new TextureRegion[0]);
         return new Animation<>(0.2f,animations);
     }
+    public Animation<TextureRegion> getDefaultAnimation(){
+        TextureRegion[] icon={tiles[0][0]};
+        return new Animation<>(0.3f,icon);
+    }
     public int getWidth(){
         return 16;
     }

@@ -27,6 +27,8 @@ public class PregameMenu implements Screen {
     private final Animation<TextureRegion>[] standFrames=new Animation[Hero.values().length];
     private final Animation<TextureRegion>[] currentAnimations=new Animation[Hero.values().length];
     private final Animation<TextureRegion>[] weaponAnimations=new Animation[Weapon.values().length];
+    private final Animation<TextureRegion>[] weaponDefaultAnimation=new Animation[Weapon.values().length];
+    private final Animation<TextureRegion>[] currentWeaponsAnimations=new Animation[Weapon.values().length];
     private float stateTime=0;
     private ImageButton[] heroButtons;
     private ImageButton[] weaponButtons;
@@ -95,7 +97,7 @@ public class PregameMenu implements Screen {
         }else{
             int index=0;
             for(ImageButton weaponButton:weaponButtons){
-                TextureRegion currentFrame = weaponAnimations[index++].getKeyFrame(stateTime, true);
+                TextureRegion currentFrame = currentWeaponsAnimations[index++].getKeyFrame(stateTime, true);
                 float width = 64;
                 float height = 64;
                 stage.getBatch().draw(currentFrame,weaponButton.getX()+(weaponButton.getWidth()-width)/2,weaponButton.getY()+(weaponButton.getHeight()-height)/2, width, height);
@@ -153,6 +155,8 @@ public class PregameMenu implements Screen {
         table.add(backToSelectHero).width(400).height(60).colspan(5).padTop(100);
         for(int i=0;i<Weapon.values().length;i++){
             weaponAnimations[i]=Weapon.values()[i].getAnimation();
+            weaponDefaultAnimation[i]=Weapon.values()[i].getDefaultAnimation();
+            currentWeaponsAnimations[i]=weaponDefaultAnimation[i];
         }
         stage.addActor(table);
         controller.handleSelectWeaponButtons();
@@ -189,5 +193,18 @@ public class PregameMenu implements Screen {
     }
     public void setSelectHero(boolean selectHero) {
         this.selectHero=selectHero;
+        stateTime=0;
+    }
+    public Animation<TextureRegion>[] getWeaponAnimations(){
+        return weaponAnimations;
+    }
+    public Animation<TextureRegion>[] getWeaponDefaultAnimation(){
+        return weaponDefaultAnimation;
+    }
+    public Animation<TextureRegion>[] getWeaponCurrentAnimation(){
+        return currentWeaponsAnimations;
+    }
+    public ImageButton[] getWeaponButtons(){
+        return weaponButtons;
     }
 }

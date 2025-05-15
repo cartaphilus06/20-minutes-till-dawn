@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Hero;
+import com.tilldawn.Models.Enums.Weapon;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.PregameMenu;
@@ -41,6 +43,18 @@ public class PregameMenuController {
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
+        ImageButton[] weaponButtons=view.getWeaponButtons();
+        for(int i=0;i<weaponButtons.length;i++){
+            ImageButton weaponButton=weaponButtons[i];
+            int finalI = i;
+            weaponButton.addListener(new ClickListener(){
+                public void clicked(InputEvent event, float x, float y) {
+                    AssetManager.getUiClickSound().play();
+                    App.getCurrentUser().getCharacter().setWeapon(Weapon.values()[finalI]);
+                    User.saveUsers();
+                }
+            });
+        }
     }
     public void handleSelectWeaponButtons(){
         view.getBackToSelectHero().addListener(new ClickListener(){
@@ -70,6 +84,22 @@ public class PregameMenuController {
                 @Override
                 public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     currentAnimations[finalI]=standAnimations[finalI];
+                }
+            });
+        }
+        ImageButton[] weaponButtons=view.getWeaponButtons();
+        Animation<TextureRegion>[] weaponAnimations=view.getWeaponAnimations();
+        Animation<TextureRegion>[] weaponDefaultAnimations=view.getWeaponDefaultAnimation();
+        Animation<TextureRegion>[] weaponCurrentAnimations=view.getWeaponCurrentAnimation();
+        for(int i=0;i<weaponButtons.length;i++){
+            ImageButton weaponButton=weaponButtons[i];
+            int finalI = i;
+            weaponButton.addListener(new InputListener(){
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    weaponCurrentAnimations[finalI]=weaponAnimations[finalI];
+                }
+                public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    weaponCurrentAnimations[finalI]=weaponDefaultAnimations[finalI];
                 }
             });
         }
