@@ -12,10 +12,10 @@ public class GameMenuController {
     public GameMenuController(GameMenu view) {
         this.view = view;
         characterController = new CharacterController(App.getCurrentUser().getCharacter(),App.getCurrentUser().getMovingKeys(),view);
-        mapController = new MapController(view);
+        mapController = new MapController(view,App.getCurrentUser().getCharacter());
     }
     public void update(){
-        characterController.update();
         mapController.update();
+        characterController.update();
     }
 }

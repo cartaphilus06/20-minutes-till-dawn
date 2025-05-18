@@ -1,6 +1,7 @@
 package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.Models.Map.Character;
@@ -23,8 +24,8 @@ public class CharacterController {
     }
     public void playAnimation(){
         Animation<TextureRegion> animation;
-        if(character.getIsIdle()) animation=view.getStandAnimation();
-        else if(character.getIsRunning()) animation=view.getRunAnimation();
+        if(character.isIdle()) animation=view.getStandAnimation();
+        else if(character.isRunning()) animation=view.getRunAnimation();
         else animation=view.getWalkAnimation();
         character.getSprite().setRegion(animation.getKeyFrame(character.getStateTime()));
         if(!animation.isAnimationFinished(character.getStateTime())){
@@ -36,6 +37,25 @@ public class CharacterController {
         animation.setPlayMode(Animation.PlayMode.LOOP);
     }
     public void handleInput(){
-
+        if(Gdx.input.isKeyPressed(movingKeys.getMoveUp())){
+            character.setY(character.getY()-character.getSpeed());
+            character.setIdle(false);
+        }
+        if(Gdx.input.isKeyPressed(movingKeys.getMoveDown())){
+            character.setY(character.getY()+character.getSpeed());
+            character.setIdle(false);
+        }
+        if(Gdx.input.isKeyPressed(movingKeys.getMoveRight())){
+            character.setX(character.getX()-character.getSpeed());
+            character.setIdle(false);
+        }
+        if(Gdx.input.isKeyPressed(movingKeys.getMoveLeft())){
+            character.setX(character.getX()+character.getSpeed());
+            character.getSprite().flip(true, false);
+            character.setIdle(false);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)){
+            character.setRunning(!character.isRunning());
+        }
     }
 }

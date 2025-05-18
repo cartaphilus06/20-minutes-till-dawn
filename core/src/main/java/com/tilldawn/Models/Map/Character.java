@@ -22,15 +22,18 @@ public class Character {
     private Sprite sprite;
     private boolean isIdle=true;
     private boolean isRunning=false;
+    private int x=0;
+    private int y=0;
     public Character(){
         Random rand = new Random();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
-        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth()*2)/2,
-            (Gdx.graphics.getHeight()-hero.getIconHeight()*2)/2,
-            hero.getIconWidth(),
-            hero.getIconHeight());
+        float coEfficient=2.5f;
+        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth()*coEfficient)/2,
+            (Gdx.graphics.getHeight()-hero.getIconHeight()*coEfficient)/2,
+            hero.getIconWidth()*coEfficient,
+            hero.getIconHeight()*coEfficient);
         setSprite();
     }
     public Hero getHero() {
@@ -69,16 +72,32 @@ public class Character {
     public void setCollisionRect(CollisionRect collisionRect) {
         this.collisionRect = collisionRect;
     }
-    public boolean getIsIdle() {
+    public int getX() {
+        return x;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+    @JsonIgnore
+    public boolean isIdle() {
         return isIdle;
     }
-    public void setIsIdle(boolean idle) {
+    @JsonIgnore
+    public void setIdle(boolean idle) {
         isIdle = idle;
     }
-    public boolean getIsRunning() {
+    @JsonIgnore
+    public boolean isRunning() {
         return isRunning;
     }
-    public void setIsRunning(boolean running) {
+    @JsonIgnore
+    public void setRunning(boolean running) {
         isRunning = running;
     }
     @JsonIgnore

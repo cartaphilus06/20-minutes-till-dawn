@@ -1,29 +1,29 @@
 package com.tilldawn.Models;
 
 public class CollisionRect {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    private float x;
+    private float y;
+    private float width;
+    private float height;
     public CollisionRect(){
 
     }
-    public CollisionRect(int x, int y, int width, int height) {
+    public CollisionRect(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    public int getX() {
+    public float getX() {
         return x;
     }
-    public int getY() {
+    public float getY() {
         return y;
     }
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
     public void setX(int x) {
