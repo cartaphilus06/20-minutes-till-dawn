@@ -17,6 +17,7 @@ public class CharacterController {
         this.view = view;
     }
     public void update(){
+        character.getSprite().draw(view.getStage().getBatch());
         playAnimation();
         handleInput();
     }

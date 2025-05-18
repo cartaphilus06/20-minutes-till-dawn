@@ -27,8 +27,8 @@ public class Character {
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
-        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth())/2,
-            (Gdx.graphics.getHeight()-hero.getIconHeight())/2,
+        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth()*2)/2,
+            (Gdx.graphics.getHeight()-hero.getIconHeight()*2)/2,
             hero.getIconWidth(),
             hero.getIconHeight());
         setSprite();

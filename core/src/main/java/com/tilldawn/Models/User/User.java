@@ -118,6 +118,7 @@ public class User {
                     allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
                     for(User user : allUsers) {
                         if(user.stayLoggedIn) App.setCurrentUser(user);
+                        user.getCharacter().setSprite();
                     }
                 }
                 else {
