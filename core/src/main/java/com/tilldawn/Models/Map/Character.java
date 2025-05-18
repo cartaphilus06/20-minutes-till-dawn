@@ -61,7 +61,12 @@ public class Character {
     public void setScore(int score) {
         this.score = score;
     }
-
+    public CollisionRect getCollisionRect() {
+        return collisionRect;
+    }
+    public void setCollisionRect(CollisionRect collisionRect) {
+        this.collisionRect = collisionRect;
+    }
     @JsonIgnore
     public Sprite getSprite() {
         return sprite;
