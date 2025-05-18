@@ -17,7 +17,7 @@ public class User {
     private String username;
     private String password;
     private Question securityQuestion;
-    private com.tilldawn.Models.Map.Character character;
+    private Character character;
     private Avatar avatar;
     private boolean stayLoggedIn;
     private BackgroundMusic backgroundMusic=BackgroundMusic.PRETTY_DUNGEON;
@@ -29,7 +29,7 @@ public class User {
         this.username = username;
         this.password = password;
         avatar=Avatar.values()[(new Random()).nextInt(Avatar.values().length)];
-        character=new com.tilldawn.Models.Map.Character();
+        character=new Character();
         allUsers.add(this);
         saveUsers();
     }
@@ -118,6 +118,7 @@ public class User {
                     allUsers = mapper.readValue(file, new TypeReference<ArrayList<User>>() {});
                     for(User user : allUsers) {
                         if(user.stayLoggedIn) App.setCurrentUser(user);
+                        user.getCharacter().setSprite();
                     }
                 }
                 else {
@@ -127,7 +128,6 @@ public class User {
                 System.out.println("Users file doesn't exist, starting with empty user list");
             }
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Failed to load users from JSON file");
             allUsers = new ArrayList<>();
         }

@@ -29,6 +29,7 @@ public class Character {
             (Gdx.graphics.getHeight()-hero.getIconHeight())/2,
             hero.getIconWidth(),
             hero.getIconHeight());
+        setSprite();
     }
     public Hero getHero() {
         return hero;
@@ -59,6 +60,17 @@ public class Character {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+
+    @JsonIgnore
+    public Sprite getSprite() {
+        return sprite;
+    }
+    @JsonIgnore
+    public void setSprite() {
+        sprite=new Sprite(hero.getTexture());
+        sprite.setPosition(collisionRect.getX(),collisionRect.getY());
+        sprite.setSize(collisionRect.getWidth(),collisionRect.getHeight());
     }
     @JsonIgnore
     private int getStateTime(){
