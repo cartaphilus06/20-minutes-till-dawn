@@ -8,8 +8,6 @@ import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.User.MovingKeys;
 import com.tilldawn.View.GameMenu;
 
-import java.awt.geom.AffineTransform;
-
 public class CharacterController {
     private final GameMenu view;
     private final Character character;

@@ -77,4 +77,7 @@ public enum Weapon{
     public int getHeight(){
         return 16;
     }
+    public TextureRegion getTexture(){
+        return tiles[0][0];
+    }
 }

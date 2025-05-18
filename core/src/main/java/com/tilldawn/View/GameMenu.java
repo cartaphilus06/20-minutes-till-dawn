@@ -68,6 +68,7 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        controller.getGunController().handleWeaponRotation(screenX, screenY);
         return false;
     }
 

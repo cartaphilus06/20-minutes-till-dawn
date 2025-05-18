@@ -6,7 +6,6 @@ import com.tilldawn.Models.Map.Character;
 import com.tilldawn.View.GameMenu;
 
 public class MapController {
-    private static MapController mapController;
     private final GameMenu view;
     private final CharacterController characterController;
     private final Character character;
@@ -23,7 +22,6 @@ public class MapController {
         character.setX((Gdx.graphics.getWidth()-character.getHeroWidth())/2);
         character.setY((Gdx.graphics.getHeight() - character.getHeroHeight())/2);
         setMinAndMax();
-        mapController = this;
     }
     public void update(){
         setBackgroundX(backgroundX-characterController.getDx());
@@ -36,18 +34,6 @@ public class MapController {
     }
     public void setBackgroundY(float y){
         backgroundY = y;
-    }
-    public static float getBackgroundX(){
-        return mapController.backgroundX;
-    }
-    public static float getBackgroundY(){
-        return mapController.backgroundY;
-    }
-    public static float getBackgroundWidth(){
-        return mapController.background.getWidth();
-    }
-    public static float getBackgroundHeight(){
-        return mapController.background.getHeight();
     }
     public void setMinAndMax(){
         characterController.setMinX(backgroundX-character.getHero().getIconWidth());
