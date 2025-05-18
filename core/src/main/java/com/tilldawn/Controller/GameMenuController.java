@@ -12,10 +12,14 @@ public class GameMenuController {
     public GameMenuController(GameMenu view) {
         this.view = view;
         characterController = new CharacterController(App.getCurrentUser().getCharacter(),App.getCurrentUser().getMovingKeys(),view);
-        mapController = new MapController(view,App.getCurrentUser().getCharacter());
+        mapController = new MapController(view,App.getCurrentUser().getCharacter(),characterController);
     }
     public void update(){
         mapController.update();
         characterController.update();
+    }
+    public void handleKeyUp(){
+        characterController.setDy(0);
+        characterController.setDx(0);
     }
 }

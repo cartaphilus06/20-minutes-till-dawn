@@ -21,19 +21,21 @@ public class Character {
     private CollisionRect collisionRect;
     private Sprite sprite;
     private boolean isIdle=true;
-    private boolean isRunning=false;
-    private int x=0;
-    private int y=0;
+    private boolean isRunning=true;
+    private float x=0;
+    private float y=0;
+    private float heroWidth;
+    private float heroHeight;
     public Character(){
         Random rand = new Random();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
-        float coEfficient=2.5f;
-        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth()*coEfficient)/2,
-            (Gdx.graphics.getHeight()-hero.getIconHeight()*coEfficient)/2,
-            hero.getIconWidth()*coEfficient,
-            hero.getIconHeight()*coEfficient);
+        setWidthAndHeight();
+        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-heroWidth)/2,
+            (Gdx.graphics.getHeight()-heroHeight)/2,
+            heroWidth,
+            heroHeight);
         setSprite();
     }
     public Hero getHero() {
@@ -72,17 +74,31 @@ public class Character {
     public void setCollisionRect(CollisionRect collisionRect) {
         this.collisionRect = collisionRect;
     }
-    public int getX() {
+    public float getX() {
         return x;
     }
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
-    public int getY() {
+    public float getY() {
         return y;
     }
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
+    }
+    @JsonIgnore
+    public void setWidthAndHeight() {
+        float coEfficient=2.5f;
+        heroHeight=coEfficient*hero.getIconHeight();
+        heroWidth=coEfficient*hero.getIconWidth();
+    }
+    @JsonIgnore
+    public float getHeroWidth(){
+        return heroWidth;
+    }
+    @JsonIgnore
+    public float getHeroHeight(){
+        return heroHeight;
     }
     @JsonIgnore
     public boolean isIdle() {

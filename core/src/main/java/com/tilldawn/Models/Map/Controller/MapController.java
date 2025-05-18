@@ -7,18 +7,30 @@ import com.tilldawn.View.GameMenu;
 
 public class MapController {
     private final GameMenu view;
+    private final CharacterController characterController;
     private final Character character;
     private final Texture background;
     private float backgroundX;
     private float backgroundY;
-    public MapController(GameMenu view,Character character) {
+    public MapController(GameMenu view,Character character,CharacterController characterController) {
         this.view = view;
         this.character = character;
+        this.characterController = characterController;
         this.background = new Texture(Gdx.files.internal("images/backgrounds/background.png"));
+        backgroundX= (float) (Gdx.graphics.getWidth() - background.getWidth()) /2;
+        backgroundY= (float) (Gdx.graphics.getHeight() - background.getHeight()) /2;
+        character.setX((Gdx.graphics.getWidth()-character.getHeroWidth())/2);
+        character.setY((Gdx.graphics.getHeight() - character.getHeroHeight())/2);
     }
     public void update(){
-        backgroundX = character.getX();
-        backgroundY = character.getY();
+        setBackgroundX(backgroundX-characterController.getDx());
+        setBackgroundY(backgroundY-characterController.getDy());
         view.getStage().getBatch().draw(background,backgroundX,backgroundY);
+    }
+    public void setBackgroundX(float x){
+        backgroundX = x;
+    }
+    public void setBackgroundY(float y){
+        backgroundY = y;
     }
 }

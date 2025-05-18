@@ -37,6 +37,7 @@ public class GameMenu implements Screen, InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         App.getCurrentUser().getCharacter().setIdle(true);
+        controller.handleKeyUp();
         return false;
     }
 

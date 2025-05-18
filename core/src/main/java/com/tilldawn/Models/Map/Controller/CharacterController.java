@@ -12,6 +12,8 @@ public class CharacterController {
     private final GameMenu view;
     private final Character character;
     private final MovingKeys movingKeys;
+    private float dx=0;
+    private float dy=0;
     public CharacterController(Character character, MovingKeys movingKeys, GameMenu view) {
         this.character = character;
         this.movingKeys = movingKeys;
@@ -36,26 +38,53 @@ public class CharacterController {
         }
         animation.setPlayMode(Animation.PlayMode.LOOP);
     }
-    public void handleInput(){
-        if(Gdx.input.isKeyPressed(movingKeys.getMoveUp())){
-            character.setY(character.getY()-character.getSpeed());
-            character.setIdle(false);
+    public void handleInput() {
+        dx = 0;
+        dy = 0;
+        boolean isMoving = false;
+
+        if (Gdx.input.isKeyPressed(movingKeys.getMoveUp())) {
+            dy += character.getSpeed();
+            isMoving = true;
         }
-        if(Gdx.input.isKeyPressed(movingKeys.getMoveDown())){
-            character.setY(character.getY()+character.getSpeed());
-            character.setIdle(false);
+        if (Gdx.input.isKeyPressed(movingKeys.getMoveDown())) {
+            dy -= character.getSpeed();
+            isMoving = true;
         }
-        if(Gdx.input.isKeyPressed(movingKeys.getMoveRight())){
-            character.setX(character.getX()-character.getSpeed());
-            character.setIdle(false);
+        if (Gdx.input.isKeyPressed(movingKeys.getMoveRight())) {
+            dx += character.getSpeed();
+            isMoving = true;
         }
-        if(Gdx.input.isKeyPressed(movingKeys.getMoveLeft())){
-            character.setX(character.getX()+character.getSpeed());
-            character.getSprite().flip(true, false);
-            character.setIdle(false);
+        if (Gdx.input.isKeyPressed(movingKeys.getMoveLeft())) {
+            dx -= character.getSpeed();
+            character.getSprite().flip(true, false); // Might need better flip logic
+            isMoving = true;
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)){
+
+        character.setIdle(!isMoving);
+
+        // Normalize diagonal speed to prevent faster movement when moving diagonally
+        if (dx != 0 && dy != 0) {
+            float norm = (float) Math.sqrt(dx * dx + dy * dy);
+            dx = (dx / norm) * character.getSpeed();
+            dy = (dy / norm) * character.getSpeed();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
             character.setRunning(!character.isRunning());
         }
+    }
+
+    public float getDx() {
+        return dx;
+    }
+    public void setDx(float dx) {
+        this.dx = dx;
+    }
+    public float getDy() {
+        return dy;
+    }
+    public void setDy(float dy) {
+        this.dy = dy;
     }
 }

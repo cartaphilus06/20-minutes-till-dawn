@@ -119,6 +119,7 @@ public class User {
                     for(User user : allUsers) {
                         if(user.stayLoggedIn) App.setCurrentUser(user);
                         user.getCharacter().setSprite();
+                        user.getCharacter().setWidthAndHeight();
                     }
                 }
                 else {
