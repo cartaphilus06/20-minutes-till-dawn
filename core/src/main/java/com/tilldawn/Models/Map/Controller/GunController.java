@@ -27,16 +27,14 @@ public class GunController {
         float originX = Gdx.graphics.getWidth()/2f - sprite.getX();
         float originY = Gdx.graphics.getHeight()/2f - sprite.getY();
         sprite.setOrigin(originX, originY);
-        Vector3 target = view.getStage().getCamera().unproject(new Vector3(x, y, 0));
+        //Vector3 target = view.getStage().getCamera().unproject(new Vector3(x, y, 0));
         float dx = x - Gdx.graphics.getWidth()/2f;
         float dy = y - Gdx.graphics.getHeight()/2f;
         float angle = -MathUtils.atan2(dy, dx) * MathUtils.radiansToDegrees;
         if (dx<0 && !sprite.isFlipY()) {
             sprite.flip(false, true);
-            character.getSprite().flip(false, true);
         } else if (dx>0 && sprite.isFlipY()) {
             sprite.flip(false, true);
-            character.getSprite().flip(true, false);
         }
         sprite.setRotation(angle);
     }

@@ -18,6 +18,7 @@ public class CharacterController {
     private float minY;
     private float maxX;
     private float maxY;
+    private boolean facingLeft=false;
     public CharacterController(Character character, MovingKeys movingKeys, GameMenu view) {
         this.character = character;
         this.movingKeys = movingKeys;
@@ -33,7 +34,13 @@ public class CharacterController {
         if(character.isIdle()) animation=view.getStandAnimation();
         else if(character.isRunning()) animation=view.getRunAnimation();
         else animation=view.getWalkAnimation();
-        character.getSprite().setRegion(animation.getKeyFrame(character.getStateTime()));
+        TextureRegion currentFrame=animation.getKeyFrame(character.getStateTime());
+        if (isFacingLeft() && !currentFrame.isFlipX()) {
+            currentFrame.flip(true, false);
+        } else if (!isFacingLeft() && currentFrame.isFlipX()) {
+            currentFrame.flip(true, false);
+        }
+        character.getSprite().setRegion(currentFrame);
         if(!animation.isAnimationFinished(character.getStateTime())){
             character.setStateTime(Gdx.graphics.getDeltaTime()+character.getStateTime());
         }
@@ -62,13 +69,14 @@ public class CharacterController {
             if(character.getX()+character.getSpeed()<getMaxX()) {
                 dx += character.getSpeed();
             }
+            setFacingLeft(false);
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveLeft())) {
             if(character.getX()-character.getSpeed()>getMinX()) {
                 dx -= character.getSpeed();
             }
-            character.getSprite().flip(true, false); // Might need better flip logic
+            setFacingLeft(true);
             isMoving = true;
         }
         character.setIdle(!isMoving);
@@ -117,5 +125,11 @@ public class CharacterController {
     }
     public void setMaxY(float maxY) {
         this.maxY = maxY;
+    }
+    public boolean isFacingLeft() {
+        return facingLeft;
+    }
+    public void setFacingLeft(boolean facingLeft) {
+        this.facingLeft = facingLeft;
     }
 }
