@@ -8,12 +8,18 @@ import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.User.MovingKeys;
 import com.tilldawn.View.GameMenu;
 
+import java.awt.geom.AffineTransform;
+
 public class CharacterController {
     private final GameMenu view;
     private final Character character;
     private final MovingKeys movingKeys;
     private float dx=0;
     private float dy=0;
+    private float minX;
+    private float minY;
+    private float maxX;
+    private float maxY;
     public CharacterController(Character character, MovingKeys movingKeys, GameMenu view) {
         this.character = character;
         this.movingKeys = movingKeys;
@@ -42,34 +48,37 @@ public class CharacterController {
         dx = 0;
         dy = 0;
         boolean isMoving = false;
-
         if (Gdx.input.isKeyPressed(movingKeys.getMoveUp())) {
-            dy += character.getSpeed();
+            if(character.getY()+character.getSpeed()<getMaxY()) {
+                dy += character.getSpeed();
+            }
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveDown())) {
-            dy -= character.getSpeed();
+            if(character.getY()-character.getSpeed()>getMinY()) {
+                dy -= character.getSpeed();
+            }
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveRight())) {
-            dx += character.getSpeed();
+            if(character.getX()+character.getSpeed()<getMaxX()) {
+                dx += character.getSpeed();
+            }
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveLeft())) {
-            dx -= character.getSpeed();
+            if(character.getX()-character.getSpeed()>getMinX()) {
+                dx -= character.getSpeed();
+            }
             character.getSprite().flip(true, false); // Might need better flip logic
             isMoving = true;
         }
-
         character.setIdle(!isMoving);
-
-        // Normalize diagonal speed to prevent faster movement when moving diagonally
         if (dx != 0 && dy != 0) {
             float norm = (float) Math.sqrt(dx * dx + dy * dy);
             dx = (dx / norm) * character.getSpeed();
             dy = (dy / norm) * character.getSpeed();
         }
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
             character.setRunning(!character.isRunning());
         }
@@ -86,5 +95,29 @@ public class CharacterController {
     }
     public void setDy(float dy) {
         this.dy = dy;
+    }
+    public float getMinX() {
+        return minX;
+    }
+    public void setMinX(float minX) {
+        this.minX = minX;
+    }
+    public float getMinY() {
+        return minY;
+    }
+    public void setMinY(float minY) {
+        this.minY = minY;
+    }
+    public float getMaxX() {
+        return maxX;
+    }
+    public void setMaxX(float maxX) {
+        this.maxX = maxX;
+    }
+    public float getMaxY() {
+        return maxY;
+    }
+    public void setMaxY(float maxY) {
+        this.maxY = maxY;
     }
 }
