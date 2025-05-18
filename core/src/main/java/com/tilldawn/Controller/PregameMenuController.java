@@ -14,6 +14,7 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.Enums.Weapon;
 import com.tilldawn.Models.User.User;
+import com.tilldawn.View.GameMenu;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.PregameMenu;
 
@@ -52,6 +53,7 @@ public class PregameMenuController {
                     AssetManager.getUiClickSound().play();
                     App.getCurrentUser().getCharacter().setWeapon(Weapon.values()[finalI]);
                     User.saveUsers();
+                    view.getGame().setScreen(new GameMenu(view.getGame()));
                 }
             });
         }

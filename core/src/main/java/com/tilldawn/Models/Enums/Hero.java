@@ -69,4 +69,7 @@ public enum Hero {
     public Texture getHeroPortraitTexture() {
         return new Texture(Gdx.files.internal(texturePortraitPath));
     }
+    public Texture getTexture(){
+        return iconsTiles[0][0].getTexture();
+    }
 }

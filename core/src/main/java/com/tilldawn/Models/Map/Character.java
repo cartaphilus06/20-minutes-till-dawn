@@ -1,8 +1,11 @@
 package com.tilldawn.Models.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.Models.Ability.Ability;
 import com.tilldawn.Models.Ability.DefaultAbility;
+import com.tilldawn.Models.CollisionRect;
 import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.Enums.Weapon;
 
@@ -13,12 +16,19 @@ public class Character {
     private Weapon weapon;
     private Ability ability=new DefaultAbility();
     private int score;
+    private int stateTime=0;
     private boolean autoReload=true;
+    private CollisionRect collisionRect;
+    private Sprite sprite;
     public Character(){
         Random rand = new Random();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
+        collisionRect=new CollisionRect((Gdx.graphics.getWidth()-hero.getIconWidth())/2,
+            (Gdx.graphics.getHeight()-hero.getIconHeight())/2,
+            hero.getIconWidth(),
+            hero.getIconHeight());
     }
     public Hero getHero() {
         return hero;
@@ -49,6 +59,14 @@ public class Character {
     }
     public void setScore(int score) {
         this.score = score;
+    }
+    @JsonIgnore
+    private int getStateTime(){
+        return stateTime;
+    }
+    @JsonIgnore
+    private void setStateTime(int stateTime){
+        this.stateTime=stateTime;
     }
     @JsonIgnore
     public int getHP(){
