@@ -5,14 +5,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.tilldawn.App;
+import com.tilldawn.Controller.GameMenuController;
+import com.tilldawn.Models.Map.Character;
 
 public class GameMenu implements Screen, InputProcessor {
+    private final GameMenuController controller;
     private final Game game;
     private Stage stage;
+    private final Animation<TextureRegion> walkAnimation;
+    private final Animation<TextureRegion> runAnimation;
+    private final Animation<TextureRegion> standAnimation;
     public GameMenu(Game game) {
         this.game = game;
+        controller = new GameMenuController(this);
+        Character character= App.getCurrentUser().getCharacter();
+        walkAnimation=character.getHero().getWalkAnimation();
+        runAnimation=character.getHero().getRunAnimation();
+        standAnimation=character.getHero().getStandAnimation();
     }
 
     @Override
@@ -71,6 +86,7 @@ public class GameMenu implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0.153f, 0.125f, 0.188f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getBatch().begin();
+        controller.update();
         stage.getBatch().end();
         stage.act(delta);
         stage.draw();
@@ -98,6 +114,21 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+    }
+    public Game getGame() {
+        return game;
+    }
+    public Stage getStage() {
+        return stage;
+    }
+    public Animation<TextureRegion> getWalkAnimation() {
+        return walkAnimation;
+    }
+    public Animation<TextureRegion> getRunAnimation() {
+        return runAnimation;
+    }
+    public Animation<TextureRegion> getStandAnimation() {
+        return standAnimation;
     }
 }

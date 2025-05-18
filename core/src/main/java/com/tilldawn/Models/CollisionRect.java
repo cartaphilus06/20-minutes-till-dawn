@@ -3,8 +3,11 @@ package com.tilldawn.Models;
 public class CollisionRect {
     private int x;
     private int y;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
+    public CollisionRect(){
+
+    }
     public CollisionRect(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
@@ -28,5 +31,11 @@ public class CollisionRect {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

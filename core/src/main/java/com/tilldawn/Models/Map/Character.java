@@ -16,10 +16,12 @@ public class Character {
     private Weapon weapon;
     private Ability ability=new DefaultAbility();
     private int score;
-    private int stateTime=0;
+    private float stateTime=0;
     private boolean autoReload=true;
     private CollisionRect collisionRect;
     private Sprite sprite;
+    private boolean isIdle=true;
+    private boolean isRunning=false;
     public Character(){
         Random rand = new Random();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
@@ -67,6 +69,18 @@ public class Character {
     public void setCollisionRect(CollisionRect collisionRect) {
         this.collisionRect = collisionRect;
     }
+    public boolean getIsIdle() {
+        return isIdle;
+    }
+    public void setIsIdle(boolean idle) {
+        isIdle = idle;
+    }
+    public boolean getIsRunning() {
+        return isRunning;
+    }
+    public void setIsRunning(boolean running) {
+        isRunning = running;
+    }
     @JsonIgnore
     public Sprite getSprite() {
         return sprite;
@@ -78,11 +92,11 @@ public class Character {
         sprite.setSize(collisionRect.getWidth(),collisionRect.getHeight());
     }
     @JsonIgnore
-    private int getStateTime(){
+    public float getStateTime(){
         return stateTime;
     }
     @JsonIgnore
-    private void setStateTime(int stateTime){
+    public void setStateTime(float stateTime){
         this.stateTime=stateTime;
     }
     @JsonIgnore
