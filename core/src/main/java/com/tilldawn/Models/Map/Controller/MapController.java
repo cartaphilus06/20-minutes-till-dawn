@@ -38,10 +38,17 @@ public class MapController {
     }
     public void drawHeart(Batch batch){
         Animation<TextureRegion> heartAnimation=AssetManager.getHeart().getAnimation();
+        TextureRegion deadHeart=AssetManager.getHeart().getTiles()[3];
+        int currentHp=character.getCurrentHp();
         for(int i=1;i<=character.getHP();i++){
-            float x=i*64;
-            float y=Gdx.graphics.getHeight()-character.getHeroHeight();
-            batch.draw(heartAnimation.getKeyFrame(stateTime,true),x,y);
+            float x = i * 64;
+            float y = Gdx.graphics.getHeight() - character.getHeroHeight();
+            if(i<=currentHp) {
+                TextureRegion currentFrame = heartAnimation.getKeyFrame(stateTime, true);
+                batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * 2, currentFrame.getRegionHeight() * 2);
+            }else{
+                batch.draw(deadHeart, x, y, deadHeart.getRegionWidth() * 2, deadHeart.getRegionHeight() * 2);
+            }
         }
     }
     public void setBackgroundX(float x){

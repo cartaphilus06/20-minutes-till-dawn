@@ -37,7 +37,7 @@ public class AssetManager {
         TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 20; // Adjust size as needed
+        parameter.size = 20;
         BitmapFont customFont = generator.generateFont(parameter);
         generator.dispose();
         textFieldStyle.font = customFont;

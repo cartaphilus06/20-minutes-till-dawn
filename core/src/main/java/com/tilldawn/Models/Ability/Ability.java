@@ -1,25 +1,19 @@
 package com.tilldawn.Models.Ability;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Vitality.class, name = "Vitality"),
-    @JsonSubTypes.Type(value = Damager.class, name = "Damager"),
-    @JsonSubTypes.Type(value = Speedy.class, name = "Speedy"),
-    @JsonSubTypes.Type(value = Procrease.class, name = "Procrease"),
-    @JsonSubTypes.Type(value = Amocrease.class, name = "Amocrease"),
-    @JsonSubTypes.Type(value = DefaultAbility.class, name = "DefaultAbility"),
+    @JsonSubTypes.Type(value = DefaultAbility.class),
+    @JsonSubTypes.Type(value = Damager.class),
+    @JsonSubTypes.Type(value = Speedy.class)
 })
-@JsonIgnoreProperties({"hp", "damage", "projectile", "reloadTime", "maxAmmo", "disappearingTime", "speed"})
 public interface Ability {
-    int getHP();
+    int getHP(int hp);
     float getDamage(int damage);
-    int getProjectile();
-    int getReloadTime();
-    int getMaxAmmo();
-    int getDisappearingTime();
+    int getProjectile(int projectile);
+    int getReloadTime(int reloadTime);
+    int getMaxAmmo(int maxAmmo);
     int getSpeed(int speed);
 }

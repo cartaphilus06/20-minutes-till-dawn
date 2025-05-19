@@ -1,38 +1,36 @@
 package com.tilldawn.Models.Ability;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DefaultAbility implements Ability {
     @Override
-    public int getHP() {
-        return 0;
+    public int getHP(int hp) {
+        return hp;
     }
 
     @Override
     public float getDamage(int damage) {
-        return 0;
+        return damage;
     }
 
     @Override
-    public int getProjectile() {
-        return 0;
+    public int getProjectile(int projectile) {
+        return projectile;
     }
 
     @Override
-    public int getReloadTime() {
-        return 0;
+    public int getReloadTime(int reloadTime) {
+        return reloadTime;
     }
 
     @Override
-    public int getMaxAmmo() {
-        return 0;
-    }
-
-    @Override
-    public int getDisappearingTime() {
-        return 0;
+    public int getMaxAmmo(int maxAmmo) {
+        return maxAmmo;
     }
 
     @Override
     public int getSpeed(int speed) {
-        return 0;
+        return speed;
     }
 }

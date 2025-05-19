@@ -1,39 +1,46 @@
 package com.tilldawn.Models.Ability;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Damager implements Ability {
+    private Ability ability;
+    public Damager(Ability ability) {
+        this.ability = ability;
+    }
     @Override
-    public int getHP() {
-        return 0;
+    public int getHP(int hp) {
+        return ability.getHP(hp);
     }
 
     @Override
     public float getDamage(int damage) {
-        return (float) damage /4;
+        return ability.getDamage(damage)*5/4;
     }
 
     @Override
-    public int getProjectile() {
-        return 0;
+    public int getProjectile(int projectile) {
+        return ability.getProjectile(projectile);
     }
 
     @Override
-    public int getReloadTime() {
-        return 0;
+    public int getReloadTime(int reloadTime) {
+        return ability.getReloadTime(reloadTime);
     }
 
     @Override
-    public int getMaxAmmo() {
-        return 0;
-    }
-
-    @Override
-    public int getDisappearingTime() {
-        return 10;
+    public int getMaxAmmo(int maxAmmo) {
+        return ability.getMaxAmmo(maxAmmo);
     }
 
     @Override
     public int getSpeed(int speed) {
-        return 0;
+        return ability.getSpeed(speed);
+    }
+    public Ability getAbility() {
+        return ability;
+    }
+    public void setAbility(Ability ability) {
+        this.ability = ability;
     }
 }

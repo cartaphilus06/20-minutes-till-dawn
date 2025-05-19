@@ -26,6 +26,7 @@ public class Character {
     private float y=0;
     private float heroWidth;
     private float heroHeight;
+    private int currentHp;
     public Character(){
         Random rand = new Random();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
@@ -36,7 +37,9 @@ public class Character {
             (Gdx.graphics.getHeight()-heroHeight)/2,
             heroWidth,
             heroHeight);
+        this.currentHp=getHP();
         setSprite();
+        //setCurrentHp(getHP());
     }
     public Hero getHero() {
         return hero;
@@ -85,6 +88,12 @@ public class Character {
     }
     public void setY(float y) {
         this.y = y;
+    }
+    public int getCurrentHp() {
+        return currentHp;
+    }
+    public void setCurrentHp(int currentHp) {
+        this.currentHp = currentHp;
     }
     @JsonIgnore
     public void setWidthAndHeight() {
@@ -136,23 +145,23 @@ public class Character {
     }
     @JsonIgnore
     public int getHP(){
-        return hero.getHp()+ability.getHP();
+        return ability.getHP(hero.getHp());
     }
     @JsonIgnore
     public float getDamage(){
-        return weapon.getDamage()+ability.getDamage(weapon.getDamage());
+        return ability.getDamage(weapon.getDamage());
     }
     @JsonIgnore
     public int getProjectile(){
-        return weapon.getProjectile()+ability.getProjectile();
+        return ability.getProjectile(weapon.getProjectile());
     }
     @JsonIgnore
     public int getReloadTime(){
-        return weapon.getReloadTime()+ability.getReloadTime();
+        return ability.getReloadTime(weapon.getReloadTime());
     }
     @JsonIgnore
     public int getMaxAmmo(){
-        return weapon.getMaxAmmo()+ability.getMaxAmmo();
+        return ability.getMaxAmmo(weapon.getMaxAmmo());
     }
     @JsonIgnore
     public int getSpeed(){
