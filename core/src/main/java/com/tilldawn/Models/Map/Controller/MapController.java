@@ -2,6 +2,10 @@ package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.View.GameMenu;
 
@@ -12,6 +16,7 @@ public class MapController {
     private final Texture background;
     private float backgroundX;
     private float backgroundY;
+    private float stateTime=0f;
     public MapController(GameMenu view,Character character,CharacterController characterController) {
         this.view = view;
         this.character = character;
@@ -28,6 +33,16 @@ public class MapController {
         setBackgroundY(backgroundY-characterController.getDy());
         setMinAndMax();
         view.getStage().getBatch().draw(background,backgroundX,backgroundY);
+        drawHeart(view.getStage().getBatch());
+        stateTime+=Gdx.graphics.getDeltaTime();
+    }
+    public void drawHeart(Batch batch){
+        Animation<TextureRegion> heartAnimation=AssetManager.getHeart().getAnimation();
+        for(int i=1;i<=character.getHP();i++){
+            float x=i*64;
+            float y=Gdx.graphics.getHeight()-character.getHeroHeight();
+            batch.draw(heartAnimation.getKeyFrame(stateTime,true),x,y);
+        }
     }
     public void setBackgroundX(float x){
         backgroundX = x;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -21,10 +22,12 @@ public class AssetManager {
     private final static AssetManager assetManager=new AssetManager();
     private final Skin skin;
     private final Music uiClicks;
+    private final AssetHelper heart=new AssetHelper(new Texture(Gdx.files.internal("images/Texture2D/T_HeartAnimation.png")),32,32,0.3f);
     private AssetManager(){
         skin=new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
         uiClicks=Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
         uiClicks.setVolume(1f);
+        heart.setAnimation();
     }
     public static Skin getSkin(){
         return assetManager.skin;
@@ -91,5 +94,8 @@ public class AssetManager {
     }
     public static Texture getSelectorBubbleHover(){
         return new Texture(Gdx.files.internal("images/Sprite/T_SelectorBubble_1.png"));
+    }
+    public static AssetHelper getHeart(){
+        return assetManager.heart;
     }
 }
