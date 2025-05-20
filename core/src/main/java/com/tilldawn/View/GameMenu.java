@@ -27,13 +27,13 @@ public class GameMenu implements Screen, InputProcessor {
     public GameMenu(Game game) {
         this.game = game;
         map=new Map(120);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         controller = new GameMenuController(this,map);
         Character character= App.getCurrentUser().getCharacter();
         walkAnimation=character.getHero().getWalkAnimation();
         runAnimation=character.getHero().getRunAnimation();
         standAnimation=character.getHero().getStandAnimation();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
@@ -92,8 +92,8 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        camera.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
         stage.getBatch().setProjectionMatrix(camera.combined);
         stage.getBatch().begin();
         controller.update();
@@ -101,6 +101,7 @@ public class GameMenu implements Screen, InputProcessor {
         stage.act(delta);
         stage.draw();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -140,5 +141,8 @@ public class GameMenu implements Screen, InputProcessor {
     }
     public Animation<TextureRegion> getStandAnimation() {
         return standAnimation;
+    }
+    public OrthographicCamera getCamera(){
+        return camera;
     }
 }

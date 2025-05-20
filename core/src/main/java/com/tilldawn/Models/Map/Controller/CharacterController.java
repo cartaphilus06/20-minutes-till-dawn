@@ -16,10 +16,6 @@ public class CharacterController {
     private final Map map;
     private float dx=0;
     private float dy=0;
-    private float minX;
-    private float minY;
-    private float maxX;
-    private float maxY;
     private boolean facingLeft=false;
     public CharacterController(Character character, MovingKeys movingKeys, GameMenu view,Map map) {
         this.character = character;
@@ -27,10 +23,11 @@ public class CharacterController {
         this.view = view;
         this.map = map;
     }
-    public void update(){
-        character.getSprite().draw(view.getStage().getBatch());
-        playAnimation();
+    public void update() {
         handleInput();
+        character.setX(character.getX() + dx);
+        character.setY(character.getY() + dy);
+        playAnimation();
     }
     public void playAnimation(){
         Animation<TextureRegion> animation;
@@ -57,28 +54,21 @@ public class CharacterController {
         dy = 0;
         boolean isMoving = false;
         if (Gdx.input.isKeyPressed(movingKeys.getMoveUp())) {
-            if(character.getY()+character.getSpeed()<getMaxY()) {
-                dy += character.getSpeed();
-            }
+            dy += character.getSpeed();
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveDown())) {
-            if(character.getY()-character.getSpeed()>getMinY()) {
-                dy -= character.getSpeed();
-            }
+            dy -= character.getSpeed();
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveRight())) {
-            if(character.getX()+character.getSpeed()<getMaxX()) {
-                dx += character.getSpeed();
-            }
+            dx += character.getSpeed();
             setFacingLeft(false);
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveLeft())) {
-            if(character.getX()-character.getSpeed()>getMinX()) {
-                dx -= character.getSpeed();
-            }
+            dx -= character.getSpeed();
+
             setFacingLeft(true);
             isMoving = true;
         }
@@ -91,43 +81,6 @@ public class CharacterController {
         if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
             character.setRunning(!character.isRunning());
         }
-    }
-
-    public float getDx() {
-        return dx;
-    }
-    public void setDx(float dx) {
-        this.dx = dx;
-    }
-    public float getDy() {
-        return dy;
-    }
-    public void setDy(float dy) {
-        this.dy = dy;
-    }
-    public float getMinX() {
-        return minX;
-    }
-    public void setMinX(float minX) {
-        this.minX = minX;
-    }
-    public float getMinY() {
-        return minY;
-    }
-    public void setMinY(float minY) {
-        this.minY = minY;
-    }
-    public float getMaxX() {
-        return maxX;
-    }
-    public void setMaxX(float maxX) {
-        this.maxX = maxX;
-    }
-    public float getMaxY() {
-        return maxY;
-    }
-    public void setMaxY(float maxY) {
-        this.maxY = maxY;
     }
     public boolean isFacingLeft() {
         return facingLeft;

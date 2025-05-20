@@ -20,4 +20,7 @@ public class Map {
     public void spawnMonsters() {
 
     }
+    public void dispose(){
+        background.dispose();
+    }
 }

@@ -23,24 +23,32 @@ public class GunController {
         this.gun=new Gun(character);
     }
     public void update(){
-        gun.getSprite().draw(view.getStage().getBatch());
+        Sprite sprite=gun.getSprite();
+        float x=character.getX();
+        float y=character.getY()-gun.getSprite().getHeight()/2;
+        sprite.setPosition(x, y);
+        sprite.draw(view.getStage().getBatch());
     }
-    public void handleWeaponRotation(int x, int y) {
+    public void handleWeaponRotation(int screenX, int screenY) {
+        Vector3 worldMouse = view.getCamera().unproject(new Vector3(screenX, screenY, 0));
+        Vector3 worldCenter = view.getCamera().unproject(new Vector3(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, 0));
+
         Sprite sprite = gun.getSprite();
-        float originX = Gdx.graphics.getWidth()/2f - sprite.getX();
-        float originY = Gdx.graphics.getHeight()/2f - sprite.getY();
-        sprite.setOrigin(originX, originY);
-        //Vector3 target = view.getStage().getCamera().unproject(new Vector3(x, y, 0));
-        float dx = x - Gdx.graphics.getWidth()/2f;
-        float dy = y - Gdx.graphics.getHeight()/2f;
-        float angle = -MathUtils.atan2(dy, dx) * MathUtils.radiansToDegrees;
-        if (dx<0 && !sprite.isFlipY()) {
-            sprite.flip(false, true);
-        } else if (dx>0 && sprite.isFlipY()) {
+
+        // Set the origin to the center of the screen in world coordinates
+        sprite.setOrigin(worldCenter.x - sprite.getX(), worldCenter.y - sprite.getY());
+
+        float dx = worldMouse.x - worldCenter.x;
+        float dy = worldMouse.y - worldCenter.y;
+
+        float angle = MathUtils.atan2(dy, dx) * MathUtils.radiansToDegrees;
+        sprite.setRotation(angle);
+
+        if(dx<0 ^ sprite.isFlipY()){
             sprite.flip(false, true);
         }
-        sprite.setRotation(angle);
     }
+
 
 
 }
