@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.GameMenuController;
 import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Map;
 
 public class GameMenu implements Screen, InputProcessor {
     private final GameMenuController controller;
@@ -20,9 +21,11 @@ public class GameMenu implements Screen, InputProcessor {
     private final Animation<TextureRegion> walkAnimation;
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> standAnimation;
+    private final Map map;
     public GameMenu(Game game) {
         this.game = game;
-        controller = new GameMenuController(this);
+        map=new Map(120);
+        controller = new GameMenuController(this,map);
         Character character= App.getCurrentUser().getCharacter();
         walkAnimation=character.getHero().getWalkAnimation();
         runAnimation=character.getHero().getRunAnimation();

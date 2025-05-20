@@ -7,21 +7,24 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
 
 public class MapController {
     private final GameMenu view;
     private final CharacterController characterController;
     private final Character character;
+    private final Map map;
     private final Texture background;
     private float backgroundX;
     private float backgroundY;
     private float stateTime=0f;
-    public MapController(GameMenu view,Character character,CharacterController characterController) {
+    public MapController(GameMenu view,Character character,CharacterController characterController,Map map) {
         this.view = view;
         this.character = character;
         this.characterController = characterController;
-        this.background = new Texture(Gdx.files.internal("images/backgrounds/background.png"));
+        this.map = map;
+        this.background = map.getBackground();
         backgroundX= (float) (Gdx.graphics.getWidth() - background.getWidth()) /2;
         backgroundY= (float) (Gdx.graphics.getHeight() - background.getHeight()) /2;
         character.setX((Gdx.graphics.getWidth()-character.getHeroWidth())/2);

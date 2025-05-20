@@ -15,4 +15,22 @@ public abstract class Monster {
     public int getHp(){
         return hp;
     }
+    public int getWorldX() {
+        return worldX;
+    }
+    public void setWorldX(int worldX) {
+        this.worldX = worldX;
+    }
+    public int getWorldY() {
+        return worldY;
+    }
+    public void setWorldY(int worldY) {
+        this.worldY = worldY;
+    }
+    protected void setInternalPath(String internalPath) {
+        this.internalPath = internalPath;
+    }
+    protected String getInternalPath() {
+        return internalPath;
+    }
 }

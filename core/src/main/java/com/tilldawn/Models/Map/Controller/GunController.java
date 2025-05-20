@@ -6,17 +6,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Gun;
+import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
 
 public class GunController {
     private final GameMenu view;
     private final Character character;
     private final CharacterController characterController;
+    private final Map map;
     private final Gun gun;
-    public GunController(GameMenu view, Character character, CharacterController characterController) {
+    public GunController(GameMenu view, Character character, CharacterController characterController,Map map) {
         this.view = view;
         this.character = character;
         this.characterController = characterController;
+        this.map = map;
         this.gun=new Gun(character);
     }
     public void update(){

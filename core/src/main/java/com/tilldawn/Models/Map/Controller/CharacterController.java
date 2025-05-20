@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.User.MovingKeys;
 import com.tilldawn.View.GameMenu;
 
@@ -12,6 +13,7 @@ public class CharacterController {
     private final GameMenu view;
     private final Character character;
     private final MovingKeys movingKeys;
+    private final Map map;
     private float dx=0;
     private float dy=0;
     private float minX;
@@ -19,10 +21,11 @@ public class CharacterController {
     private float maxX;
     private float maxY;
     private boolean facingLeft=false;
-    public CharacterController(Character character, MovingKeys movingKeys, GameMenu view) {
+    public CharacterController(Character character, MovingKeys movingKeys, GameMenu view,Map map) {
         this.character = character;
         this.movingKeys = movingKeys;
         this.view = view;
+        this.map = map;
     }
     public void update(){
         character.getSprite().draw(view.getStage().getBatch());
