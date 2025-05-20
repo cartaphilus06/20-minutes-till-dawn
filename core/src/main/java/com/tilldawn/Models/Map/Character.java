@@ -14,7 +14,7 @@ import java.util.Random;
 public class Character {
     private Hero hero;
     private Weapon weapon;
-    private Ability ability=new DefaultAbility();
+    private Ability ability;
     private int score;
     private float stateTime=0;
     private boolean autoReload=true;
@@ -29,6 +29,7 @@ public class Character {
     private int currentHp;
     public Character(){
         Random rand = new Random();
+        ability = new DefaultAbility();
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
@@ -37,15 +38,15 @@ public class Character {
             (Gdx.graphics.getHeight()-heroHeight)/2,
             heroWidth,
             heroHeight);
-        setCurrentHp(getHP());
-        System.out.println(getHP());
         setSprite();
+        setCurrentHp(getHP());
     }
     public Hero getHero() {
         return hero;
     }
     public void setHero(Hero hero) {
         this.hero = hero;
+        setCurrentHp(getHP());
     }
     public Weapon getWeapon(){
         return weapon;
