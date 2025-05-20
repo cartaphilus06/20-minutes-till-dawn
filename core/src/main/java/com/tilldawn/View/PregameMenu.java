@@ -37,6 +37,15 @@ public class PregameMenu implements Screen {
     private final Texture[] portraits=AssetManager.getHeroPortraits();
     private Texture currentPortrait;
     private boolean selectHero=true;
+    private Label heroName;
+    private Label heroHP;
+    private Label heroSpeed;
+    private Label weaponName;
+    private Label weaponDamage;
+    private Label weaponReloadTime;
+    private Label weaponProjectile;
+    private Label weaponAmmo;
+
 
     public PregameMenu(Game game) {
         this.game=game;
@@ -73,6 +82,15 @@ public class PregameMenu implements Screen {
             style.down=imageOver;
             weaponButtons[i]=new ImageButton(style);
         }
+        backToSelectHero=new TextButton("BACK",skin);
+        weaponName=new Label("", skin);
+        weaponAmmo=new Label("", skin);
+        weaponDamage=new Label("", skin);
+        weaponProjectile=new Label("", skin);
+        weaponReloadTime=new Label("", skin);
+        heroName = new Label("", skin);
+        heroHP = new Label("", skin);
+        heroSpeed = new Label("", skin);
         setUpUI();
         controller.handleClickedButtons();
         controller.handleHoveredButtons();
@@ -125,25 +143,48 @@ public class PregameMenu implements Screen {
     }
     public void setUpUI(){
         stage.clear();
-        Table table=new Table();
-        table.setFillParent(true);
-        table.top().left().padTop(300).padLeft(100);
-        table.row();
-        for(ImageButton heroButton:heroButtons){
-            table.add(heroButton).width(120).height(120).pad(10);
+        Table topLeftTable = new Table();
+        topLeftTable.top().left().padTop(20).padLeft(20);
+        topLeftTable.setFillParent(true);
+        topLeftTable.add(heroName).left().row();
+        topLeftTable.add(heroHP).left().row();
+        topLeftTable.add(heroSpeed).left().row();
+        stage.addActor(topLeftTable);
+
+        Table centerTable = new Table();
+        centerTable.setFillParent(true);
+        centerTable.top().left().padTop(300).padLeft(100);
+
+        for (ImageButton heroButton : heroButtons) {
+            centerTable.add(heroButton).width(120).height(120).pad(10);
         }
-        table.row();
-        table.add(back).width(400).height(60).colspan(5).padTop(100);
-        for(int i=0;i<Hero.values().length;i++){
-            runFrames[i]=Hero.values()[i].getRunAnimation();
-            standFrames[i]=Hero.values()[i].getStandAnimation();
-            currentAnimations[i]=standFrames[i];
+
+        centerTable.row();
+        centerTable.add(back).width(400).height(60).colspan(5).padTop(100);
+        stage.addActor(centerTable);
+
+        for (int i = 0; i < Hero.values().length; i++) {
+            runFrames[i] = Hero.values()[i].getRunAnimation();
+            standFrames[i] = Hero.values()[i].getStandAnimation();
+            currentAnimations[i] = standFrames[i];
         }
-        stage.addActor(table);
     }
+
     public void setSelectWeaponUI(){
         stage.clear();
-        backToSelectHero=new TextButton("BACK",AssetManager.getSkin());
+        Skin skin=AssetManager.getSkin();
+        Table topLeftTable = new Table();
+        topLeftTable.top().left().padTop(20).padLeft(20);
+        topLeftTable.setFillParent(true);
+        topLeftTable.add(weaponName).left().row();
+        topLeftTable.add(weaponDamage).left().row();
+        topLeftTable.add(weaponReloadTime).left().row();
+        topLeftTable.add(weaponProjectile).left().row();
+        topLeftTable.add(weaponAmmo).left().row();
+        stage.addActor(topLeftTable);
+
+        topLeftTable.add();
+
         Table table=new Table();
         table.setFillParent(true);
         table.top().left().padTop(300).padLeft(100);
@@ -206,5 +247,29 @@ public class PregameMenu implements Screen {
     }
     public ImageButton[] getWeaponButtons(){
         return weaponButtons;
+    }
+    public Label getHeroName(){
+        return heroName;
+    }
+    public Label getHeroHP(){
+        return heroHP;
+    }
+    public Label getHeroSpeed(){
+        return heroSpeed;
+    }
+    public Label getWeaponName(){
+        return weaponName;
+    }
+    public Label getWeaponDamage(){
+        return weaponDamage;
+    }
+    public Label getWeaponProjectile() {
+        return weaponProjectile;
+    }
+    public Label getWeaponAmmo() {
+        return weaponAmmo;
+    }
+    public Label getWeaponReloadTime() {
+        return weaponReloadTime;
     }
 }

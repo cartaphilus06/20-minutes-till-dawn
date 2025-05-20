@@ -81,11 +81,17 @@ public class PregameMenuController {
                     currentAnimations[finalI]=runAnimations[finalI];
                     Texture[] portraits=view.getPortraits();
                     view.setCurrentPortrait(portraits[finalI]);
+                    view.getHeroName().setText("NAME: "+Hero.values()[finalI].name().toUpperCase());
+                    view.getHeroHP().setText("HP: "+Hero.values()[finalI].getHp());
+                    view.getHeroSpeed().setText("SPEED: "+Hero.values()[finalI].getSpeed());
                 }
 
                 @Override
                 public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     currentAnimations[finalI]=standAnimations[finalI];
+                    view.getHeroName().setText("");
+                    view.getHeroHP().setText("");
+                    view.getHeroSpeed().setText("");
                 }
             });
         }
@@ -99,9 +105,19 @@ public class PregameMenuController {
             weaponButton.addListener(new InputListener(){
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     weaponCurrentAnimations[finalI]=weaponAnimations[finalI];
+                    view.getWeaponName().setText("NAME: "+Weapon.values()[finalI].name().toUpperCase());
+                    view.getWeaponDamage().setText("DAMAGE: "+Weapon.values()[finalI].getDamage());
+                    view.getWeaponAmmo().setText("AMMO: "+Weapon.values()[finalI].getMaxAmmo());
+                    view.getWeaponProjectile().setText("PROJECTILE: "+Weapon.values()[finalI].getProjectile());
+                    view.getWeaponReloadTime().setText("RELOAD TIME: "+Weapon.values()[finalI].getReloadTime());
                 }
                 public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                     weaponCurrentAnimations[finalI]=weaponDefaultAnimations[finalI];
+                    view.getWeaponName().setText("");
+                    view.getWeaponDamage().setText("");
+                    view.getWeaponAmmo().setText("");
+                    view.getWeaponProjectile().setText("");
+                    view.getWeaponReloadTime().setText("");
                 }
             });
         }

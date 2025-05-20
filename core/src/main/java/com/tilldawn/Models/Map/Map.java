@@ -17,4 +17,7 @@ public class Map {
     public Texture getBackground() {
         return background;
     }
+    public void spawnMonsters() {
+
+    }
 }
