@@ -202,6 +202,9 @@ public class PregameMenu implements Screen {
         stage.addActor(table);
         controller.handleSelectWeaponButtons();
     }
+    public void setSelectTimeUI(){
+        stage.clear();
+    }
     public Game getGame() {
         return game;
     }

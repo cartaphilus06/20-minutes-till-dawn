@@ -35,4 +35,7 @@ public class GameMenuController {
     public GunController getGunController(){
         return gunController;
     }
+    public void dispose(){
+
+    }
 }
