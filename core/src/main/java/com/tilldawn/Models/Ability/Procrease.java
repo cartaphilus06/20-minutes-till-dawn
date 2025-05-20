@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Procrease implements Ability{
     private Ability ability;
+    public Procrease() {}
     public Procrease(Ability ability) {
         this.ability = ability;
     }

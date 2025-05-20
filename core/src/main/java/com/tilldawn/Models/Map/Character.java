@@ -37,9 +37,9 @@ public class Character {
             (Gdx.graphics.getHeight()-heroHeight)/2,
             heroWidth,
             heroHeight);
-        this.currentHp=getHP();
+        setCurrentHp(getHP());
+        System.out.println(getHP());
         setSprite();
-        //setCurrentHp(getHP());
     }
     public Hero getHero() {
         return hero;
@@ -94,6 +94,10 @@ public class Character {
     }
     public void setCurrentHp(int currentHp) {
         this.currentHp = currentHp;
+    }
+    @JsonIgnore
+    public void addAbility(Ability ability){
+        this.ability=ability;
     }
     @JsonIgnore
     public void setWidthAndHeight() {
@@ -169,6 +173,6 @@ public class Character {
     }
     @JsonIgnore
     public int getDisappearingTime(){
-        return ability.getDisappearingTime();
+        return 0;
     }
 }

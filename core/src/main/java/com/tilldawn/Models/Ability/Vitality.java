@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vitality implements Ability {
     private Ability ability;
+    public Vitality() {}
     public Vitality(Ability ability) {
         this.ability = ability;
     }

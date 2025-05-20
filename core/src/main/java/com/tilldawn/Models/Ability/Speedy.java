@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Speedy implements Ability {
     private Ability ability;
+    public Speedy() {}
     public Speedy(Ability ability) {
         this.ability = ability;
     }

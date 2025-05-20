@@ -48,7 +48,8 @@ public class MainMenuController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(App.getCurrentUser()==null){
-                    AlertGenerator.showAlert("","Please login first!",view.getStage());
+                    AlertGenerator.showAlert("","you haven't logged in yet!",view.getStage());
+                    return;
                 }
                 AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new Settings(view.getGame()));
@@ -74,6 +75,10 @@ public class MainMenuController {
         view.getPreGame().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                if(App.getCurrentUser()==null){
+                    AlertGenerator.showAlert("","you haven't logged in yet!",view.getStage());
+                    return;
+                }
                 view.getGame().setScreen(new PregameMenu(view.getGame()));
             }
         });
