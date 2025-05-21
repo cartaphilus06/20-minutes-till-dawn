@@ -98,6 +98,7 @@ public class GameMenu implements Screen, InputProcessor {
         stage.getBatch().begin();
         controller.update();
         stage.getBatch().end();
+        
         stage.act(delta);
         stage.draw();
     }

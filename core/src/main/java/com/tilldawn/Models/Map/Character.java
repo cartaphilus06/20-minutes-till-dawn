@@ -27,6 +27,8 @@ public class Character {
     private float heroWidth;
     private float heroHeight;
     private int currentHp;
+    private int level;
+    private float currentExp;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -40,6 +42,8 @@ public class Character {
             heroHeight);
         setSprite();
         setCurrentHp(getHP());
+        setLevel(1);
+        setCurrentExp(0);
     }
     public Hero getHero() {
         return hero;
@@ -96,9 +100,21 @@ public class Character {
     public void setCurrentHp(int currentHp) {
         this.currentHp = currentHp;
     }
+    public int getLevel() {
+        return level;
+    }
+    public void setLevel(int level) {
+        this.level = level;
+    }
+    public float getCurrentExp() {
+        return currentExp;
+    }
+    public void setCurrentExp(float currentExp) {
+        this.currentExp = currentExp;
+    }
     @JsonIgnore
-    public void addAbility(Ability ability){
-        this.ability=ability;
+    public float getExpPerLevel(){
+        return getLevel()*20;
     }
     @JsonIgnore
     public void setWidthAndHeight() {
