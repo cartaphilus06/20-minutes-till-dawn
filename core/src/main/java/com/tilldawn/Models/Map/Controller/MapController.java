@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
@@ -23,6 +25,7 @@ public class MapController {
     private float stateTime = 0f;
     private final OrthographicCamera camera;
     private Texture pixel;
+    private BitmapFont level;
 
     public MapController(GameMenu view, Character character, CharacterController characterController, Map map) {
         this.view = view;
@@ -34,6 +37,7 @@ public class MapController {
 
         character.setX((background.getWidth()-character.getHeroWidth()) / 2f);
         character.setY((background.getHeight()-character.getHeroHeight()) / 2f);
+        setLevel();
         setPixel();
     }
 
@@ -54,6 +58,7 @@ public class MapController {
 
         drawHeart(batch);
         drawExpBar(batch);
+        addLevel(batch);
 
         stateTime += Gdx.graphics.getDeltaTime();
     }
@@ -85,6 +90,12 @@ public class MapController {
         batch.setColor(Color.WHITE);
     }
 
+    public void addLevel(Batch batch) {
+        float x=camera.position.x-getLevelSize()-60;
+        float y=camera.position.y+camera.viewportHeight / 2f - 15;
+        level.draw(batch,"LEVEL: "+character.getLevel(),x,y);
+    }
+
     public float getBarWidth(){
         return Gdx.graphics.getWidth();
     }
@@ -99,6 +110,18 @@ public class MapController {
         pixmap.fill();
         pixel = new Texture(pixmap);
         pixmap.dispose();
+    }
+    public void setLevel(){
+        level=new BitmapFont();
+        level.setColor(Color.WHITE);
+        FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size=getLevelSize();
+        level=generator.generateFont(parameter);
+        generator.dispose();
+    }
+    public int getLevelSize(){
+        return 32;
     }
     public void dispose() {
         background.dispose();

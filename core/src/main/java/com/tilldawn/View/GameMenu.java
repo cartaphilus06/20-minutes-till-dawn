@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.GameMenuController;
@@ -98,7 +99,7 @@ public class GameMenu implements Screen, InputProcessor {
         stage.getBatch().begin();
         controller.update();
         stage.getBatch().end();
-        
+
         stage.act(delta);
         stage.draw();
     }
