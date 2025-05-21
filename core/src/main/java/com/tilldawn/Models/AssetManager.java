@@ -98,4 +98,10 @@ public class AssetManager {
     public static AssetHelper getHeart(){
         return assetManager.heart;
     }
+    public static Texture getAmmoIcon(){
+        return new Texture(Gdx.files.internal("images/Texture2D/T_AmmoIcon.png"));
+    }
+    public static Texture getBulletTexture(){
+        return new Texture(Gdx.files.internal("images/Texture2D/EyeMonsterProjecitle.png"));
+    }
 }

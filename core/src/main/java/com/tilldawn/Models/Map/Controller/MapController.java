@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
@@ -26,6 +25,8 @@ public class MapController {
     private final OrthographicCamera camera;
     private Texture pixel;
     private BitmapFont level;
+    private final Texture ammoIcon;
+    private BitmapFont ammo;
 
     public MapController(GameMenu view, Character character, CharacterController characterController, Map map) {
         this.view = view;
@@ -34,10 +35,12 @@ public class MapController {
         this.map = map;
         this.background = map.getBackground();
         this.camera = view.getCamera();
+        this.ammoIcon = AssetManager.getAmmoIcon();
 
         character.setX((background.getWidth()-character.getHeroWidth()) / 2f);
         character.setY((background.getHeight()-character.getHeroHeight()) / 2f);
         setLevel();
+        setAmmo();
         setPixel();
     }
 
@@ -59,6 +62,7 @@ public class MapController {
         drawHeart(batch);
         drawExpBar(batch);
         addLevel(batch);
+        drawAmmo(batch);
 
         stateTime += Gdx.graphics.getDeltaTime();
     }
@@ -90,6 +94,16 @@ public class MapController {
         batch.setColor(Color.WHITE);
     }
 
+    public void drawAmmo(Batch batch) {
+        float width=ammoIcon.getWidth()*2f;
+        float height=ammoIcon.getHeight()*2f;
+        float x=camera.position.x - camera.viewportWidth / 2 + 32;
+        float y=camera.position.y + camera.viewportHeight / 2f - 64 - getBarHeight() - height - 10;
+        batch.draw(ammoIcon, x, y, width, height);
+        float numberX=x+width;
+        ammo.draw(batch,String.valueOf(character.getWeapon().getMaxAmmo()),numberX,y+40);
+    }
+
     public void addLevel(Batch batch) {
         float x=camera.position.x-getLevelSize()-60;
         float y=camera.position.y+camera.viewportHeight / 2f - 15;
@@ -112,12 +126,17 @@ public class MapController {
         pixmap.dispose();
     }
     public void setLevel(){
-        level=new BitmapFont();
-        level.setColor(Color.WHITE);
         FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size=getLevelSize();
         level=generator.generateFont(parameter);
+        generator.dispose();
+    }
+    public void setAmmo(){
+        FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size=getLevelSize();
+        ammo=generator.generateFont(parameter);
         generator.dispose();
     }
     public int getLevelSize(){

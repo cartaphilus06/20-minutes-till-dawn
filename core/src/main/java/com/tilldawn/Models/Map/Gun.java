@@ -1,8 +1,6 @@
 package com.tilldawn.Models.Map;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.tilldawn.App;
-import com.tilldawn.Models.CollisionRect;
 
 public class Gun {
     private final Sprite sprite;

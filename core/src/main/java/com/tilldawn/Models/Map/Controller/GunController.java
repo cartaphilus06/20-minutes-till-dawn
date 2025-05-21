@@ -48,7 +48,7 @@ public class GunController {
             sprite.flip(false, true);
         }
     }
-
-
-
+    public Gun getGun(){
+        return gun;
+    }
 }

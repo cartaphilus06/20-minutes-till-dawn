@@ -2,10 +2,7 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.tilldawn.App;
-import com.tilldawn.Models.Map.Controller.CharacterController;
-import com.tilldawn.Models.Map.Controller.GunController;
-import com.tilldawn.Models.Map.Controller.MapController;
-import com.tilldawn.Models.Map.Controller.MonsterController;
+import com.tilldawn.Models.Map.Controller.*;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
 
@@ -15,6 +12,7 @@ public class GameMenuController {
     private final MapController mapController;
     private final GunController gunController;
     private final MonsterController monsterController;
+    private final BulletController bulletController;
     private final Map map;
     private final OrthographicCamera camera;
     public GameMenuController(GameMenu view,Map map) {
@@ -25,12 +23,15 @@ public class GameMenuController {
         mapController = new MapController(view,App.getCurrentUser().getCharacter(),characterController,map);
         gunController = new GunController(view,App.getCurrentUser().getCharacter(),characterController,map);
         monsterController = new MonsterController(view,map,App.getCurrentUser().getCharacter());
+        bulletController = new BulletController(view,gunController);
     }
     public void update(){
         mapController.update();
         characterController.update();
         gunController.update();
         monsterController.update();
+        gunController.update();
+        bulletController.update();
     }
     public void handleKeyUp(){
 
