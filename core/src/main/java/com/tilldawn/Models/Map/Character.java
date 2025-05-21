@@ -185,8 +185,9 @@ public class Character {
         return ability.getMaxAmmo(weapon.getMaxAmmo());
     }
     @JsonIgnore
-    public int getSpeed(){
-        return hero.getSpeed()+ ability.getSpeed(hero.getSpeed());
+    public float getSpeed(){
+        float speed=hero.getSpeed()+ ability.getSpeed(hero.getSpeed());
+        return isRunning()?speed:speed/2f;
     }
     @JsonIgnore
     public int getDisappearingTime(){

@@ -36,6 +36,9 @@ public class GameMenuController {
     public void handleKeyUp(){
 
     }
+    public void handleTouchDown(int button){
+        characterController.handleTouchDown(button);
+    }
     public GunController getGunController(){
         return gunController;
     }

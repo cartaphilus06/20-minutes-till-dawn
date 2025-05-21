@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Timer;
+import com.tilldawn.App;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.User.MovingKeys;
@@ -87,5 +89,16 @@ public class CharacterController {
     }
     public void setFacingLeft(boolean facingLeft) {
         this.facingLeft = facingLeft;
+    }
+    public void handleTouchDown(int button){
+        if (button == com.badlogic.gdx.Input.Buttons.LEFT) {
+            App.getCurrentUser().getCharacter().setRunning(false);
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    App.getCurrentUser().getCharacter().setRunning(true);
+                }
+            }, 0.5f); // 0.5 seconds delay
+        }
     }
 }
