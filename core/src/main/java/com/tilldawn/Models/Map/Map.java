@@ -37,4 +37,10 @@ public class Map {
     public static int getWorldMaxY(){
         return map.background.getHeight();
     }
+    public ArrayList<Monster> getMonsters() {
+        return allMonsters;
+    }
+    public boolean isWalkable(float x,float y) {
+        return true;
+    }
 }
