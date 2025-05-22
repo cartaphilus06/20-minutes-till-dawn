@@ -54,7 +54,7 @@ public class GameMenu implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        controller.handleTouchDown(button);
+        controller.handleTouchDown(screenX,screenY,button);
         return false;
     }
 

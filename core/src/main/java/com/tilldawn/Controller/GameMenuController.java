@@ -23,7 +23,7 @@ public class GameMenuController {
         mapController = new MapController(view,App.getCurrentUser().getCharacter(),characterController,map);
         gunController = new GunController(view,App.getCurrentUser().getCharacter(),characterController,map);
         monsterController = new MonsterController(view,map,App.getCurrentUser().getCharacter());
-        bulletController = new BulletController(view,gunController);
+        bulletController = new BulletController(view,gunController,App.getCurrentUser().getCharacter());
     }
     public void update(){
         mapController.update();
@@ -36,8 +36,9 @@ public class GameMenuController {
     public void handleKeyUp(){
 
     }
-    public void handleTouchDown(int button){
+    public void handleTouchDown(int screenX,int screenY,int button){
         characterController.handleTouchDown(button);
+        bulletController.touchDown(screenX,screenY);
     }
     public GunController getGunController(){
         return gunController;

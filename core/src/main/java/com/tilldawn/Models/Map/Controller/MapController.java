@@ -101,7 +101,7 @@ public class MapController {
         float y=camera.position.y + camera.viewportHeight / 2f - 64 - getBarHeight() - height - 10;
         batch.draw(ammoIcon, x, y, width, height);
         float numberX=x+width;
-        ammo.draw(batch,String.valueOf(character.getWeapon().getMaxAmmo()),numberX,y+40);
+        ammo.draw(batch,character.getCurrentAmmo()+"/"+character.getWeapon().getMaxAmmo(),numberX,y+40);
     }
 
     public void addLevel(Batch batch) {

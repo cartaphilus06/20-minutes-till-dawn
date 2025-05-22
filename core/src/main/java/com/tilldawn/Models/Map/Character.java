@@ -29,6 +29,7 @@ public class Character {
     private int currentHp;
     private int level;
     private float currentExp;
+    private int currentAmmo;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -57,6 +58,7 @@ public class Character {
     }
     public void setWeapon(Weapon weapon){
         this.weapon=weapon;
+        setCurrentAmmo(weapon.getMaxAmmo());
     }
     public Ability getAbility() {
         return ability;
@@ -111,6 +113,12 @@ public class Character {
     }
     public void setCurrentExp(float currentExp) {
         this.currentExp = currentExp;
+    }
+    public int getCurrentAmmo() {
+        return currentAmmo;
+    }
+    public void setCurrentAmmo(int currentAmmo) {
+        this.currentAmmo = currentAmmo;
     }
     @JsonIgnore
     public float getExpPerLevel(){
