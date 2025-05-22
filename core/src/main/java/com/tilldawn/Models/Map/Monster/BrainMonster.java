@@ -12,4 +12,14 @@ public class BrainMonster extends Monster {
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         this.sprite=new Sprite(monsterTexture);
     }
+
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
 }

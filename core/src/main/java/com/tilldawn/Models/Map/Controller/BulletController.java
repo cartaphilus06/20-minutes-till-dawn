@@ -10,6 +10,8 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Gun;
+import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.View.GameMenu;
 
 import java.util.ArrayList;
@@ -19,10 +21,12 @@ public class BulletController {
     private final GunController gunController;
     private final Character character;
     private final ArrayList<Bullet> bullets = new ArrayList<>();
-    public BulletController(GameMenu view,GunController gunController,Character character) {
+    private final Map map;
+    public BulletController(GameMenu view,GunController gunController,Character character,Map map) {
         this.view = view;
         this.gunController=gunController;
         this.character=character;
+        this.map=map;
     }
     public void update(){
         Batch batch=view.getStage().getBatch();
@@ -34,7 +38,6 @@ public class BulletController {
     }
     public void handleInput(int screenX, int screenY){
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            // Use the actual game camera, not the stage camera
             Vector3 target = view.getCamera().unproject(new Vector3(screenX, screenY, 0));
             shoot(target.x, target.y);
         }
@@ -77,6 +80,11 @@ public class BulletController {
             Bullet bullet=bullets.get(i);
             bullet.update(delta);
             if(bullet.isOutOfBounds()) bullets.remove(i);
+            Monster monster=map.isMonster(bullet.getBoundsBox());
+            if(monster!=null){
+                monster.setHp((int)(monster.getHp()-character.getDamage()));
+                bullets.remove(i);
+            }
         }
     }
     public void drawBullets(Batch batch){

@@ -15,9 +15,10 @@ public class AStarPathFinder {
         PriorityQueue<AStarNode> openSet = new PriorityQueue<>(Comparator.comparingDouble(AStarNode::getFCost));
         java.util.Map<String, AStarNode> visited=new HashMap<>();
         AStarNode start=new AStarNode(startX,startY,0,heuristic(startX,startY,goalX,goalY),null);
+        openSet.add(start);
         while(!openSet.isEmpty()){
             AStarNode current = openSet.poll();
-            if(current.x == goalX && current.y == goalY) return reconstructPath(current);
+            if((int)current.x == (int)goalX && (int)current.y == (int)goalY) return reconstructPath(current);
             int[] dx={1,0,1,0,1,1,-1,-1};
             int[] dy={0,1,0,-1,1,-1,1,-1};
             for(int i=0; i<dx.length; i++){

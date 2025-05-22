@@ -23,7 +23,7 @@ public class GameMenuController {
         mapController = new MapController(view,App.getCurrentUser().getCharacter(),characterController,map);
         gunController = new GunController(view,App.getCurrentUser().getCharacter(),characterController,map);
         monsterController = new MonsterController(view,map,App.getCurrentUser().getCharacter());
-        bulletController = new BulletController(view,gunController,App.getCurrentUser().getCharacter());
+        bulletController = new BulletController(view,gunController,App.getCurrentUser().getCharacter(),map);
     }
     public void update(){
         mapController.update();

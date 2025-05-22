@@ -2,6 +2,7 @@ package com.tilldawn.Models.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.tilldawn.Models.Map.Monster.Monster;
 
 import java.util.ArrayList;
@@ -42,5 +43,12 @@ public class Map {
     }
     public boolean isWalkable(float x,float y) {
         return true;
+    }
+    public Monster isMonster(Rectangle rectangle) {
+        for(Monster monster : allMonsters) {
+            Rectangle rec=monster.getSprite().getBoundingRectangle();
+            if(rec.contains(rectangle)) return monster;
+        }
+        return null;
     }
 }

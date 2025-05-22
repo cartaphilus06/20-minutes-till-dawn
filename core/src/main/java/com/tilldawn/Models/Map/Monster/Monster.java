@@ -23,9 +23,10 @@ public abstract class Monster {
     }
     public void setPath(List<Vector2> path) {
         this.path = path;
+        this.pathIndex = 0;
     }
     public void followPath(float delta){
-        if(path==null || pathIndex>path.size()) return;
+        if(path==null || pathIndex>=path.size()) return;
         Vector2 target=path.get(pathIndex);
         float targetX=target.x;
         float targetY=target.y;
@@ -65,12 +66,17 @@ public abstract class Monster {
 
     }
     public void draw(Batch batch){
-
+        sprite.draw(batch);
     }
     public void setTexture(Texture texture){
         monsterTexture = texture;
     }
+    public abstract int getWidth();
+    public abstract int getHeight();
     protected String getInternalPath() {
         return internalPath;
+    }
+    public Sprite getSprite() {
+        return sprite;
     }
 }
