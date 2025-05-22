@@ -30,6 +30,7 @@ public class Character {
     private int level;
     private float currentExp;
     private int currentAmmo;
+    private boolean isInvincible=false;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -119,6 +120,12 @@ public class Character {
     }
     public void setCurrentAmmo(int currentAmmo) {
         this.currentAmmo = currentAmmo;
+    }
+    public boolean isInvincible(){
+        return isInvincible;
+    }
+    public void setInvincible(boolean invincible) {
+        isInvincible = invincible;
     }
     @JsonIgnore
     public float getExpPerLevel(){

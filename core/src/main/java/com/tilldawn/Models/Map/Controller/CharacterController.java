@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.App;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.User.MovingKeys;
 import com.tilldawn.View.GameMenu;
 
@@ -28,9 +30,13 @@ public class CharacterController {
     }
     public void update() {
         handleInput();
-        character.setX(character.getX() + dx);
-        character.setY(character.getY() + dy);
-        playAnimation();
+        if(map.isWalkable(character.getX()+dx,character.getY()+dy)) {
+            character.setX(character.getX() + dx);
+            character.setY(character.getY() + dy);
+            playAnimation();
+        }
+        handlePlayerCollision();
+        handleHp();
     }
     public void playAnimation(){
         Animation<TextureRegion> animation;
@@ -93,18 +99,50 @@ public class CharacterController {
     }
     public void handleTouchDown(int button){
         if (button == Input.Buttons.LEFT) {
-            character.setRunning(false);
-            if (resetRunTask != null) {
-                resetRunTask.cancel();
-            }
-            resetRunTask = new Timer.Task() {
-                @Override
-                public void run() {
-                    character.setRunning(true);
-                    resetRunTask = null; // Clear reference after it's done
-                }
-            };
-            Timer.schedule(resetRunTask, 0.5f); // 0.5 seconds delay
+            handleRunning();
         }
+    }
+    public void handleRunning(){
+        character.setRunning(false);
+        if (resetRunTask != null) {
+            resetRunTask.cancel();
+        }
+        resetRunTask = new Timer.Task() {
+            @Override
+            public void run() {
+                character.setRunning(true);
+                resetRunTask = null; // Clear reference after it's done
+            }
+        };
+        Timer.schedule(resetRunTask, 0.5f); // 0.5 seconds delay
+    }
+    public void handleHp(){
+        if(character.getCurrentHp()<=0){
+
+        }
+    }
+    public void handlePlayerCollision(){
+        float targetX=character.getX()+dx;
+        float targetY=character.getY()+dy;
+        float currentX=character.getX();
+        float currentY=character.getY();
+        if(character.isInvincible()) return;
+        for(Monster monster: map.getMonsters()){
+            Rectangle monsterRectangle=monster.getSprite().getBoundingRectangle();
+            if(monsterRectangle.contains(targetX,targetY) || monsterRectangle.contains(currentX,currentY)){
+                character.setCurrentHp(character.getCurrentHp()-1);
+                character.setInvincible(true);
+                handleInvincibility();
+                break;
+            }
+        }
+    }
+    public void handleInvincibility(){
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                character.setInvincible(false);
+            }
+        },1);
     }
 }

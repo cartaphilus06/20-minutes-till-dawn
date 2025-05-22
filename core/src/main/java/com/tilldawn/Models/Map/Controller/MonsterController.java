@@ -1,6 +1,7 @@
 package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
@@ -26,18 +27,6 @@ public class MonsterController {
     }
     public void update(){
         drawMonsters(view.getStage().getBatch());
-//        updateMonsters();
-//        float delta = Gdx.graphics.getDeltaTime();
-//        float targetX = character.getX();
-//        float targetY = character.getY();
-//        AStarPathFinder pathFinder = new AStarPathFinder(map);
-//        for(Monster monster: allMonsters){
-//            float startX=monster.getX();
-//            float startY=monster.getY();
-//            List<Vector2> path=pathFinder.findPath(startX,startY,targetX,targetY);
-//            monster.setPath(path);
-//            monster.followPath(delta);
-//        }
     }
     public void scheduleMonsterSpawning(float intervalSeconds){
         Timer.schedule(new Timer.Task() {
@@ -59,7 +48,9 @@ public class MonsterController {
         allMonsters.add(newMonster);
     }
     public void updateMonsters(){
-        for(Monster monster:allMonsters){
+        for(int i=allMonsters.size()-1;i>=0;i--){
+            Monster monster=allMonsters.get(i);
+            if(monster.getHp()<0) allMonsters.remove(i);
             monster.update();
         }
     }
@@ -77,6 +68,7 @@ public class MonsterController {
             float playerY = character.getY();
             float minDistance = 300f;
             if (Math.hypot(playerX - x, playerY - y) < minDistance) continue;
+            if (!map.isWalkable(x,y)) continue;
             Monster newMonster = new Tree(x, y);
             newMonster.getSprite().setPosition(x, y);
             allMonsters.add(newMonster);

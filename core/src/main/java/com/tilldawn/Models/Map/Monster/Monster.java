@@ -14,32 +14,11 @@ public abstract class Monster {
     protected float y;
     protected String internalPath;
     protected Texture monsterTexture;
-    protected List<Vector2> path=new ArrayList<>();
     protected int pathIndex;
     protected float speed=100f;
     public Monster(float x, float y) {
         this.x = x;
         this.y = y;
-    }
-    public void setPath(List<Vector2> path) {
-        this.path = path;
-        this.pathIndex = 0;
-    }
-    public void followPath(float delta){
-        if(path==null || pathIndex>=path.size()) return;
-        Vector2 target=path.get(pathIndex);
-        float targetX=target.x;
-        float targetY=target.y;
-        float dx=targetX-x;
-        float dy=targetY-y;
-        float distance=(float)Math.hypot(dx,dy);
-        if(distance<5){
-            pathIndex++;
-            return;
-        }
-        float step=speed*delta;
-        x+=(dx/distance)*step;
-        y+=(dy/distance)*step;
     }
     public void setHp(int hp) {
         this.hp = hp;
