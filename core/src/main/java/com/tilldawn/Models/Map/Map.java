@@ -42,12 +42,17 @@ public class Map {
     public ArrayList<Monster> getMonsters() {
         return allMonsters;
     }
-    public boolean isWalkable(float x,float y) {
-        for(Monster monster : allMonsters) {
-            Rectangle monsterRectangle=monster.getSprite().getBoundingRectangle();
-            if(monsterRectangle.contains(x,y)) return false;
+    public boolean isWalkable(float x, float y) {
+        Rectangle pointRect = new Rectangle(x, y, 1, 1);
+        for (Monster monster : allMonsters) {
+            Rectangle monsterRect = monster.getSprite().getBoundingRectangle();
+            if (monsterRect.overlaps(pointRect)) return false;
         }
         return true;
+    }
+
+    public static Map getMap() {
+        return map;
     }
     public Monster isMonster(Rectangle rectangle) {
         for(Monster monster : allMonsters) {

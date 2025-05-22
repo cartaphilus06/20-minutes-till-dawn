@@ -3,7 +3,10 @@ package com.tilldawn.Models.Map.Monster;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
+import com.tilldawn.App;
+import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Controller.CharacterController;
+import com.tilldawn.Models.Map.Map;
 
 import java.util.*;
 
@@ -14,8 +17,9 @@ public abstract class Monster {
     protected float y;
     protected String internalPath;
     protected Texture monsterTexture;
-    protected int pathIndex;
     protected float speed=100f;
+    protected float stateTime;
+    protected boolean isFacingLeft=false;
     public Monster(float x, float y) {
         this.x = x;
         this.y = y;
@@ -41,8 +45,32 @@ public abstract class Monster {
     protected void setInternalPath(String internalPath) {
         this.internalPath = internalPath;
     }
-    public void update(){
-
+    public void update(float delta){
+        Character character= App.getCurrentUser().getCharacter();
+        move(character.getX(),character.getY(),delta);
+        stateTime+=delta;
+    }
+    public void move(float targetX, float targetY,float delta) {
+        if(this instanceof Tree) return;
+        Character character= App.getCurrentUser().getCharacter();
+        float dx = targetX - x;
+        float dy = targetY - y;
+        float distance=(float)Math.sqrt(dx*dx+dy*dy);
+        if(sprite.getBoundingRectangle().overlaps(character.getSprite().getBoundingRectangle())){
+            character.setCurrentHp(character.getCurrentHp()-1);
+            Map.getMap().getMonsters().remove(this);
+            CharacterController.getCharacterController().handleInvincibility();
+            return;
+        }
+        if(distance>1 && Map.getMap().isWalkable(x + dx, y + dy)) {
+            float step=speed*delta;
+            x+=(dx/distance)*step;
+            y+=(dy/distance)*step;
+            sprite.setPosition(x, y);
+            if(dx<0 ^ sprite.isFlipX()){
+                setFacingLeft(dx<0);
+            }
+        }
     }
     public void draw(Batch batch){
         sprite.draw(batch);
@@ -57,5 +85,11 @@ public abstract class Monster {
     }
     public Sprite getSprite() {
         return sprite;
+    }
+    public boolean isFacingLeft() {
+        return isFacingLeft;
+    }
+    public void setFacingLeft(boolean facingLeft) {
+        isFacingLeft = facingLeft;
     }
 }

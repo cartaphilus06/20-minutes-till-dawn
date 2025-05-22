@@ -57,7 +57,7 @@ public class GunController {
             if(reloadSound.isPlaying()) reloadSound.stop();
             reloadSound.play();
             isReloading=true;
-            float reloadTime=1f;
+            float reloadTime=character.getReloadTime();
             Gdx.app.postRunnable(() -> {
                 Gdx.app.log("GunController", "Started reloading...");
             });

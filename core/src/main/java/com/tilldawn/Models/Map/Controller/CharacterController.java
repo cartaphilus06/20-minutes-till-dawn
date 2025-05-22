@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
-import com.tilldawn.App;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.Map.Monster.Monster;
@@ -14,6 +13,7 @@ import com.tilldawn.Models.User.MovingKeys;
 import com.tilldawn.View.GameMenu;
 
 public class CharacterController {
+    private static CharacterController characterController;
     private final GameMenu view;
     private final Character character;
     private final MovingKeys movingKeys;
@@ -27,6 +27,7 @@ public class CharacterController {
         this.movingKeys = movingKeys;
         this.view = view;
         this.map = map;
+        characterController = this;
     }
     public void update() {
         handleInput();
@@ -44,9 +45,7 @@ public class CharacterController {
         else if(character.isRunning()) animation=view.getRunAnimation();
         else animation=view.getWalkAnimation();
         TextureRegion currentFrame=animation.getKeyFrame(character.getStateTime());
-        if (isFacingLeft() && !currentFrame.isFlipX()) {
-            currentFrame.flip(true, false);
-        } else if (!isFacingLeft() && currentFrame.isFlipX()) {
+        if (isFacingLeft() ^ currentFrame.isFlipX()) {
             currentFrame.flip(true, false);
         }
         character.getSprite().setRegion(currentFrame);
@@ -111,14 +110,14 @@ public class CharacterController {
             @Override
             public void run() {
                 character.setRunning(true);
-                resetRunTask = null; // Clear reference after it's done
+                resetRunTask = null;
             }
         };
-        Timer.schedule(resetRunTask, 0.5f); // 0.5 seconds delay
+        Timer.schedule(resetRunTask, 0.5f);
     }
     public void handleHp(){
         if(character.getCurrentHp()<=0){
-
+            //gameOver
         }
     }
     public void handlePlayerCollision(){
@@ -131,18 +130,20 @@ public class CharacterController {
             Rectangle monsterRectangle=monster.getSprite().getBoundingRectangle();
             if(monsterRectangle.contains(targetX,targetY) || monsterRectangle.contains(currentX,currentY)){
                 character.setCurrentHp(character.getCurrentHp()-1);
-                character.setInvincible(true);
                 handleInvincibility();
                 break;
             }
         }
     }
     public void handleInvincibility(){
+        character.setInvincible(true);
         Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
+            public void run(){
                 character.setInvincible(false);
             }
         },1);
+    }
+    public static CharacterController getCharacterController() {
+        return characterController;
     }
 }

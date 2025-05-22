@@ -45,25 +45,18 @@ public class MapController {
     }
 
     public void update() {
-        // Move camera to follow character's world position
         camera.position.set(character.getX(), character.getY(), 0);
         camera.update();
-
         Batch batch = view.getStage().getBatch();
-
-        // Draw background relative to camera
         batch.draw(background, 0, 0);
-
         float screenCenterX = camera.position.x - character.getHeroWidth() / 2f;
         float screenCenterY = camera.position.y - character.getHeroHeight() / 2f;
         character.getSprite().setPosition(screenCenterX, screenCenterY);
         character.getSprite().draw(batch);
-
         drawHeart(batch);
         drawExpBar(batch);
         addLevel(batch);
         drawAmmo(batch);
-
         stateTime += Gdx.graphics.getDeltaTime();
     }
 

@@ -2,24 +2,39 @@ package com.tilldawn.Models.Map.Monster;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class BrainMonster extends Monster {
+    private final Animation<TextureRegion> animation;
     public BrainMonster(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(25);
         setInternalPath("images/Texture2D/BrainMonster.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
-        this.sprite=new Sprite(monsterTexture);
+        TextureRegion[][] tiles = TextureRegion.split(monsterTexture, getWidth(), getHeight());
+        animation=new Animation<>(0.2f, tiles[0]);
+        this.sprite=new Sprite(tiles[0][0]);
+        this.sprite.setSize(getWidth()*2,getHeight()*2);
+    }
+
+    public void draw(Batch batch) {
+        TextureRegion currentFrame=animation.getKeyFrame(stateTime);
+        animation.setPlayMode(Animation.PlayMode.LOOP);
+        if(isFacingLeft ^ currentFrame.isFlipX()) currentFrame.flip(true, false);
+        sprite.setRegion(currentFrame);
+        sprite.draw(batch);
     }
 
     @Override
     public int getWidth() {
-        return 0;
+        return 64;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return 64;
     }
 }

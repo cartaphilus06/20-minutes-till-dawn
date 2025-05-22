@@ -1,10 +1,12 @@
 package com.tilldawn.Models.Map.Controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.BrainMonster;
 import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.Map.Monster.Tree;
 import com.tilldawn.Models.RandomNum;
@@ -22,11 +24,12 @@ public class MonsterController {
         this.map = map;
         this.character = character;
         allMonsters=map.getMonsters();
-        //scheduleMonsterSpawning(5);
+        scheduleMonsterSpawning(5);
         spawnTrees();
     }
     public void update(){
         drawMonsters(view.getStage().getBatch());
+        updateMonsters();
     }
     public void scheduleMonsterSpawning(float intervalSeconds){
         Timer.schedule(new Timer.Task() {
@@ -43,7 +46,11 @@ public class MonsterController {
         float playerY = character.getY();
         float minDistance = 300f;
         if(Math.hypot(playerX - x, playerY - y) < minDistance) return;
-        Monster newMonster=new Tree(x,y);
+        if (!map.isWalkable(x,y)) {
+            spawnMonster();
+            return;
+        }
+        Monster newMonster=new BrainMonster(x,y);
         newMonster.getSprite().setPosition(x,y);
         allMonsters.add(newMonster);
     }
@@ -51,7 +58,7 @@ public class MonsterController {
         for(int i=allMonsters.size()-1;i>=0;i--){
             Monster monster=allMonsters.get(i);
             if(monster.getHp()<0) allMonsters.remove(i);
-            monster.update();
+            monster.update(Gdx.graphics.getDeltaTime());
         }
     }
     public void drawMonsters(Batch batch){
@@ -75,4 +82,5 @@ public class MonsterController {
             numberOfTrees++;
         }
     }
+
 }
