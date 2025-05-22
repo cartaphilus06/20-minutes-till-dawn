@@ -2,9 +2,11 @@ package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Gun;
@@ -40,27 +42,36 @@ public class BulletController {
 
 
     public void shoot(float targetX, float targetY) {
-        Gun gun=gunController.getGun();
+        Gun gun = gunController.getGun();
         int projectileCount = character.getProjectile();
         float spreadAngle = 10f;
         float speed = 1000f;
         Sprite gunSprite = gun.getSprite();
-        float gunX = gunSprite.getX() + gunSprite.getWidth() / 2f;
-        float gunY = gunSprite.getY() + gunSprite.getHeight() / 2f;
-        float baseAngle = gun.getSprite().getRotation();
+        float originX = gunSprite.getX() + gunSprite.getOriginX();
+        float originY = gunSprite.getY() + gunSprite.getOriginY();
+        float baseAngle = gunSprite.getRotation();
+        float muzzleLength = gunSprite.getWidth() / 2f;
+        float radians = (float) Math.toRadians(baseAngle);
+        float muzzleX = originX + (float)Math.cos(radians) * muzzleLength;
+        float muzzleY = originY + (float)Math.sin(radians) * muzzleLength;
         int mid = projectileCount / 2;
-        if(character.getCurrentAmmo()>0) {
+        if (character.getCurrentAmmo() > 0) {
+            Music shotSound = AssetManager.getShotSound();
+            if (shotSound.isPlaying()) shotSound.stop();
+            shotSound.play();
             for (int i = 0; i < projectileCount; i++) {
                 float offset = (i - mid) * spreadAngle;
                 if (projectileCount % 2 == 0) {
                     offset += spreadAngle / 2f;
                 }
                 float finalAngle = baseAngle + offset;
-                bullets.add(new Bullet(gunX, gunY, finalAngle, speed));
+                bullets.add(new Bullet(muzzleX, muzzleY, finalAngle, speed));
             }
-            character.setCurrentAmmo(character.getCurrentAmmo()-1);
+
+            character.setCurrentAmmo(character.getCurrentAmmo() - 1);
         }
     }
+
     public void updateBullets(float delta){
         for(int i=bullets.size()-1;i>=0;i--){
             Bullet bullet=bullets.get(i);

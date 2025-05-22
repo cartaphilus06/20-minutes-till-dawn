@@ -19,6 +19,7 @@ public class CharacterController {
     private float dx=0;
     private float dy=0;
     private boolean facingLeft=false;
+    private Timer.Task resetRunTask;
     public CharacterController(Character character, MovingKeys movingKeys, GameMenu view,Map map) {
         this.character = character;
         this.movingKeys = movingKeys;
@@ -91,14 +92,19 @@ public class CharacterController {
         this.facingLeft = facingLeft;
     }
     public void handleTouchDown(int button){
-        if (button == com.badlogic.gdx.Input.Buttons.LEFT) {
-            App.getCurrentUser().getCharacter().setRunning(false);
-            Timer.schedule(new Timer.Task() {
+        if (button == Input.Buttons.LEFT) {
+            character.setRunning(false);
+            if (resetRunTask != null) {
+                resetRunTask.cancel();
+            }
+            resetRunTask = new Timer.Task() {
                 @Override
                 public void run() {
-                    App.getCurrentUser().getCharacter().setRunning(true);
+                    character.setRunning(true);
+                    resetRunTask = null; // Clear reference after it's done
                 }
-            }, 0.5f); // 0.5 seconds delay
+            };
+            Timer.schedule(resetRunTask, 0.5f); // 0.5 seconds delay
         }
     }
 }

@@ -22,11 +22,17 @@ public class AssetManager {
     private final static AssetManager assetManager=new AssetManager();
     private final Skin skin;
     private final Music uiClicks;
+    private final Music shotSound;
+    private final Music reloadSound;
     private final AssetHelper heart=new AssetHelper(new Texture(Gdx.files.internal("images/Texture2D/T_HeartAnimation.png")),32,32,0.3f);
     private AssetManager(){
         skin=new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
         uiClicks=Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/UI Click 36.wav"));
         uiClicks.setVolume(1f);
+        shotSound=Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/single_shot.wav"));
+        reloadSound=Gdx.audio.newMusic(Gdx.files.internal("SFX/AudioClip/Weapon_Shotgun_Reload.wav"));
+        shotSound.setVolume(1f);
+        reloadSound.setVolume(1f);
         heart.setAnimation();
     }
     public static Skin getSkin(){
@@ -103,5 +109,11 @@ public class AssetManager {
     }
     public static Texture getBulletTexture(){
         return new Texture(Gdx.files.internal("images/Texture2D/EyeMonsterProjecitle.png"));
+    }
+    public static Music getShotSound(){
+        return assetManager.shotSound;
+    }
+    public static Music getReloadSound(){
+        return assetManager.reloadSound;
     }
 }

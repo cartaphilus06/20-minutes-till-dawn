@@ -31,6 +31,8 @@ public class SettingsController {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 AssetManager.getUiClickSound().setVolume(view.getSfxSlider().getValue());
+                AssetManager.getReloadSound().setVolume(view.getSfxSlider().getValue());
+                AssetManager.getShotSound().setVolume(view.getSfxSlider().getValue());
             }
         });
     }

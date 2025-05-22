@@ -1,10 +1,12 @@
 package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Gun;
 import com.tilldawn.Models.Map.Map;
@@ -51,10 +53,12 @@ public class GunController {
     public void reload(){
         if(isReloading) return;
         if(character.getCurrentAmmo()==0){
+            Music reloadSound=AssetManager.getReloadSound();
+            if(reloadSound.isPlaying()) reloadSound.stop();
+            reloadSound.play();
             isReloading=true;
             float reloadTime=1f;
             Gdx.app.postRunnable(() -> {
-                // Prevent multiple timers from stacking
                 Gdx.app.log("GunController", "Started reloading...");
             });
             Timer.schedule(new Timer.Task() {
