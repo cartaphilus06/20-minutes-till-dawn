@@ -3,6 +3,7 @@ package com.tilldawn.Models.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.Models.Map.Monster.Monster;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Map {
     private float remainingTime;
     private final Texture background;
     private final ArrayList<Monster> allMonsters=new ArrayList<>();
+    private final ArrayList<Exp> allExps=new ArrayList<>();
     public Map(int time) {
         this.time = time;
         this.remainingTime = time;
@@ -40,6 +42,9 @@ public class Map {
     public ArrayList<Monster> getMonsters() {
         return allMonsters;
     }
+    public ArrayList<Exp> getExps() {
+        return allExps;
+    }
     public boolean isWalkable(float x, float y) {
         Rectangle pointRect = new Rectangle(x, y, 1, 1);
         for (Monster monster : allMonsters) {
@@ -48,10 +53,13 @@ public class Map {
         }
         return true;
     }
-
     public static Map getMap() {
         return map;
     }
+    public static void setMap(Map map) {
+        Map.map = map;
+    }
+    @JsonIgnore
     public Monster isMonster(Rectangle rectangle) {
         for(Monster monster : allMonsters) {
             Rectangle rec=monster.getSprite().getBoundingRectangle();
@@ -65,15 +73,20 @@ public class Map {
     public void setRemainingTime(float remainingTime) {
         this.remainingTime = remainingTime;
     }
+    @JsonIgnore
     public float getBrainMonsterSpawnRate(){
         float elapsed = time - remainingTime;
         return elapsed/30f;
     }
+    @JsonIgnore
     public float getEyebatSpawnRate(){
         float elapsed = time - remainingTime;
         return (4*elapsed-time+30)/30f;
     }
     public int getTime(){
         return time;
+    }
+    public void addExp(Exp exp) {
+        allExps.add(exp);
     }
 }

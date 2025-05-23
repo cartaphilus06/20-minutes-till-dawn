@@ -7,6 +7,7 @@ import com.tilldawn.App;
 import com.tilldawn.Models.Enums.MonsterType;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Exp;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.Map.Monster.Eyebat;
 import com.tilldawn.Models.Map.Monster.Monster;
@@ -85,7 +86,10 @@ public class MonsterController {
     public void updateMonsters(){
         for(int i=allMonsters.size()-1;i>=0;i--){
             Monster monster=allMonsters.get(i);
-            if(monster.getHp()<0) allMonsters.remove(i);
+            if(monster.getHp()<0) {
+                allMonsters.remove(i);
+                map.addExp(new Exp(monster.getX(),monster.getY()));
+            }
             monster.update(Gdx.graphics.getDeltaTime());
         }
     }

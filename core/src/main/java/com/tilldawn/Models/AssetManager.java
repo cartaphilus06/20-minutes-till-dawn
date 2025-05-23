@@ -116,4 +116,7 @@ public class AssetManager {
     public static Music getReloadSound(){
         return assetManager.reloadSound;
     }
+    public static Texture getEggIcon(){
+        return new Texture(Gdx.files.internal("images/Texture2D/T_DragonEgg.png"));
+    }
 }

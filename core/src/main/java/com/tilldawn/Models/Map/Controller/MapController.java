@@ -10,10 +10,14 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Rectangle;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
+import com.tilldawn.Models.Map.Exp;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
+
+import java.util.ArrayList;
 
 public class MapController {
     private final GameMenu view;
@@ -60,6 +64,8 @@ public class MapController {
         addLevel(batch);
         drawAmmo(batch);
         drawTimeLabel(batch);
+        drawExps(batch);
+        handleExps();
         map.setRemainingTime(map.getRemainingTime()-Gdx.graphics.getDeltaTime());
         stateTime += Gdx.graphics.getDeltaTime();
     }
@@ -137,6 +143,11 @@ public class MapController {
         level=generator.generateFont(parameter);
         generator.dispose();
     }
+    public void drawExps(Batch batch) {
+        for(Exp exp: map.getExps()){
+            exp.draw(batch);
+        }
+    }
     public void setAmmo(){
         FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -157,5 +168,16 @@ public class MapController {
     public void dispose() {
         background.dispose();
         map.dispose();
+    }
+    public void handleExps(){
+        ArrayList<Exp> exps=map.getExps();
+        Rectangle characterRectangle=character.getSprite().getBoundingRectangle();
+        for(int i=exps.size()-1;i>=0;i--){
+            Exp exp=exps.get(i);
+            if(exp.getSprite().getBoundingRectangle().overlaps(characterRectangle)){
+                character.setCurrentExp(character.getCurrentExp()+1);
+                exps.remove(i);
+            }
+        }
     }
 }

@@ -70,7 +70,6 @@ public class BulletController {
                 float finalAngle = baseAngle + offset;
                 bullets.add(new Bullet(muzzleX, muzzleY, finalAngle, speed));
             }
-
             character.setCurrentAmmo(character.getCurrentAmmo() - 1);
         }
     }
