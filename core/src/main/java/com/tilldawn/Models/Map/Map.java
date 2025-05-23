@@ -10,11 +10,13 @@ import java.util.ArrayList;
 
 public class Map {
     private static Map map;
-    private int time;
+    private final int time;
+    private float remainingTime;
     private final Texture background;
     private final ArrayList<Monster> allMonsters=new ArrayList<>();
     public Map(int time) {
         this.time = time;
+        this.remainingTime = time;
         this.background = new Texture(Gdx.files.internal("images/backgrounds/background.png"));
         map=this;
     }
@@ -60,5 +62,22 @@ public class Map {
             if(rec.contains(rectangle)) return monster;
         }
         return null;
+    }
+    public float getRemainingTime(){
+        return remainingTime;
+    }
+    public void setRemainingTime(float remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+    public float getBrainMonsterSpawnRate(){
+        float elapsed = time - remainingTime;
+        return elapsed/30f;
+    }
+    public float getEyebatSpawnRate(){
+        float elapsed = time - remainingTime;
+        return (4*elapsed-time+30)/30f;
+    }
+    public int getTime(){
+        return time;
     }
 }

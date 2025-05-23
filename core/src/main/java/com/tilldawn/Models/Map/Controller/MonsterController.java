@@ -2,11 +2,9 @@ package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Timer;
+import com.tilldawn.Models.Enums.MonsterType;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
-import com.tilldawn.Models.Map.Monster.BrainMonster;
 import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.Map.Monster.Tree;
 import com.tilldawn.Models.RandomNum;
@@ -19,27 +17,28 @@ public class MonsterController {
     private final Map map;
     private final Character character;
     private final ArrayList<Monster> allMonsters;
+    private float brainMonsterSpawnTimer;
+    private float elderSpawnTimer;
+    private float eyebatSpawnTimer;
+    private float stateTime;
     public MonsterController(GameMenu view, Map map, Character character) {
         this.view = view;
         this.map = map;
         this.character = character;
         allMonsters=map.getMonsters();
-        scheduleMonsterSpawning(5);
         spawnTrees();
     }
     public void update(){
         drawMonsters(view.getStage().getBatch());
         updateMonsters();
+        spawnBrainMonster();
+        spawnElder();
+        brainMonsterSpawnTimer +=Gdx.graphics.getDeltaTime();
+        elderSpawnTimer +=Gdx.graphics.getDeltaTime();
+        eyebatSpawnTimer +=Gdx.graphics.getDeltaTime();
+        stateTime+=Gdx.graphics.getDeltaTime();
     }
-    public void scheduleMonsterSpawning(float intervalSeconds){
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                spawnMonster();
-            }
-        }, 0, intervalSeconds);
-    }
-    public void spawnMonster(){
+    public void spawnMonster(MonsterType type){
         float x = (float)RandomNum.getRandomNumber(Map.getWorldMinX(),Map.getWorldMaxX()-100);
         float y = (float)RandomNum.getRandomNumber(Map.getWorldMinY(),Map.getWorldMaxY()-100);
         float playerX = character.getX();
@@ -47,12 +46,35 @@ public class MonsterController {
         float minDistance = 300f;
         if(Math.hypot(playerX - x, playerY - y) < minDistance) return;
         if (!map.isWalkable(x,y)) {
-            spawnMonster();
+            spawnMonster(type);
             return;
         }
-        Monster newMonster=new BrainMonster(x,y);
+        Monster newMonster=Monster.getInstance(type, x, y);
+        if(newMonster==null) return;
         newMonster.getSprite().setPosition(x,y);
         allMonsters.add(newMonster);
+    }
+    public void spawnBrainMonster(){
+        if(brainMonsterSpawnTimer<3) return;
+        int spawnRate=(int)map.getBrainMonsterSpawnRate();
+        while(spawnRate!=0){
+            spawnMonster(MonsterType.BrainMonster);
+            spawnRate--;
+        }
+        brainMonsterSpawnTimer=0;
+    }
+    public void spawnElder(){
+
+    }
+    public void spawnEyebat(){
+        float time= map.getTime();
+        if(stateTime<time/4 || eyebatSpawnTimer<10) return;
+        int spawnRate=(int)map.getEyebatSpawnRate();
+        while(spawnRate!=0){
+            spawnMonster(MonsterType.Eyebat);
+            spawnRate--;
+        }
+        eyebatSpawnTimer=0;
     }
     public void updateMonsters(){
         for(int i=allMonsters.size()-1;i>=0;i--){

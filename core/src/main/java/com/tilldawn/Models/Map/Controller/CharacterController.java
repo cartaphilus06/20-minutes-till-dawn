@@ -60,31 +60,31 @@ public class CharacterController {
     public void handleInput() {
         dx = 0;
         dy = 0;
+        float speed= (float)(character.getSpeed()*0.7);
         boolean isMoving = false;
         if (Gdx.input.isKeyPressed(movingKeys.getMoveUp())) {
-            dy += character.getSpeed();
+            dy += speed;
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveDown())) {
-            dy -= character.getSpeed();
+            dy -= speed;
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveRight())) {
-            dx += character.getSpeed();
+            dx += speed;
             setFacingLeft(false);
             isMoving = true;
         }
         if (Gdx.input.isKeyPressed(movingKeys.getMoveLeft())) {
-            dx -= character.getSpeed();
-
+            dx -= speed;
             setFacingLeft(true);
             isMoving = true;
         }
         character.setIdle(!isMoving);
         if (dx != 0 && dy != 0) {
             float norm = (float) Math.sqrt(dx * dx + dy * dy);
-            dx = (dx / norm) * character.getSpeed();
-            dy = (dy / norm) * character.getSpeed();
+            dx = (dx / norm) * speed;
+            dy = (dy / norm) * speed;
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
             character.setRunning(!character.isRunning());

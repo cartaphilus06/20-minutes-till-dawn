@@ -25,7 +25,7 @@ public class BrainMonster extends Monster {
         animation.setPlayMode(Animation.PlayMode.LOOP);
         if(isFacingLeft ^ currentFrame.isFlipX()) currentFrame.flip(true, false);
         sprite.setRegion(currentFrame);
-        sprite.draw(batch);
+        super.draw(batch);
     }
 
     @Override

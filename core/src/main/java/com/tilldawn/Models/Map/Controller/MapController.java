@@ -21,12 +21,13 @@ public class MapController {
     private final Character character;
     private final Map map;
     private final Texture background;
-    private float stateTime = 0f;
+    private float stateTime;
     private final OrthographicCamera camera;
     private Texture pixel;
     private BitmapFont level;
     private final Texture ammoIcon;
     private BitmapFont ammo;
+    private BitmapFont timeLabel;
 
     public MapController(GameMenu view, Character character, CharacterController characterController, Map map) {
         this.view = view;
@@ -42,6 +43,7 @@ public class MapController {
         setLevel();
         setAmmo();
         setPixel();
+        setTimeLabel();
     }
 
     public void update() {
@@ -57,6 +59,8 @@ public class MapController {
         drawExpBar(batch);
         addLevel(batch);
         drawAmmo(batch);
+        drawTimeLabel(batch);
+        map.setRemainingTime(map.getRemainingTime()-Gdx.graphics.getDeltaTime());
         stateTime += Gdx.graphics.getDeltaTime();
     }
 
@@ -97,6 +101,14 @@ public class MapController {
         ammo.draw(batch,character.getCurrentAmmo()+"/"+character.getWeapon().getMaxAmmo(),numberX,y+40);
     }
 
+    public void drawTimeLabel(Batch batch) {
+        float x=camera.position.x + camera.viewportWidth / 2 - 200;
+        float y=camera.position.y + camera.viewportHeight / 2f - 64 - getBarHeight() - ammoIcon.getHeight() - 10;
+        float remainingTime= map.getRemainingTime();
+        String timeStr=(int)(remainingTime/60f)+":"+(int)(remainingTime%60f);
+        timeLabel.draw(batch,timeStr,x,y);
+    }
+
     public void addLevel(Batch batch) {
         float x=camera.position.x-getLevelSize()-60;
         float y=camera.position.y+camera.viewportHeight / 2f - 15;
@@ -130,6 +142,13 @@ public class MapController {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size=getLevelSize();
         ammo=generator.generateFont(parameter);
+        generator.dispose();
+    }
+    public void setTimeLabel(){
+        FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size=getLevelSize();
+        timeLabel=generator.generateFont(parameter);
         generator.dispose();
     }
     public int getLevelSize(){

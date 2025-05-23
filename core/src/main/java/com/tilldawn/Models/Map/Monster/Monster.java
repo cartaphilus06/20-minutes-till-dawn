@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.tilldawn.App;
+import com.tilldawn.Models.Enums.MonsterType;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Controller.CharacterController;
 import com.tilldawn.Models.Map.Map;
@@ -91,5 +92,12 @@ public abstract class Monster {
     }
     public void setFacingLeft(boolean facingLeft) {
         isFacingLeft = facingLeft;
+    }
+    public static Monster getInstance(MonsterType type,float x,float y){
+        if(type == MonsterType.Tree) return new Tree(x,y);
+        if(type == MonsterType.BrainMonster) return new BrainMonster(x,y);
+        if(type == MonsterType.Eyebat) return new Eyebat(x,y);
+        if(type == MonsterType.Elder) return new Elder(x,y);
+        return null;
     }
 }
