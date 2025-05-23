@@ -1,11 +1,13 @@
 package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
+import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Gun;
@@ -52,7 +54,7 @@ public class GunController {
     }
     public void reload(){
         if(isReloading) return;
-        if(character.getCurrentAmmo()==0){
+        if(character.getCurrentAmmo()==0 || Gdx.input.isKeyPressed(App.getCurrentUser().getMovingKeys().getReload())){
             Music reloadSound=AssetManager.getReloadSound();
             if(reloadSound.isPlaying()) reloadSound.stop();
             reloadSound.play();

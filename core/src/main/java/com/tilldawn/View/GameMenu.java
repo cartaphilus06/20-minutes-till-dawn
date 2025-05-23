@@ -91,6 +91,8 @@ public class GameMenu implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Character character= App.getCurrentUser().getCharacter();
+        camera.position.set(character.getX(), character.getY(), 0);
         camera.update();
         stage.getBatch().setProjectionMatrix(camera.combined);
         stage.getBatch().begin();

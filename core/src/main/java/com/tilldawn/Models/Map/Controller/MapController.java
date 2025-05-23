@@ -51,8 +51,6 @@ public class MapController {
     }
 
     public void update() {
-        camera.position.set(character.getX(), character.getY(), 0);
-        camera.update();
         Batch batch = view.getStage().getBatch();
         batch.draw(background, 0, 0);
         float screenCenterX = camera.position.x - character.getHeroWidth() / 2f;
@@ -109,9 +107,10 @@ public class MapController {
 
     public void drawTimeLabel(Batch batch) {
         float x=camera.position.x + camera.viewportWidth / 2 - 200;
-        float y=camera.position.y + camera.viewportHeight / 2f - 64 - getBarHeight() - ammoIcon.getHeight() - 10;
+        float y=camera.position.y + camera.viewportHeight / 2f - getBarHeight() - ammoIcon.getHeight() - 10;
         float remainingTime= map.getRemainingTime();
-        String timeStr=(int)(remainingTime/60f)+":"+(int)(remainingTime%60f);
+        String sec=remainingTime%60f<10?"0"+(int)(remainingTime%60f):(int)(remainingTime%60f)+"";
+        String timeStr=(int)(remainingTime/60f)+":"+sec;
         timeLabel.draw(batch,timeStr,x,y);
     }
 

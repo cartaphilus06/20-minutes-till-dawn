@@ -38,6 +38,7 @@ public class CharacterController {
         }
         handlePlayerCollision();
         handleHp();
+        handleExp();
     }
     public void playAnimation(){
         Animation<TextureRegion> animation;
@@ -60,7 +61,7 @@ public class CharacterController {
     public void handleInput() {
         dx = 0;
         dy = 0;
-        float speed= (float)(character.getSpeed()*0.7);
+        float speed= (float)(character.getSpeed());
         boolean isMoving = false;
         if (Gdx.input.isKeyPressed(movingKeys.getMoveUp())) {
             dy += speed;
@@ -118,6 +119,14 @@ public class CharacterController {
     public void handleHp(){
         if(character.getCurrentHp()<=0){
             //gameOver
+        }
+    }
+    public void handleExp(){
+        float currentExp=character.getCurrentExp();
+        float expPerLevel=character.getExpPerLevel();
+        if(currentExp>=expPerLevel){
+            character.setCurrentExp(0);
+            character.setLevel(character.getLevel()+1);
         }
     }
     public void handlePlayerCollision(){

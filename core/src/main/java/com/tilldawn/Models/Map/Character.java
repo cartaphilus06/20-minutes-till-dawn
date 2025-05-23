@@ -31,6 +31,7 @@ public class Character {
     private float currentExp;
     private int currentAmmo;
     private boolean isInvincible=false;
+    private boolean isAutoAim=false;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -126,6 +127,12 @@ public class Character {
     }
     public void setInvincible(boolean invincible) {
         isInvincible = invincible;
+    }
+    public boolean isAutoAim() {
+        return isAutoAim;
+    }
+    public void setAutoAim(boolean autoAim) {
+        isAutoAim = autoAim;
     }
     @JsonIgnore
     public float getExpPerLevel(){
