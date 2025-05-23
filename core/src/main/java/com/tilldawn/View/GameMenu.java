@@ -21,9 +21,9 @@ public class GameMenu implements Screen, InputProcessor {
     private final Animation<TextureRegion> standAnimation;
     private final Map map;
     private final OrthographicCamera camera;
-    public GameMenu(Game game) {
+    public GameMenu(Game game,int minutes) {
         this.game = game;
-        map=new Map(120);
+        map=new Map(minutes*60);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         controller = new GameMenuController(this,map);

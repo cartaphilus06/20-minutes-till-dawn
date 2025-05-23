@@ -45,7 +45,8 @@ public class PregameMenu implements Screen {
     private Label weaponReloadTime;
     private Label weaponProjectile;
     private Label weaponAmmo;
-
+    private Label selectTimeLabel;
+    private SelectBox<Integer> selectTime;
 
     public PregameMenu(Game game) {
         this.game=game;
@@ -91,6 +92,9 @@ public class PregameMenu implements Screen {
         heroName = new Label("", skin);
         heroHP = new Label("", skin);
         heroSpeed = new Label("", skin);
+        selectTimeLabel=new Label("2 MINUTES",skin);
+        selectTime=new SelectBox<>(skin);
+        selectTime.setItems(2,5,10,20);
         setUpUI();
         controller.handleClickedButtons();
         controller.handleHoveredButtons();
@@ -172,7 +176,6 @@ public class PregameMenu implements Screen {
 
     public void setSelectWeaponUI(){
         stage.clear();
-        Skin skin=AssetManager.getSkin();
         Table topLeftTable = new Table();
         topLeftTable.top().left().padTop(20).padLeft(20);
         topLeftTable.setFillParent(true);
@@ -193,6 +196,8 @@ public class PregameMenu implements Screen {
             table.add(weaponButton).width(120).height(120).pad(10);
         }
         table.row();
+        table.add(selectTime).width(400).height(60).colspan(5).padLeft(10);
+        table.row();
         table.add(backToSelectHero).width(400).height(60).colspan(5).padTop(100);
         for(int i=0;i<Weapon.values().length;i++){
             weaponAnimations[i]=Weapon.values()[i].getAnimation();
@@ -201,9 +206,6 @@ public class PregameMenu implements Screen {
         }
         stage.addActor(table);
         controller.handleSelectWeaponButtons();
-    }
-    public void setSelectTimeUI(){
-        stage.clear();
     }
     public Game getGame() {
         return game;
@@ -274,5 +276,8 @@ public class PregameMenu implements Screen {
     }
     public Label getWeaponReloadTime() {
         return weaponReloadTime;
+    }
+    public SelectBox<Integer> getSelectTime() {
+        return selectTime;
     }
 }

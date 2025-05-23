@@ -53,7 +53,7 @@ public class PregameMenuController {
                     AssetManager.getUiClickSound().play();
                     App.getCurrentUser().getCharacter().setWeapon(Weapon.values()[finalI]);
                     User.saveUsers();
-                    view.getGame().setScreen(new GameMenu(view.getGame()));
+                    view.getGame().setScreen(new GameMenu(view.getGame(),view.getSelectTime().getSelected()));
                 }
             });
         }
