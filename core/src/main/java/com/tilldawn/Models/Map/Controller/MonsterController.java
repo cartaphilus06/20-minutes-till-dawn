@@ -2,9 +2,13 @@ package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
+import com.tilldawn.App;
 import com.tilldawn.Models.Enums.MonsterType;
+import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.Eyebat;
 import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.Map.Monster.Tree;
 import com.tilldawn.Models.RandomNum;
@@ -33,6 +37,8 @@ public class MonsterController {
         updateMonsters();
         spawnBrainMonster();
         spawnElder();
+        spawnEyebat();
+        updateBullets();
         brainMonsterSpawnTimer +=Gdx.graphics.getDeltaTime();
         elderSpawnTimer +=Gdx.graphics.getDeltaTime();
         eyebatSpawnTimer +=Gdx.graphics.getDeltaTime();
@@ -104,5 +110,24 @@ public class MonsterController {
             numberOfTrees++;
         }
     }
-
+    public void updateBullets(){
+        Rectangle characterRectangle=character.getSprite().getBoundingRectangle();
+        for(Monster monster:allMonsters){
+            if(monster instanceof Eyebat){
+                Eyebat eyebat=(Eyebat)monster;
+                ArrayList<Bullet> bullets=eyebat.getBullets();
+                for(int i=bullets.size()-1;i>=0;i--){
+                    Bullet bullet=bullets.get(i);
+                    bullet.update(Gdx.graphics.getDeltaTime());
+                    bullet.draw(view.getStage().getBatch());
+                    if(bullet.getBoundsBox().overlaps(characterRectangle)){
+                        character.setCurrentHp(character.getCurrentHp()-1);
+                        bullets.remove(i);
+                        continue;
+                    }
+                    if(bullet.isOutOfBounds()) bullets.remove(i);
+                }
+            }
+        }
+    }
 }

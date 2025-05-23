@@ -6,9 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tilldawn.App;
+import com.tilldawn.Models.Map.Bullet;
+import com.tilldawn.Models.Map.Character;
+
+import java.util.ArrayList;
 
 public class Eyebat extends Monster {
+    private float shootTimer;
     private final Animation<TextureRegion> animation;
+    private final ArrayList<Bullet> bullets=new ArrayList<>();
     public Eyebat(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(50);
@@ -25,6 +32,23 @@ public class Eyebat extends Monster {
         if(isFacingLeft ^ currentFrame.isFlipX()) currentFrame.flip(true, false);
         sprite.setRegion(currentFrame);
         super.draw(batch);
+    }
+
+    public void shoot(){
+        shootTimer+=Gdx.graphics.getDeltaTime();
+        if(shootTimer<3) return;
+        Character character= App.getCurrentUser().getCharacter();
+        float targetX=character.getX();
+        float targetY=character.getY();
+        float dx=targetX-x;
+        float dy=targetY-y;
+        float angle=(float)Math.atan2(dy,dx);
+        bullets.add(new Bullet(x,y,(float)Math.toDegrees(angle),500f));
+        shootTimer=0;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 
     @Override

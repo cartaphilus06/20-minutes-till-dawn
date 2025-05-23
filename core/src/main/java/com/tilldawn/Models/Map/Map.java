@@ -3,7 +3,6 @@ package com.tilldawn.Models.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.tilldawn.App;
 import com.tilldawn.Models.Map.Monster.Monster;
 
 import java.util.ArrayList;
@@ -22,9 +21,6 @@ public class Map {
     }
     public Texture getBackground() {
         return background;
-    }
-    public void spawnMonsters() {
-
     }
     public void dispose(){
         background.dispose();

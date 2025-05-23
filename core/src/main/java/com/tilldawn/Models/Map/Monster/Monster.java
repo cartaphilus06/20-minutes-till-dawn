@@ -49,6 +49,7 @@ public abstract class Monster {
     public void update(float delta){
         Character character= App.getCurrentUser().getCharacter();
         move(character.getX(),character.getY(),delta);
+        shoot();
         stateTime+=delta;
     }
     public void move(float targetX, float targetY,float delta) {
@@ -73,6 +74,7 @@ public abstract class Monster {
             }
         }
     }
+    public void shoot(){}
     public void draw(Batch batch){
         sprite.draw(batch);
     }
