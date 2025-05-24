@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.GameMenuController;
@@ -34,6 +35,8 @@ public class GameMenu implements Screen, InputProcessor {
     private Table pauseMenuTable;
     private Table selectAbilityTable;
     private boolean leveledUp = false;
+    private float stateTime;
+    private float abilityTimer;
     public GameMenu(Game game,int minutes) {
         this.game = game;
         map=new Map(minutes*60);
@@ -109,7 +112,7 @@ public class GameMenu implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(!isPaused() || isLeveledUp()) {
+        if(!isPaused() && !isLeveledUp()) {
             Character character = App.getCurrentUser().getCharacter();
             camera.position.set(character.getX(), character.getY(), 0);
             camera.update();
@@ -117,6 +120,8 @@ public class GameMenu implements Screen, InputProcessor {
             stage.getBatch().begin();
             controller.update();
             stage.getBatch().end();
+            stateTime+=delta;
+            abilityTimer += delta;
         }
         stage.act(delta);
         stage.draw();
@@ -245,9 +250,19 @@ public class GameMenu implements Screen, InputProcessor {
         for(TextButton button:abilities){
             button.addListener(new ClickListener(){
                 public void clicked(InputEvent event,float x,float y) {
+                    abilityTimer=0;
                     AssetManager.getUiClickSound().play();
-                    character.setAbility(Ability.getInstance((String)button.getText(),character.getAbility()));
+                    character.setLastAbility(character.getAbility());
+                    character.setAbility(Ability.getInstance(button.getText().toString(),character.getAbility()));
                     setLeveledUp(false);
+                    if(button.getText().toString().equals("DAMAGER") || button.getText().toString().equals("SPEEDY")){
+                        Timer.schedule(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                character.setAbility(character.getLastAbility());
+                            }
+                        },10,0);
+                    }
                 }
             });
             selectAbilityTable.add(button).width(300).height(60).row();

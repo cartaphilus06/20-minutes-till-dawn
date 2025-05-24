@@ -37,7 +37,7 @@ public class Speedy implements Ability {
 
     @Override
     public int getSpeed(int speed) {
-        return ability.getSpeed(speed);
+        return 2*ability.getSpeed(speed);
     }
 
     @JsonIgnore

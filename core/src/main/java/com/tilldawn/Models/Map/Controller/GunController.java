@@ -66,7 +66,7 @@ public class GunController {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    character.setCurrentAmmo(character.getWeapon().getMaxAmmo());
+                    character.setCurrentAmmo(character.getMaxAmmo());
                     isReloading=false;
                     Gdx.app.postRunnable(() -> {
                         Gdx.app.log("GunController", "Reloaded: " + character.getCurrentAmmo());
