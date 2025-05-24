@@ -1,5 +1,6 @@
 package com.tilldawn.Models.Ability;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -38,6 +39,12 @@ public class Damager implements Ability {
     public int getSpeed(int speed) {
         return ability.getSpeed(speed);
     }
+
+    @JsonIgnore
+    public String getName() {
+        return "Damager";
+    }
+
     public Ability getAbility() {
         return ability;
     }
