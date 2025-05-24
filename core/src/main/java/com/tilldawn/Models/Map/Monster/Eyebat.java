@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.App;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
@@ -13,9 +14,12 @@ import com.tilldawn.Models.Map.Character;
 import java.util.ArrayList;
 
 public class Eyebat extends Monster {
+    @JsonIgnore
     private float shootTimer;
-    private final Animation<TextureRegion> animation;
-    private final ArrayList<Bullet> bullets=new ArrayList<>();
+    private Animation<TextureRegion> animation;
+    @JsonIgnore
+    private ArrayList<Bullet> bullets=new ArrayList<>();
+    public Eyebat() {}
     public Eyebat(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(50);
@@ -59,5 +63,15 @@ public class Eyebat extends Monster {
     @Override
     public int getHeight() {
         return 96;
+    }
+
+    @Override
+    public void reinitializeAssets() {
+        setTexture(new Texture(Gdx.files.internal(getInternalPath())));
+        TextureRegion[][] tiles=TextureRegion.split(monsterTexture,getWidth(),getHeight());
+        animation=new Animation<>(0.2f,tiles[0]);
+        this.sprite=new Sprite(tiles[0][0]);
+        this.sprite.setSize(getWidth(),getHeight());
+        bullets=new ArrayList<>();
     }
 }

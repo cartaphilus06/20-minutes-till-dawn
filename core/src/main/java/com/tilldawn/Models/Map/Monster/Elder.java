@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Elder extends Monster {
+    public Elder() {}
     public Elder(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(400);
@@ -28,5 +29,12 @@ public class Elder extends Monster {
     @Override
     public int getHeight() {
         return 48;
+    }
+
+    @Override
+    public void reinitializeAssets() {
+        setTexture(new Texture(Gdx.files.internal(getInternalPath())));
+        this.sprite=new Sprite(monsterTexture);
+        this.sprite.setSize(getWidth()*2, getHeight()*2);
     }
 }

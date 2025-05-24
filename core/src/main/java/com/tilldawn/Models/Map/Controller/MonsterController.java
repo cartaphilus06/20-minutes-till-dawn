@@ -46,8 +46,9 @@ public class MonsterController {
         stateTime+=Gdx.graphics.getDeltaTime();
     }
     public void spawnMonster(MonsterType type){
-        float x = (float)RandomNum.getRandomNumber(Map.getWorldMinX(),Map.getWorldMaxX()-100);
-        float y = (float)RandomNum.getRandomNumber(Map.getWorldMinY(),Map.getWorldMaxY()-100);
+        Map map=App.getCurrentMap();
+        float x = (float)RandomNum.getRandomNumber(map.getWorldMinX(),map.getWorldMaxX()-100);
+        float y = (float)RandomNum.getRandomNumber(map.getWorldMinY(),map.getWorldMaxY()-100);
         float playerX = character.getX();
         float playerY = character.getY();
         float minDistance = 300f;
@@ -101,8 +102,8 @@ public class MonsterController {
     public void spawnTrees(){
         int numberOfTrees=0;
         while(numberOfTrees<=10) {
-            float x = (float) RandomNum.getRandomNumber(Map.getWorldMinX(), Map.getWorldMaxX() - 100);
-            float y = (float) RandomNum.getRandomNumber(Map.getWorldMinY(), Map.getWorldMaxY() - 100);
+            float x = (float) RandomNum.getRandomNumber(map.getWorldMinX(), map.getWorldMaxX() - 100);
+            float y = (float) RandomNum.getRandomNumber(map.getWorldMinY(), map.getWorldMaxY() - 100);
             float playerX = character.getX();
             float playerY = character.getY();
             float minDistance = 300f;

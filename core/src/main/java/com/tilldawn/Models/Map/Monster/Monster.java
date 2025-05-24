@@ -3,24 +3,26 @@ package com.tilldawn.Models.Map.Monster;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.MonsterType;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Controller.CharacterController;
-import com.tilldawn.Models.Map.Map;
 
-import java.util.*;
 
 public abstract class Monster {
+    @JsonIgnore
     protected Sprite sprite;
     protected int hp;
     protected float x;
     protected float y;
     protected String internalPath;
+    @JsonIgnore
     protected Texture monsterTexture;
     protected float speed=100f;
     protected float stateTime;
     protected boolean isFacingLeft=false;
+    public Monster() {}
     public Monster(float x, float y) {
         this.x = x;
         this.y = y;
@@ -60,11 +62,11 @@ public abstract class Monster {
         float distance=(float)Math.sqrt(dx*dx+dy*dy);
         if(sprite.getBoundingRectangle().overlaps(character.getSprite().getBoundingRectangle())){
             character.setCurrentHp(character.getCurrentHp()-1);
-            Map.getMap().getMonsters().remove(this);
+            App.getCurrentMap().getMonsters().remove(this);
             CharacterController.getCharacterController().handleInvincibility();
             return;
         }
-        if(distance>1 && Map.getMap().isWalkable(x + dx, y + dy)) {
+        if(distance>1 && App.getCurrentMap().isWalkable(x + dx, y + dy)) {
             float step=speed*delta;
             x+=(dx/distance)*step;
             y+=(dy/distance)*step;
@@ -78,6 +80,7 @@ public abstract class Monster {
     public void draw(Batch batch){
         sprite.draw(batch);
     }
+    @JsonIgnore
     public void setTexture(Texture texture){
         monsterTexture = texture;
     }
@@ -86,6 +89,7 @@ public abstract class Monster {
     protected String getInternalPath() {
         return internalPath;
     }
+    @JsonIgnore
     public Sprite getSprite() {
         return sprite;
     }
@@ -102,4 +106,5 @@ public abstract class Monster {
         if(type == MonsterType.Elder) return new Elder(x,y);
         return null;
     }
+    public abstract void reinitializeAssets();
 }

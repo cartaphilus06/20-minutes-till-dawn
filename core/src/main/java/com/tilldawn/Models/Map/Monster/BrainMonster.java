@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class BrainMonster extends Monster {
-    private final Animation<TextureRegion> animation;
+    @JsonIgnore
+    private Animation<TextureRegion> animation;
+    public BrainMonster() {}
     public BrainMonster(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(25);
@@ -36,5 +39,14 @@ public class BrainMonster extends Monster {
     @Override
     public int getHeight() {
         return 64;
+    }
+
+    @Override
+    public void reinitializeAssets() {
+        setTexture(new Texture(Gdx.files.internal(getInternalPath())));
+        TextureRegion[][] tiles = TextureRegion.split(monsterTexture, getWidth(), getHeight());
+        animation=new Animation<>(0.2f, tiles[0]);
+        this.sprite=new Sprite(tiles[0][0]);
+        this.sprite.setSize(getWidth()*2,getHeight()*2);
     }
 }

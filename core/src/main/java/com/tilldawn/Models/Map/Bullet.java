@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 
 public class Bullet {
@@ -27,6 +28,7 @@ public class Bullet {
     public boolean isOutOfBounds(){
         float x=sprite.getX();
         float y=sprite.getY();
-        return (x<Map.getWorldMinX() || x>Map.getWorldMaxX() || y<Map.getWorldMinY() || y>Map.getWorldMaxY());
+        Map map= App.getCurrentMap();
+        return (x<map.getWorldMinX() || x>map.getWorldMaxX() || y<map.getWorldMinY() || y>map.getWorldMaxY());
     }
 }

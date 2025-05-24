@@ -214,6 +214,7 @@ public class GameMenu implements Screen, InputProcessor {
         exitGame.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y) {
                 AssetManager.getUiClickSound().play();
+                Map.saveMaps();
                 Gdx.app.exit();
             }
         });

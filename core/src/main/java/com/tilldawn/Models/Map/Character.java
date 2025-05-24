@@ -219,8 +219,4 @@ public class Character {
         float speed=ability.getSpeed(hero.getSpeed());
         return isRunning()?speed:speed/2f;
     }
-    @JsonIgnore
-    public int getDisappearingTime(){
-        return 0;
-    }
 }
