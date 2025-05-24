@@ -29,6 +29,7 @@ public class Settings implements Screen {
     private Texture background;
     private TextButton moveUp,moveDown,moveLeft,moveRight;
     private TextButton autoReload;
+    private TextButton shoot;
     public Settings(Game game) {
         this.game=game;
     }
@@ -89,6 +90,10 @@ public class Settings implements Screen {
         moveRight=new TextButton("Move right key: "+Input.Keys.toString(user.getMovingKeys().getMoveRight()),skin);
         background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
         autoReload=new TextButton("Auto reload: "+(App.getCurrentUser().getCharacter().getAutoReload()?"On":"Off"),skin);
+        String a;
+        if(user.getMovingKeys().getShoot()==0) a="Left";
+        else a=Input.Keys.toString(user.getMovingKeys().getShoot());
+        shoot=new TextButton("Shoot: "+a,skin);
         musicPicker=new SelectBox<>(skin);
         String[] items= BackgroundMusic.getItems();
         musicPicker.setItems(items);
@@ -116,6 +121,8 @@ public class Settings implements Screen {
         table.add(moveLeft).width(470).height(60).colspan(2).padTop(10);
         table.row();
         table.add(moveRight).width(470).height(60).colspan(2).padTop(10);
+        table.row();
+        table.add(shoot).width(470).height(60).colspan(2).padTop(10);
         table.row();
         table.add(autoReload).width(470).height(60).colspan(2).padTop(10);
         table.row();
@@ -154,5 +161,8 @@ public class Settings implements Screen {
     }
     public TextButton getAutoReload(){
         return autoReload;
+    }
+    public TextButton getShoot(){
+        return shoot;
     }
 }

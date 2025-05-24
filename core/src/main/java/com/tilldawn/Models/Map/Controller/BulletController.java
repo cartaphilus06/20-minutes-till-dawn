@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
+import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
@@ -37,7 +38,7 @@ public class BulletController {
         handleInput(screenX, screenY);
     }
     public void handleInput(int screenX, int screenY){
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(App.getCurrentUser().getMovingKeys().getShoot())) {
             Vector3 target = view.getCamera().unproject(new Vector3(screenX, screenY, 0));
             shoot(target.x, target.y);
         }

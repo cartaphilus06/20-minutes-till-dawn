@@ -9,6 +9,7 @@ public class MovingKeys {
     private int moveRight= Input.Keys.D;
     private int reload=Input.Keys.R;
     private int autoAim=Input.Keys.SPACE;
+    private int shoot=Input.Buttons.LEFT;
     public int getMoveUp() {
         return moveUp;
     }
@@ -27,6 +28,9 @@ public class MovingKeys {
     public int getAutoAim() {
         return autoAim;
     }
+    public int getShoot(){
+        return shoot;
+    }
     public void setMoveUp(int moveUp) {
         this.moveUp = moveUp;
     }
@@ -44,5 +48,8 @@ public class MovingKeys {
     }
     public void setAutoAim(int autoAim) {
         this.autoAim = autoAim;
+    }
+    public void setShoot(int shoot){
+        this.shoot = shoot;
     }
 }

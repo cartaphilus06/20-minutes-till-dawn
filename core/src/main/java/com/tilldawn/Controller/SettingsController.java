@@ -128,6 +128,25 @@ public class SettingsController {
                 return true;
             }
         });
+        view.getShoot().addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                User user=App.getCurrentUser();
+                Gdx.input.setInputProcessor(new InputAdapter(){
+                    @Override
+                    public boolean keyDown(int keycode) {
+                        AssetManager.getUiClickSound().play();
+                        user.getMovingKeys().setShoot(keycode);
+                        view.getShoot().setText("Shoot: "+ Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(view.getStage());
+                        view.getStage().unfocusAll();
+                        User.saveUsers();
+                        return true;
+                    }
+                });
+                return true;
+            }
+        });
     }
     public void handleSelectBox(){
         view.getMusicPicker().addListener(new ChangeListener() {
