@@ -32,6 +32,8 @@ public class GameMenu implements Screen, InputProcessor {
     private final OrthographicCamera camera;
     private boolean paused =false;
     private Table pauseMenuTable;
+    private Table selectAbilityTable;
+    private boolean leveledUp = false;
     public GameMenu(Game game,int minutes) {
         this.game = game;
         map=new Map(minutes*60);
@@ -107,7 +109,7 @@ public class GameMenu implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(!isPaused()) {
+        if(!isPaused() || isLeveledUp()) {
             Character character = App.getCurrentUser().getCharacter();
             camera.position.set(character.getX(), character.getY(), 0);
             camera.update();
@@ -166,6 +168,19 @@ public class GameMenu implements Screen, InputProcessor {
     public boolean isPaused() {
         return paused;
     }
+    public boolean isLeveledUp() {
+        return leveledUp;
+    }
+    public void setLeveledUp(boolean leveledUp) {
+        this.leveledUp = leveledUp;
+        if(leveledUp){
+            createSelectAbilityTable();
+            Gdx.input.setInputProcessor(stage);
+        } else if(selectAbilityTable!=null){
+            selectAbilityTable.remove();
+            Gdx.input.setInputProcessor(this);
+        }
+    }
     public void setPaused(boolean paused) {
         this.paused = paused;
         if(paused){
@@ -183,8 +198,7 @@ public class GameMenu implements Screen, InputProcessor {
         pauseMenuTable.setFillParent(true);
         pauseMenuTable.top().padTop(50);
         TextButton resume=new TextButton("RESUME",skin);
-        TextButton save=new TextButton("SAVE",skin);
-        TextButton exitGame=new TextButton("EXIT",skin);
+        TextButton exitGame=new TextButton("SAVE AND EXIT",skin);
         resume.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y) {
                 AssetManager.getUiClickSound().play();
@@ -198,26 +212,46 @@ public class GameMenu implements Screen, InputProcessor {
                 Gdx.app.exit();
             }
         });
-        save.addListener(new ClickListener(){
-            public void clicked(InputEvent event,float x,float y) {
-                //save the map
-            }
-        });
         Ability abilities=character.getAbility();
+        pauseMenuTable.row();
         Label ab=new Label("acquired abilities:",skin);
-        pauseMenuTable.add(ab).width(300).height(60).colspan(2);
+        pauseMenuTable.add(ab).width(400).height(60).colspan(2);
         int count=0;
         while(!(abilities instanceof DefaultAbility)){
             Label ability=new Label(abilities.getName(),skin);
             if(count%2==0) pauseMenuTable.row();
-            pauseMenuTable.add(ability).width(150).height(60).colspan(1);
+            pauseMenuTable.add(ability).width(200).height(60).colspan(1);
             abilities=abilities.getAbility();
             count++;
         }
-        if(count==1) pauseMenuTable.row();
-        pauseMenuTable.add(resume).width(300).height(60).colspan(2);
-        pauseMenuTable.add(save).width(300).height(60).colspan(2);
-        pauseMenuTable.add(exitGame).width(300).height(60).colspan(2);
+        if(count==1 || count==0) pauseMenuTable.row();
+        pauseMenuTable.add(resume).width(400).height(60).colspan(2);
+        pauseMenuTable.row();
+        pauseMenuTable.add(exitGame).width(400).height(60).colspan(2);
         stage.addActor(pauseMenuTable);
+    }
+    public void createSelectAbilityTable(){
+        Character character = App.getCurrentUser().getCharacter();
+        Skin skin=AssetManager.getSkin();
+        selectAbilityTable=new Table();
+        selectAbilityTable.setFillParent(true);
+        selectAbilityTable.center();
+        TextButton damager=new TextButton("DAMAGER",skin);
+        TextButton speedy=new TextButton("SPEEDY",skin);
+        TextButton vitality=new TextButton("VITALITY",skin);
+        TextButton amocrease=new TextButton("AMOCREASE",skin);
+        TextButton procrease=new TextButton("PROCREASE",skin);
+        TextButton[] abilities={damager,speedy,vitality,amocrease,procrease};
+        for(TextButton button:abilities){
+            button.addListener(new ClickListener(){
+                public void clicked(InputEvent event,float x,float y) {
+                    AssetManager.getUiClickSound().play();
+                    character.setAbility(Ability.getInstance((String)button.getText(),character.getAbility()));
+                    setLeveledUp(false);
+                }
+            });
+            selectAbilityTable.add(button).width(300).height(60).row();
+        }
+        stage.addActor(selectAbilityTable);
     }
 }

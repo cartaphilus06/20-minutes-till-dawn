@@ -23,4 +23,12 @@ public interface Ability {
     Ability getAbility();
     @JsonIgnore
     String getName();
+    static Ability getInstance(String name,Ability currentAbility){
+        if(name.equalsIgnoreCase("amocrease")) return new Amocrease(currentAbility);
+        if(name.equalsIgnoreCase("speedy")) return new Speedy(currentAbility);
+        if(name.equalsIgnoreCase("vitality")) return new Vitality(currentAbility);
+        if(name.equalsIgnoreCase("damager")) return new Damager(currentAbility);
+        if(name.equalsIgnoreCase("procrease")) return new Procrease(currentAbility);
+        return null;
+    }
 }

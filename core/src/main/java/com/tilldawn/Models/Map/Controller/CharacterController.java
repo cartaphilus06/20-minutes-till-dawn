@@ -127,6 +127,7 @@ public class CharacterController {
         if(currentExp>=expPerLevel){
             character.setCurrentExp(0);
             character.setLevel(character.getLevel()+1);
+            view.setLeveledUp(true);
         }
     }
     public void handlePlayerCollision(){
