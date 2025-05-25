@@ -92,7 +92,14 @@ public class MainMenuController {
         });
         view.getContinueGame().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new GameMenu(App.getCurrentMap(),view.getGame()));
+            }
+        });
+        view.getHints().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                view.getGame().setScreen(new HintMenu(view.getGame()));
             }
         });
     }
