@@ -8,7 +8,8 @@ public enum CheatCodes {
     LESSEN_ARBITRARY_TIME("decrease time (?<amount>.*)","time cheat: "),
     ADD_LEVEL("add level","level cheat: "),
     ADD_HP("add hp","hp cheat: "),
-    INFINITE_HP("infinite hp","hp cheat: "),;
+    ADD_SCORE("add score (?<amount>.*)","score cheat: "),
+    INFINITE_HP("infinite hp","hp cheat: ");
     private final String pattern;
     private final String description;
     CheatCodes(String pattern,String description) {

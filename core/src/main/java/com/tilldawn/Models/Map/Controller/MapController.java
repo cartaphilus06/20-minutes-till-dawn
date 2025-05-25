@@ -183,6 +183,7 @@ public class MapController {
     }
     public void handleWin(){
         if(map.getRemainingTime()<0){
+            character.setScore(character.getScore()+map.getScore());
             view.getGame().setScreen(new WinMenu(view.getGame()));
         }
     }

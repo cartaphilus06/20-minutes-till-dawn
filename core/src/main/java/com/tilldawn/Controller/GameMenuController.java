@@ -67,6 +67,7 @@ public class GameMenuController {
         Matcher addLevel=CheatCodes.ADD_LEVEL.getMatcher(input);
         Matcher addHp=CheatCodes.ADD_HP.getMatcher(input);
         Matcher infiniteHp=CheatCodes.INFINITE_HP.getMatcher(input);
+        Matcher addScore=CheatCodes.ADD_SCORE.getMatcher(input);
         Character character=App.getCurrentUser().getCharacter();
         if(lessenTime.matches()){
             map.setRemainingTime((map.getRemainingTime()-60)<0?0:map.getRemainingTime()-60);
@@ -96,6 +97,16 @@ public class GameMenuController {
         }
         if(infiniteHp.matches()){
             character.setInfiniteHp(true);
+        }
+        if(addScore.matches()){
+            int amount;
+            try{
+                amount=Integer.parseInt(addScore.group("amount"));
+            } catch (NumberFormatException e){
+                AlertGenerator.showAlert("","please enter a valid number!",view.getStage());
+                return;
+            }
+            map.setScore(map.getScore()+amount);
         }
         AlertGenerator.showAlert("","cheat used",view.getStage());
     }

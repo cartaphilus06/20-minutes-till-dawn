@@ -78,11 +78,12 @@ public class WinMenu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.center();
+        float buttonWidth=620f;
         table.add(youWin).width(200).height(60).row();
         table.add(gotScore).width(200).height(60).row();
-        table.add(newGame).width(450).height(60).row();
-        table.add(returnToMainMenu).width(450).height(60).row();
-        table.add(exit).width(450).height(60);
+        table.add(newGame).width(buttonWidth).height(60).row();
+        table.add(returnToMainMenu).width(buttonWidth).height(60).row();
+        table.add(exit).width(buttonWidth).height(60);
         stage.addActor(table);
     }
     public Game getGame() {
