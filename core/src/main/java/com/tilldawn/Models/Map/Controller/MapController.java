@@ -16,6 +16,7 @@ import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Exp;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
+import com.tilldawn.View.WinMenu;
 
 import java.util.ArrayList;
 
@@ -64,6 +65,7 @@ public class MapController {
         drawTimeLabel(batch);
         drawExps(batch);
         handleExps();
+        handleWin();
         map.setRemainingTime(map.getRemainingTime()-Gdx.graphics.getDeltaTime());
         stateTime += Gdx.graphics.getDeltaTime();
     }
@@ -177,6 +179,11 @@ public class MapController {
                 character.setCurrentExp(character.getCurrentExp()+1);
                 exps.remove(i);
             }
+        }
+    }
+    public void handleWin(){
+        if(map.getRemainingTime()<0){
+            view.getGame().setScreen(new WinMenu(view.getGame()));
         }
     }
 }

@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tilldawn.App;
 import com.tilldawn.Models.Map.Monster.Monster;
@@ -23,6 +21,7 @@ public class Map {
     private ArrayList<Monster> allMonsters=new ArrayList<>();
     private ArrayList<Exp> allExps=new ArrayList<>();
     private String characterUsername;
+    private int score;
     public Map(){}
     public Map(int time) {
         this.time = time;
@@ -165,5 +164,11 @@ public class Map {
                 return;
             }
         }
+    }
+    public int getScore(){
+        return score;
+    }
+    public void setScore(int score){
+        this.score = score;
     }
 }
