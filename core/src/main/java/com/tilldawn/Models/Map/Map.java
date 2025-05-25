@@ -165,6 +165,9 @@ public class Map {
             }
         }
     }
+    public static ArrayList<Map> getAllMaps(){
+        return allMaps;
+    }
     public int getScore(){
         return score;
     }

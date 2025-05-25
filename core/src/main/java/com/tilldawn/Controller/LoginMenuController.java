@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.User.Question;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.LoginMenu;
@@ -86,8 +87,15 @@ public class LoginMenuController {
         if(lastUser != null) {
             lastUser.setStayLoggedIn(false);
         }
+        App.setCurrentMap(null);
         user.setStayLoggedIn(true);
         App.setCurrentUser(user);
+        for(Map map:Map.getAllMaps()){
+            if(map.getCharacterUsername().equals(username)) {
+                App.setCurrentMap(map);
+                break;
+            }
+        }
 
         AlertGenerator.showAlert("Success!", user.getUsername() + " successfully logged in!", view.getStage(), () -> {
             view.getGame().setScreen(new MainMenu(view.getGame()));
