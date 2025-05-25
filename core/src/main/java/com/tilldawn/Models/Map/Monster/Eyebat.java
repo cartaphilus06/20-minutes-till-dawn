@@ -67,6 +67,7 @@ public class Eyebat extends Monster {
 
     @Override
     public void reinitializeAssets() {
+        setInternalPath("images/Texture2D/T_EyeBat.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles=TextureRegion.split(monsterTexture,getWidth(),getHeight());
         animation=new Animation<>(0.2f,tiles[0]);

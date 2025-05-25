@@ -3,7 +3,10 @@ package com.tilldawn;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.User.User;
+import com.tilldawn.View.GameMenu;
 import com.tilldawn.View.MainMenu;
 
 public class Main extends Game {
@@ -16,7 +19,10 @@ public class Main extends Game {
         batch = new SpriteBatch();
         User.loadUsers();
         if(App.getCurrentUser()==null) AssetManager.getDefaultMusic().play();
-        else App.getCurrentUser().getBackgroundMusic().getMusic().play();
+        else {
+            App.getCurrentUser().getBackgroundMusic().getMusic().play();
+            Map.loadMaps();
+        }
         setScreen(new MainMenu(this));
     }
 

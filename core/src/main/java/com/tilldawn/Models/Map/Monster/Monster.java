@@ -4,12 +4,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tilldawn.App;
 import com.tilldawn.Models.Enums.MonsterType;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Controller.CharacterController;
 
-
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = BrainMonster.class, name = "BrainMonster"),
+    @JsonSubTypes.Type(value = Eyebat.class, name = "Eyebat"),
+    @JsonSubTypes.Type(value = Tree.class, name = "Tree"),
+    @JsonSubTypes.Type(value = Elder.class, name = "Elder")
+})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class Monster {
     @JsonIgnore
     protected Sprite sprite;

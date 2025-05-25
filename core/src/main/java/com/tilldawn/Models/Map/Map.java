@@ -60,15 +60,19 @@ public class Map {
     public void setAllMonsters(ArrayList<Monster> allMonsters) {
         this.allMonsters = allMonsters;
     }
+    @JsonIgnore
     public int getWorldMaxX(){
         return background.getWidth();
     }
+    @JsonIgnore
     public int getWorldMaxY(){
         return background.getHeight();
     }
+    @JsonIgnore
     public int getWorldMinX(){
         return 0;
     }
+    @JsonIgnore
     public int getWorldMinY(){
         return 0;
     }
@@ -149,5 +153,14 @@ public class Map {
     }
     public void reinitializeAssets(){
         this.background = new Texture(Gdx.files.internal("images/backgrounds/background.png"));
+    }
+    public static void removeMapIfExists(){
+        String username=App.getCurrentUser().getUsername();
+        for(int i=allMaps.size()-1;i>=0;i--){
+            if(allMaps.get(i).getCharacterUsername().equals(username)) {
+                allMaps.remove(i);
+                return;
+            }
+        }
     }
 }

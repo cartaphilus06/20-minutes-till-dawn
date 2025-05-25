@@ -33,6 +33,7 @@ public class Elder extends Monster {
 
     @Override
     public void reinitializeAssets() {
+        setInternalPath("images/Texture2D/ElderBrain.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         this.sprite=new Sprite(monsterTexture);
         this.sprite.setSize(getWidth()*2, getHeight()*2);

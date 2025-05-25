@@ -39,7 +39,19 @@ public class GameMenu implements Screen, InputProcessor {
     private float abilityTimer;
     public GameMenu(Game game,int minutes) {
         this.game = game;
+        Map.removeMapIfExists();
         map=new Map(minutes*60);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        controller = new GameMenuController(this,map);
+        Character character= App.getCurrentUser().getCharacter();
+        walkAnimation=character.getHero().getWalkAnimation();
+        runAnimation=character.getHero().getRunAnimation();
+        standAnimation=character.getHero().getStandAnimation();
+    }
+    public GameMenu(Map map,Game game) {
+        this.game = game;
+        this.map=map;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         controller = new GameMenuController(this,map);

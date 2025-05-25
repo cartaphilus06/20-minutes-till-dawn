@@ -43,6 +43,7 @@ public class BrainMonster extends Monster {
 
     @Override
     public void reinitializeAssets() {
+        setInternalPath("images/Texture2D/BrainMonster.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles = TextureRegion.split(monsterTexture, getWidth(), getHeight());
         animation=new Animation<>(0.2f, tiles[0]);
