@@ -11,6 +11,7 @@ import com.tilldawn.View.Scoreboard;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class ScoreboardController {
@@ -18,7 +19,7 @@ public class ScoreboardController {
     public ScoreboardController(Scoreboard view) {
         this.view = view;
     }
-    public void handleClickedButtons(){
+    public void handleClickedButtons(ArrayList<User> users){
         view.getExit().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
@@ -28,33 +29,35 @@ public class ScoreboardController {
         view.getSortByKills().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                users.sort((u1,u2) -> Integer.compare(u2.getCharacter().getKilledMonsters(), u1.getCharacter().getKilledMonsters()));
+                view.setUpStaticUI();
             }
         });
         view.getSortByScore().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                users.sort((u1,u2) -> Integer.compare(u2.getCharacter().getScore(), u1.getCharacter().getScore()));
+                view.setUpStaticUI();
             }
         });
         view.getSortBySurvival().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
+                users.sort((u1, u2) -> {
+                    float s1 = u1.getCharacter().getMostSurvival();
+                    float s2 = u2.getCharacter().getMostSurvival();
+                    return Float.compare(s2, s1);
+                });
+                view.setUpStaticUI();
             }
         });
         view.getSortByUsername().addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
-                ArrayList<Label> users=view.getUsers();
-                users.sort(Comparator.comparing(o -> o.getText().toString()));
+                users.sort(Comparator.comparing(User::getUsername));
+                view.setUpStaticUI();
             }
         });
     }
-    public ArrayList<Label> addUsersToArrayList(){
-        ArrayList<User> allUsers= User.getAllUsers();
-        ArrayList<Label> usersLabel=new ArrayList<>();
-        for(User u:allUsers){
-            Label label=new Label(u.getUsername(), AssetManager.getSkin());
-            usersLabel.add(label);
-        }
-        return usersLabel;
-    }
+
 }

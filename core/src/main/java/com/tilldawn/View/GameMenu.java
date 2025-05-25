@@ -18,8 +18,7 @@ import com.tilldawn.Models.Ability.DefaultAbility;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
-
-import java.util.Scanner;
+import com.tilldawn.Models.User.User;
 
 public class GameMenu implements Screen, InputProcessor {
     private final GameMenuController controller;
@@ -220,6 +219,7 @@ public class GameMenu implements Screen, InputProcessor {
         pauseMenuTable.top().padTop(50);
         TextButton resume=new TextButton("RESUME",skin);
         TextButton exitGame=new TextButton("SAVE AND EXIT",skin);
+        TextButton giveUp=new TextButton("GIVE UP",skin);
         resume.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y) {
                 AssetManager.getUiClickSound().play();
@@ -234,7 +234,20 @@ public class GameMenu implements Screen, InputProcessor {
         exitGame.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y) {
                 AssetManager.getUiClickSound().play();
+                float elapsedTime=map.getTime()-map.getRemainingTime();
+                if(character.getMostSurvival()<elapsedTime) character.setMostSurvival(elapsedTime);
                 Map.saveMaps();
+                User.saveUsers();
+                Gdx.app.exit();
+            }
+        });
+        giveUp.addListener(new ClickListener(){
+            public void clicked(InputEvent event,float x,float y) {
+                AssetManager.getUiClickSound().play();
+                float elapsedTime=map.getTime()-map.getRemainingTime();
+                if(character.getMostSurvival()<elapsedTime) character.setMostSurvival(elapsedTime);
+                map.deleteMap();
+                User.saveUsers();
                 Gdx.app.exit();
             }
         });
@@ -258,6 +271,8 @@ public class GameMenu implements Screen, InputProcessor {
         pauseMenuTable.add(resume).width(400).height(60).colspan(2);
         pauseMenuTable.row();
         pauseMenuTable.add(exitGame).width(400).height(60).colspan(2);
+        pauseMenuTable.row();
+        pauseMenuTable.add(giveUp).width(400).height(60).colspan(2);
         stage.addActor(pauseMenuTable);
     }
     public void createSelectAbilityTable(){

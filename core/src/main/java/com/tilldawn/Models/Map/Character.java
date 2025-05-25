@@ -35,6 +35,7 @@ public class Character {
     private boolean isInvincible=false;
     private boolean isAutoAim=false;
     private boolean isInfiniteHp=false;
+    private float mostSurvival;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -155,6 +156,12 @@ public class Character {
     }
     public void setInfiniteHp(boolean infiniteHp) {
         this.isInfiniteHp = infiniteHp;
+    }
+    public float getMostSurvival() {
+        return mostSurvival;
+    }
+    public void setMostSurvival(float mostSurvival) {
+        this.mostSurvival = mostSurvival;
     }
     @JsonIgnore
     public float getExpPerLevel(){

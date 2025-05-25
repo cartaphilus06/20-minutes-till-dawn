@@ -33,6 +33,7 @@ public class RegisterMenuController {
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
                 App.setCurrentUserAsGuest();
+                view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
     }
