@@ -1,6 +1,5 @@
 package com.tilldawn.Controller;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;

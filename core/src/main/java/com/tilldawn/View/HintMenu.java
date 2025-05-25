@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.HintMenuController;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.CheatCodes;
 import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.User.MovingKeys;
@@ -164,6 +165,16 @@ public class HintMenu implements Screen {
     }
     public void setUpCheatCodeUI(){
         stage.clear();
+        Table table=new Table();
+        table.setFillParent(true);
+        table.center();
+        table.defaults().pad(10);
+        for(CheatCodes cheatCodes:CheatCodes.values()){
+            Label label=new Label(cheatCodes.getDescription()+cheatCodes.getPattern(),skin);
+            table.add(label).width(300).height(60).row();
+        }
+        table.add(backToHint).width(300).height(60).row();
+        stage.addActor(table);
     }
     public Game getGame() {
         return game;
