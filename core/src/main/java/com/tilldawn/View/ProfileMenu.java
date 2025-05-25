@@ -16,7 +16,7 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Avatar;
 
 public class ProfileMenu implements Screen {
-    private ProfileMenuController controller=new ProfileMenuController(this);
+    private final ProfileMenuController controller=new ProfileMenuController(this);
     private final Game game;
     private Stage stage;
     private Texture background;

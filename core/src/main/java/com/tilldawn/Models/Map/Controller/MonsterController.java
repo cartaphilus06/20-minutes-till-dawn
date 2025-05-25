@@ -90,6 +90,7 @@ public class MonsterController {
             if(monster.getHp()<0) {
                 allMonsters.remove(i);
                 map.addExp(new Exp(monster.getX(),monster.getY()));
+                character.setKilledMonsters(character.getKilledMonsters()+1);
             }
             monster.update(Gdx.graphics.getDeltaTime());
         }

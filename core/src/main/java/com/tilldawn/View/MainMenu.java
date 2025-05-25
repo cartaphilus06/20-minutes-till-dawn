@@ -32,6 +32,7 @@ public class MainMenu implements Screen {
     private TextButton exit;
     private TextButton continueGame;
     private Label username;
+    private Label score;
     private Animation<TextureRegion> walkAnimation;
     private float stateTime=0f;
     private final Texture[] portraits =AssetManager.getHeroPortraits();
@@ -128,9 +129,12 @@ public class MainMenu implements Screen {
         continueGame = new TextButton("CONTINUE GAME", skin);
         username=new Label("USERNAME: ", skin);
         username.setAlignment(Align.topLeft);
+        score=new Label("SCORE: ", skin);
+        score.setAlignment(Align.topLeft);
         float avatarImageYPosition=stage.getViewport().getWorldHeight()- Avatar.getHeight();
         float avatarImageXPosition=30;
         username.setPosition(avatarImageXPosition,avatarImageYPosition-40);
+        score.setPosition(avatarImageXPosition,avatarImageYPosition-70);
         float buttonSpacing = 15f;
         float buttonWidth=350f;
         if(App.getCurrentMap()!=null){
@@ -155,6 +159,7 @@ public class MainMenu implements Screen {
         table.add(exit).width(buttonWidth).height(60);
         stage.addActor(table);
         stage.addActor(username);
+        stage.addActor(score);
         stage.addActor(imagePortrait);
     }
 
@@ -205,5 +210,8 @@ public class MainMenu implements Screen {
     }
     public TextButton getContinueGame(){
         return continueGame;
+    }
+    public Label getScore(){
+        return score;
     }
 }

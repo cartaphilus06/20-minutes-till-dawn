@@ -54,7 +54,8 @@ public class GunController {
     }
     public void reload(){
         if(isReloading) return;
-        if(character.getCurrentAmmo()==0 || Gdx.input.isKeyPressed(App.getCurrentUser().getMovingKeys().getReload())){
+        if((character.getCurrentAmmo()==0 && character.getAutoReload()) ||
+            Gdx.input.isKeyPressed(App.getCurrentUser().getMovingKeys().getReload())){
             Music reloadSound=AssetManager.getReloadSound();
             if(reloadSound.isPlaying()) reloadSound.stop();
             reloadSound.play();

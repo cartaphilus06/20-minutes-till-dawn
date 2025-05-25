@@ -13,6 +13,7 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.ConfirmDialog;
 import com.tilldawn.Models.Enums.Avatar;
 import com.tilldawn.Models.Enums.Register;
+import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.MainMenu;
 import com.tilldawn.View.ProfileMenu;
@@ -138,6 +139,9 @@ public class ProfileMenuController {
         }
         user.deleteUser();
         App.setCurrentUser(null);
+        Map map=App.getCurrentMap();
+        if(map!=null) map.deleteMap();
+        App.setCurrentMap(null);
         view.getGame().setScreen(new MainMenu(view.getGame()));
     }
     public void handleImageButtonListener(ImageButton[] buttons, Drawable[][] drawables){

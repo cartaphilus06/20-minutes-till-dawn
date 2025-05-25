@@ -21,6 +21,11 @@ public class LoginMenu implements Screen {
     private TextField passwordField;
     private TextButton loginButton;
     private TextButton back;
+    private TextButton forgetPassword;
+    private TextField questionField;
+    private TextField answerField;
+    private TextButton submit;
+    private TextButton backToLogin;
     private float stateTime=0f;
     private final Texture title=AssetManager.get20minutesTillDawnLogo();
     private final Animation<TextureRegion> rightEyesAnimation =new Animation<>(1,AssetManager.getMenusRightEyes());
@@ -32,6 +37,21 @@ public class LoginMenu implements Screen {
     public void show() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
+        Skin skin= AssetManager.getSkin();
+        usernameField=new TextField("",AssetManager.getTextFieldStyle());
+        passwordField=new TextField("",AssetManager.getTextFieldStyle());
+        passwordField.setPasswordMode(true);
+        passwordField.setPasswordCharacter('*');
+        loginButton=new TextButton("LOGIN",skin);
+        back=new TextButton("BACK",skin);
+        forgetPassword=new TextButton("FORGET PASSWORD",skin);
+        questionField=new TextField("",AssetManager.getTextFieldStyle());
+        questionField.setMessageText("QUESTION");
+        answerField=new TextField("",AssetManager.getTextFieldStyle());
+        answerField.setMessageText("ANSWER");
+        submit=new TextButton("SUBMIT",skin);
+        backToLogin=new TextButton("BACK",skin);
         setUpUI();
         controller.handleClickedButtons();
     }
@@ -86,26 +106,21 @@ public class LoginMenu implements Screen {
         background.dispose();
     }
     public void setUpUI(){
+        stage.clear();
         Table table=new Table();
         table.setFillParent(true);
         table.center().padTop(300);
-        background=new Texture(Gdx.files.internal("images/backgrounds/menusBackGround.png"));
-        Skin skin= AssetManager.getSkin();
+        Skin skin=AssetManager.getSkin();
         Label username=new Label("USERNAME",skin);
         Label password=new Label("PASSWORD",skin);
-        usernameField=new TextField("",AssetManager.getTextFieldStyle());
-        passwordField=new TextField("",AssetManager.getTextFieldStyle());
-        passwordField.setPasswordMode(true);
-        loginButton=new TextButton("LOGIN",skin);
-        back=new TextButton("BACK",skin);
         table.defaults().pad(10);
+
+        table.add(forgetPassword).width(500).height(60).colspan(2).row();
 
         table.add(username).colspan(2).row();
         table.add(usernameField).width(300).height(80).colspan(2).row();
 
         table.add(password).colspan(2).row();
-        passwordField.setPasswordMode(true);
-        passwordField.setPasswordCharacter('*');
         table.add(passwordField).width(300).height(80).colspan(2).row();
 
         Table buttonTable=new Table();
@@ -115,6 +130,32 @@ public class LoginMenu implements Screen {
         table.add(buttonTable).colspan(2).row();
 
         stage.addActor(table);
+    }
+    public void setUpForgetUI(){
+        stage.clear();
+        Table table=new Table();
+        table.setFillParent(true);
+        table.center().padTop(300);
+        table.add(questionField).width(300).height(80).colspan(2).row();
+        table.add(answerField).width(300).height(80).colspan(2).row();
+        Table buttonTable=new Table();
+        buttonTable.padTop(20);
+        buttonTable.add(submit).width(200).height(60).padRight(20);
+        buttonTable.add(backToLogin).width(200).height(60);
+        table.add(buttonTable).colspan(2).row();
+        stage.addActor(table);
+    }
+    public TextButton getBackToLogin() {
+        return backToLogin;
+    }
+    public TextButton getSubmit() {
+        return submit;
+    }
+    public TextField getQuestionField(){
+        return questionField;
+    }
+    public TextField getAnswerField(){
+        return answerField;
     }
     public TextButton getLoginButton() {
         return loginButton;
@@ -133,5 +174,8 @@ public class LoginMenu implements Screen {
     }
     public Game getGame() {
         return game;
+    }
+    public TextButton getForgetPassword() {
+        return forgetPassword;
     }
 }

@@ -98,12 +98,15 @@ public class MainMenuController {
     }
     public void handleUsernameLabel(){
         Label username=view.getUsername();
+        Label scoreLabel=view.getScore();
         User currentUser = App.getCurrentUser();
         if(currentUser!=null){
             username.setText(username.getText()+currentUser.getUsername());
+            scoreLabel.setText("SCORE: "+currentUser.getCharacter().getScore());
         }
         else {
             username.setText("not logged in yet!");
+            scoreLabel.setText("");
         }
     }
     public void handleAvatar(){

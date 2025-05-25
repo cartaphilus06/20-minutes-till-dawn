@@ -151,6 +151,9 @@ public class Map {
             }
         }
     }
+    public void deleteMap(){
+        allMaps.remove(this);
+    }
     public void reinitializeAssets(){
         this.background = new Texture(Gdx.files.internal("images/backgrounds/background.png"));
     }

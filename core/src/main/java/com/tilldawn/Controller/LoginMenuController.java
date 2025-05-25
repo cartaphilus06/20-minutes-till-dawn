@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.User.Question;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.LoginMenu;
 import com.tilldawn.View.MainMenu;
@@ -29,6 +30,40 @@ public class LoginMenuController {
                 view.getGame().setScreen(new MainMenu(view.getGame()));
             }
         });
+        view.getForgetPassword().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                view.setUpForgetUI();
+            }
+        });
+        view.getSubmit().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                forgetPassword();
+            }
+        });
+        view.getBackToLogin().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                view.setUpUI();
+            }
+        });
+    }
+    public void forgetPassword(){
+        String username=view.getUsernameField().getText();
+        String question=view.getQuestionField().getText();
+        String answer=view.getAnswerField().getText();
+        User user=User.getUser(username);
+        if(user==null){
+            AlertGenerator.showAlert("wrong username!","there is not such a user with this username!",view.getStage());
+            return;
+        }
+        if(!user.getSecurityQuestion().getQuestion().equals(question) ||
+            !user.getSecurityQuestion().getAnswer().equals(answer)){
+            AlertGenerator.showAlert("wrong security question","either your security question or answer is wrong!",view.getStage());
+            return;
+        }
+        AlertGenerator.showAlert("","your password: "+user.getPassword(),view.getStage());
     }
     public void login() {
         String username = view.getUsernameField().getText();

@@ -12,6 +12,7 @@ import com.tilldawn.Models.Enums.Weapon;
 import java.util.Random;
 
 public class Character {
+    private int killedMonsters;
     private Hero hero;
     private Weapon weapon;
     private Ability ability;
@@ -141,6 +142,12 @@ public class Character {
     }
     public void setAutoAim(boolean autoAim) {
         isAutoAim = autoAim;
+    }
+    public int getKilledMonsters(){
+        return killedMonsters;
+    }
+    public void setKilledMonsters(int killedMonsters) {
+        this.killedMonsters = killedMonsters;
     }
     @JsonIgnore
     public float getExpPerLevel(){
