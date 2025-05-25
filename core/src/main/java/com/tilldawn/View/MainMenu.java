@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.tilldawn.App;
 import com.tilldawn.Controller.MainMenuController;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Avatar;
@@ -29,6 +30,7 @@ public class MainMenu implements Screen {
     private TextButton hints;
     private TextButton preGame;
     private TextButton exit;
+    private TextButton continueGame;
     private Label username;
     private Animation<TextureRegion> walkAnimation;
     private float stateTime=0f;
@@ -123,27 +125,34 @@ public class MainMenu implements Screen {
         hints = new TextButton("HINTS", skin);
         preGame=new TextButton("PRE-GAME", skin);
         exit = new TextButton("EXIT", skin);
+        continueGame = new TextButton("CONTINUE GAME", skin);
         username=new Label("USERNAME: ", skin);
         username.setAlignment(Align.topLeft);
         float avatarImageYPosition=stage.getViewport().getWorldHeight()- Avatar.getHeight();
         float avatarImageXPosition=30;
         username.setPosition(avatarImageXPosition,avatarImageYPosition-40);
         float buttonSpacing = 15f;
-        table.add(register).padBottom(buttonSpacing).width(350).height(60);
+        float buttonWidth=350f;
+        if(App.getCurrentMap()!=null){
+            buttonWidth=420f;
+            table.add(continueGame).padBottom(buttonSpacing).width(buttonWidth).height(60);
+            table.row();
+        }
+        table.add(register).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(login).padBottom(buttonSpacing).width(350).height(60);
+        table.add(login).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(preGame).padBottom(buttonSpacing).width(350).height(60);
+        table.add(preGame).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(settings).padBottom(buttonSpacing).width(350).height(60);
+        table.add(settings).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(profile).padBottom(buttonSpacing).width(350).height(60);
+        table.add(profile).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(scoreBoard).padBottom(buttonSpacing).width(350).height(60);
+        table.add(scoreBoard).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(hints).padBottom(buttonSpacing).width(350).height(60);
+        table.add(hints).padBottom(buttonSpacing).width(buttonWidth).height(60);
         table.row();
-        table.add(exit).width(350).height(60);
+        table.add(exit).width(buttonWidth).height(60);
         stage.addActor(table);
         stage.addActor(username);
         stage.addActor(imagePortrait);
@@ -193,5 +202,8 @@ public class MainMenu implements Screen {
     }
     public Image getPortraitImage(){
         return imagePortrait;
+    }
+    public TextButton getContinueGame(){
+        return continueGame;
     }
 }

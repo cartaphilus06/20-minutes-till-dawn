@@ -90,6 +90,11 @@ public class MainMenuController {
                 view.getPortraitImage().setDrawable(new TextureRegionDrawable(new TextureRegion(textures[currentPortraitIndex])));
             }
         });
+        view.getContinueGame().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                view.getGame().setScreen(new GameMenu(App.getCurrentMap(),view.getGame()));
+            }
+        });
     }
     public void handleUsernameLabel(){
         Label username=view.getUsername();
