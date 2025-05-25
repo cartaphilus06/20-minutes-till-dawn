@@ -17,7 +17,7 @@ public class User {
     private String username;
     private String password;
     private Question securityQuestion;
-    private com.tilldawn.Models.Map.Character character;
+    private Character character;
     private Avatar avatar;
     private boolean stayLoggedIn;
     private BackgroundMusic backgroundMusic=BackgroundMusic.PRETTY_DUNGEON;

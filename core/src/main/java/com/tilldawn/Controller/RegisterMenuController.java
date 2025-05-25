@@ -2,6 +2,7 @@ package com.tilldawn.Controller;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.tilldawn.App;
 import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Enums.Register;
@@ -26,6 +27,12 @@ public class RegisterMenuController {
             public void clicked(InputEvent event, float x, float y) {
                 AssetManager.getUiClickSound().play();
                 view.getGame().setScreen(new MainMenu(view.getGame()));
+            }
+        });
+        view.getGuest().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                App.setCurrentUserAsGuest();
             }
         });
     }

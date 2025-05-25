@@ -25,6 +25,7 @@ public class RegisterMenu implements Screen {
     private TextField securityAnswerField;
     private TextButton registerButton;
     private TextButton backButton;
+    private TextButton guest;
     private float stateTime=0f;
     private final Texture title=AssetManager.get20minutesTillDawnLogo();
     private final Animation<TextureRegion> rightEyesAnimation =new Animation<>(1,AssetManager.getMenusRightEyes());
@@ -48,7 +49,7 @@ public class RegisterMenu implements Screen {
         Skin skin = AssetManager.getSkin();
         Table table = new Table();
         table.setFillParent(true);
-        table.center().padTop(500);
+        table.center().padTop(400);
 
         // Create UI elements
         Label security=new Label("CHOOSE A SECURITY QUESTION", skin);
@@ -63,11 +64,13 @@ public class RegisterMenu implements Screen {
         securityAnswerField.setMessageText("ANSWER");
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
+        guest=new TextButton("GUEST", skin);
 
         registerButton = new TextButton("REGISTER", skin);
         backButton = new TextButton("BACK", skin);
 
         table.defaults().pad(10);
+        table.add(guest).width(300).height(80).colspan(2).row();
 
         table.add(usernameField).width(300).height(80).colspan(2).row();
 
@@ -153,5 +156,8 @@ public class RegisterMenu implements Screen {
 
     public Game getGame() {
         return game;
+    }
+    public TextButton getGuest(){
+        return guest;
     }
 }

@@ -18,6 +18,7 @@ public class Main extends Game {
         main = this;
         batch = new SpriteBatch();
         User.loadUsers();
+        App.initializeGuest();
         if(App.getCurrentUser()==null) AssetManager.getDefaultMusic().play();
         else {
             App.getCurrentUser().getBackgroundMusic().getMusic().play();
