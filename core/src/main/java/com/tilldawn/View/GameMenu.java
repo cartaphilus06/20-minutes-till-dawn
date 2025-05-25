@@ -122,7 +122,7 @@ public class GameMenu implements Screen, InputProcessor {
         cheatField=new TextField("",AssetManager.getSkin());
         cheatField.setMessageText("write your cheat here");
         submitCheat=new TextButton("SUBMIT",AssetManager.getSkin());
-
+        controller.handleClickedButtons();
     }
 
     @Override
@@ -225,6 +225,10 @@ public class GameMenu implements Screen, InputProcessor {
                 AssetManager.getUiClickSound().play();
                 setPaused(!isPaused());
                 pauseMenuTable.remove();
+                if(controller.isAddLevel()){
+                    setLeveledUp(true);
+                    controller.setAddLevel(false);
+                }
             }
         });
         exitGame.addListener(new ClickListener(){

@@ -22,6 +22,7 @@ public class GameMenuController {
     private final MonsterController monsterController;
     private final BulletController bulletController;
     private final Map map;
+    private boolean isAddLevel=false;
     public GameMenuController(GameMenu view,Map map) {
         this.view = view;
         this.map = map;
@@ -70,7 +71,6 @@ public class GameMenuController {
         Character character=App.getCurrentUser().getCharacter();
         if(lessenTime.matches()){
             map.setRemainingTime((map.getRemainingTime()-60)<0?0:map.getRemainingTime()-60);
-            return;
         }
         if(lessenArbitraryTime.matches()){
             int amount;
@@ -81,21 +81,29 @@ public class GameMenuController {
                 return;
             }
             map.setRemainingTime((map.getRemainingTime()-amount)<0?0:map.getRemainingTime()-amount);
-            return;
         }
         if(addLevel.matches()){
             character.setLevel(App.getCurrentUser().getCharacter().getLevel()+1);
-            view.setLeveledUp(true);
-            return;
+            isAddLevel=true;
         }
         if(addHp.matches()){
             if(character.getCurrentHp()<character.getHP()){
                 character.setCurrentHp(character.getCurrentHp()+1);
             }
-            return;
+            else {
+                AlertGenerator.showAlert("","your hp is already full!",view.getStage());
+                return;
+            }
         }
         if(infiniteHp.matches()){
             character.setInfiniteHp(true);
         }
+        AlertGenerator.showAlert("","cheat used",view.getStage());
+    }
+    public boolean isAddLevel(){
+        return isAddLevel;
+    }
+    public void setAddLevel(boolean addLevel){
+        isAddLevel=addLevel;
     }
 }
