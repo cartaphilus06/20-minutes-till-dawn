@@ -75,7 +75,8 @@ public abstract class Monster {
         float dy = targetY - y;
         float distance=(float)Math.sqrt(dx*dx+dy*dy);
         if(sprite.getBoundingRectangle().overlaps(character.getSprite().getBoundingRectangle())){
-            character.setCurrentHp(character.getCurrentHp()-1);
+            if(!character.isInfiniteHp() && !character.isInvincible())
+                character.setCurrentHp(character.getCurrentHp()-1);
             App.getCurrentMap().getMonsters().remove(this);
             CharacterController.getCharacterController().handleInvincibility();
             return;

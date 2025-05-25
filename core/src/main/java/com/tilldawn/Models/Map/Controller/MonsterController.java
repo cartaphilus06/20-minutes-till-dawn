@@ -127,6 +127,7 @@ public class MonsterController {
                     bullet.update(Gdx.graphics.getDeltaTime());
                     bullet.draw(view.getStage().getBatch());
                     if(bullet.getBoundsBox().overlaps(characterRectangle)){
+                        if(character.isInfiniteHp() || character.isInvincible()) continue;
                         character.setCurrentHp(character.getCurrentHp()-1);
                         bullets.remove(i);
                         continue;

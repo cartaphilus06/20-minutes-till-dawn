@@ -135,7 +135,7 @@ public class CharacterController {
         float targetY=character.getY()+dy;
         float currentX=character.getX();
         float currentY=character.getY();
-        if(character.isInvincible()) return;
+        if(character.isInvincible() || character.isInfiniteHp()) return;
         for(Monster monster: map.getMonsters()){
             Rectangle monsterRectangle=monster.getSprite().getBoundingRectangle();
             if(monsterRectangle.contains(targetX,targetY) || monsterRectangle.contains(currentX,currentY)){
