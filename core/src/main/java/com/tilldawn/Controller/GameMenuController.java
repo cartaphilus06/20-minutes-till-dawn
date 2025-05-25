@@ -1,10 +1,18 @@
 package com.tilldawn.Controller;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tilldawn.App;
+import com.tilldawn.Models.AlertGenerator;
+import com.tilldawn.Models.AssetManager;
+import com.tilldawn.Models.Enums.CheatCodes;
+import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Controller.*;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.View.GameMenu;
+
+import java.util.regex.Matcher;
 
 public class GameMenuController {
     private final GameMenu view;
@@ -43,5 +51,51 @@ public class GameMenuController {
     }
     public void dispose(){
         mapController.dispose();
+    }
+    public void handleClickedButtons(){
+        view.getSubmitCheat().addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                cheat();
+            }
+        });
+    }
+    public void cheat(){
+        String input=view.getCheatField().getText();
+        Matcher lessenTime= CheatCodes.LESSEN_TIME.getMatcher(input);
+        Matcher lessenArbitraryTime= CheatCodes.LESSEN_ARBITRARY_TIME.getMatcher(input);
+        Matcher addLevel=CheatCodes.ADD_LEVEL.getMatcher(input);
+        Matcher addHp=CheatCodes.ADD_HP.getMatcher(input);
+        Matcher infiniteHp=CheatCodes.INFINITE_HP.getMatcher(input);
+        Character character=App.getCurrentUser().getCharacter();
+        if(lessenTime.matches()){
+            map.setRemainingTime((map.getRemainingTime()-60)<0?0:map.getRemainingTime()-60);
+            return;
+        }
+        if(lessenArbitraryTime.matches()){
+            int amount;
+            try{
+                amount=Integer.parseInt(lessenArbitraryTime.group("amount"));
+            } catch (NumberFormatException e){
+                AlertGenerator.showAlert("","please enter a valid number!",view.getStage());
+                return;
+            }
+            map.setRemainingTime((map.getRemainingTime()-amount)<0?0:map.getRemainingTime()-amount);
+            return;
+        }
+        if(addLevel.matches()){
+            character.setLevel(App.getCurrentUser().getCharacter().getLevel()+1);
+            view.setLeveledUp(true);
+            return;
+        }
+        if(addHp.matches()){
+            if(character.getCurrentHp()<character.getHP()){
+                character.setCurrentHp(character.getCurrentHp()+1);
+            }
+            return;
+        }
+        if(infiniteHp.matches()){
+            character.setInfiniteHp(true);
+        }
     }
 }

@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -21,6 +18,8 @@ import com.tilldawn.Models.Ability.DefaultAbility;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
+
+import java.util.Scanner;
 
 public class GameMenu implements Screen, InputProcessor {
     private final GameMenuController controller;
@@ -37,6 +36,8 @@ public class GameMenu implements Screen, InputProcessor {
     private boolean leveledUp = false;
     private float stateTime;
     private float abilityTimer;
+    private TextField cheatField;
+    private TextButton submitCheat;
     public GameMenu(Game game,int minutes) {
         this.game = game;
         Map.removeMapIfExists();
@@ -118,7 +119,10 @@ public class GameMenu implements Screen, InputProcessor {
     public void show() {
         stage=new Stage(new FitViewport(1920,1080));
         Gdx.input.setInputProcessor(this);
-        Skin skin= AssetManager.getSkin();
+        cheatField=new TextField("",AssetManager.getSkin());
+        cheatField.setMessageText("write your cheat here");
+        submitCheat=new TextButton("SUBMIT",AssetManager.getSkin());
+
     }
 
     @Override
@@ -243,6 +247,10 @@ public class GameMenu implements Screen, InputProcessor {
             count++;
         }
         if(count==1 || count==0) pauseMenuTable.row();
+        pauseMenuTable.add(cheatField).width(400).height(80).colspan(2);
+        pauseMenuTable.row();
+        pauseMenuTable.add(submitCheat).width(400).height(60).colspan(2);
+        pauseMenuTable.row();
         pauseMenuTable.add(resume).width(400).height(60).colspan(2);
         pauseMenuTable.row();
         pauseMenuTable.add(exitGame).width(400).height(60).colspan(2);
@@ -281,5 +289,11 @@ public class GameMenu implements Screen, InputProcessor {
             selectAbilityTable.add(button).width(300).height(60).row();
         }
         stage.addActor(selectAbilityTable);
+    }
+    public TextField getCheatField(){
+        return cheatField;
+    }
+    public TextButton getSubmitCheat(){
+        return submitCheat;
     }
 }

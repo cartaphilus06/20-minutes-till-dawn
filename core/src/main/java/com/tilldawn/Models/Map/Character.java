@@ -34,6 +34,7 @@ public class Character {
     private int currentAmmo;
     private boolean isInvincible=false;
     private boolean isAutoAim=false;
+    private boolean isInfiniteHp=false;
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
@@ -148,6 +149,12 @@ public class Character {
     }
     public void setKilledMonsters(int killedMonsters) {
         this.killedMonsters = killedMonsters;
+    }
+    public boolean isInfiniteHp(){
+        return isInfiniteHp;
+    }
+    public void setInfiniteHp(boolean infiniteHp) {
+        this.isInfiniteHp = infiniteHp;
     }
     @JsonIgnore
     public float getExpPerLevel(){
