@@ -30,6 +30,7 @@ public class Map {
         characterUsername= App.getCurrentUser().getUsername();
         allMaps.add(this);
         App.setCurrentMap(this);
+        App.getCurrentUser().getCharacter().reinitialize();
     }
     @JsonIgnore
     public Texture getBackground() {

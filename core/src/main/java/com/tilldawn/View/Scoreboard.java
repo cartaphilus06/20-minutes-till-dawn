@@ -112,13 +112,15 @@ public class Scoreboard implements Screen {
             builder.append("username: ").append(u.getUsername()).append(" | ")
                 .append("score: ").append(character.getScore()).append(" | ")
                 .append("kills: ").append(character.getKilledMonsters()).append(" | ")
-                .append("most survival: ").append((int)character.getMostSurvival())
-                .append("\n");
+                .append("most survival: ").append((int)character.getMostSurvival());
+            if(App.getCurrentUser()!=null)
+                if(u.getUsername().equals(App.getCurrentUser().getUsername()))
+                    builder.append(" (logged in)");
+            builder.append("\n");
             Label user=new Label(builder.toString(),skin);
             if(index==0) user.setColor(Color.RED);
             if(index==1) user.setColor(Color.GREEN);
             if(index==2) user.setColor(Color.BLUE);
-            if(u.getUsername().equals(App.getCurrentUser().getUsername())) user.setColor(Color.BROWN);
             index++;
             root.row();
             root.add(user).width(600).height(60).colspan(6);
@@ -145,8 +147,5 @@ public class Scoreboard implements Screen {
     }
     public Stage getStage() {
         return stage;
-    }
-    public ArrayList<User> getAllUsers() {
-        return allUsers;
     }
 }

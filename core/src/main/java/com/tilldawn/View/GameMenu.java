@@ -9,16 +9,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.tilldawn.App;
 import com.tilldawn.Controller.GameMenuController;
 import com.tilldawn.Models.Ability.Ability;
 import com.tilldawn.Models.Ability.DefaultAbility;
+import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.User.User;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class GameMenu implements Screen, InputProcessor {
     private final GameMenuController controller;
@@ -33,10 +38,12 @@ public class GameMenu implements Screen, InputProcessor {
     private Table pauseMenuTable;
     private Table selectAbilityTable;
     private boolean leveledUp = false;
+    private boolean timeAbility = false;
     private float stateTime;
     private float abilityTimer;
     private TextField cheatField;
     private TextButton submitCheat;
+    private Ability lastAbility=null;
     public GameMenu(Game game,int minutes) {
         this.game = game;
         Map.removeMapIfExists();
@@ -136,8 +143,8 @@ public class GameMenu implements Screen, InputProcessor {
             controller.update();
             stage.getBatch().end();
             stateTime+=delta;
-            abilityTimer += delta;
         }
+        handleTimeAbility(delta);
         stage.act(delta);
         stage.draw();
     }
@@ -255,15 +262,16 @@ public class GameMenu implements Screen, InputProcessor {
         pauseMenuTable.row();
         Label ab=new Label("acquired abilities:",skin);
         pauseMenuTable.add(ab).width(400).height(60).colspan(2);
+        pauseMenuTable.row();
         int count=0;
         while(!(abilities instanceof DefaultAbility)){
             Label ability=new Label(abilities.getName(),skin);
-            if(count%2==0) pauseMenuTable.row();
             pauseMenuTable.add(ability).width(200).height(60).colspan(1);
             abilities=abilities.getAbility();
+            if(count%2==1) pauseMenuTable.row();
             count++;
         }
-        if(count==1 || count==0) pauseMenuTable.row();
+        if(count%2==1) pauseMenuTable.row();
         pauseMenuTable.add(cheatField).width(400).height(80).colspan(2);
         pauseMenuTable.row();
         pauseMenuTable.add(submitCheat).width(400).height(60).colspan(2);
@@ -290,22 +298,27 @@ public class GameMenu implements Screen, InputProcessor {
         for(TextButton button:abilities){
             button.addListener(new ClickListener(){
                 public void clicked(InputEvent event,float x,float y) {
+                    if(timeAbility){
+                        AlertGenerator.showAlert("","ability won't be applied!",stage);
+                        return;
+                    }
                     abilityTimer=0;
                     AssetManager.getUiClickSound().play();
-                    character.setLastAbility(character.getAbility());
+                    if(button.getText().toString().equals("DAMAGER") || button.getText().toString().equals("SPEEDY")) {
+                        setLastAbility(character.getAbility());
+                        timeAbility=true;
+                    }
                     character.setAbility(Ability.getInstance(button.getText().toString(),character.getAbility()));
                     setLeveledUp(false);
-                    if(button.getText().toString().equals("DAMAGER") || button.getText().toString().equals("SPEEDY")){
-                        Timer.schedule(new Timer.Task() {
-                            @Override
-                            public void run() {
-                                character.setAbility(character.getLastAbility());
-                            }
-                        },10,0);
-                    }
                 }
             });
-            selectAbilityTable.add(button).width(300).height(60).row();
+        }
+        ArrayList<TextButton> list=new ArrayList<>(List.of(abilities));
+        Collections.shuffle(list,new Random());
+        for(int i=0;i<3;i++){
+            TextButton button=list.get(i);
+            selectAbilityTable.row();
+            selectAbilityTable.add(button).width(400).height(60).colspan(2);
         }
         stage.addActor(selectAbilityTable);
     }
@@ -314,5 +327,23 @@ public class GameMenu implements Screen, InputProcessor {
     }
     public TextButton getSubmitCheat(){
         return submitCheat;
+    }
+    public void handleTimeAbility(float delta) {
+        if (!timeAbility) return;
+
+        abilityTimer += delta;
+
+        if (abilityTimer >= 10) {
+            abilityTimer = 0;
+            timeAbility = false;
+            Character character = App.getCurrentUser().getCharacter();
+            if (lastAbility != null) {
+                character.setAbility(lastAbility);
+            }
+            lastAbility = null;
+        }
+    }
+    public void setLastAbility(Ability ability){
+        lastAbility=ability;
     }
 }

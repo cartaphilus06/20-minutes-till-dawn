@@ -16,7 +16,6 @@ public class Character {
     private Hero hero;
     private Weapon weapon;
     private Ability ability;
-    private Ability lastAbility;
     private int score;
     private float stateTime=0;
     private boolean autoReload=true;
@@ -39,7 +38,6 @@ public class Character {
     public Character(){
         Random rand = new Random();
         ability = new DefaultAbility();
-        lastAbility = null;
         hero=Hero.values()[rand.nextInt(Hero.values().length)];
         weapon=Weapon.values()[rand.nextInt(Weapon.values().length)];
         score=0;
@@ -72,12 +70,6 @@ public class Character {
     }
     public void setAbility(Ability ability) {
         this.ability = ability;
-    }
-    public Ability getLastAbility() {
-        return lastAbility;
-    }
-    public void setLastAbility(Ability lastAbility) {
-        this.lastAbility = lastAbility;
     }
     public boolean getAutoReload() {
         return autoReload;
@@ -239,5 +231,16 @@ public class Character {
     public float getSpeed(){
         float speed=ability.getSpeed(hero.getSpeed());
         return isRunning()?speed:speed/2f;
+    }
+    @JsonIgnore
+    public void reinitialize(){
+        setAbility(new DefaultAbility());
+        setLevel(1);
+        setCurrentExp(0);
+        setCurrentAmmo(getMaxAmmo());
+        setCurrentHp(getHP());
+        setInfiniteHp(false);
+        setAutoAim(false);
+        setInvincible(false);
     }
 }
