@@ -161,10 +161,17 @@ public class Map {
     public static void removeMapIfExists(){
         String username=App.getCurrentUser().getUsername();
         for(int i=allMaps.size()-1;i>=0;i--){
-            if(allMaps.get(i).getCharacterUsername().equals(username)) {
+            Map map=allMaps.get(i);
+            if(map.getCharacterUsername().equals(username)) {
                 allMaps.remove(i);
                 return;
             }
+        }
+    }
+    public static void removeEndedMaps(){
+        for(int i=allMaps.size()-1;i>=0;i--){
+            Map map=allMaps.get(i);
+            if(map.getRemainingTime()<=0) allMaps.remove(i);
         }
     }
     public static ArrayList<Map> getAllMaps(){

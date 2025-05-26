@@ -23,6 +23,7 @@ public class Main extends Game {
         else {
             App.getCurrentUser().getBackgroundMusic().getMusic().play();
             Map.loadMaps();
+            Map.removeMapIfExists();
         }
         setScreen(new MainMenu(this));
     }

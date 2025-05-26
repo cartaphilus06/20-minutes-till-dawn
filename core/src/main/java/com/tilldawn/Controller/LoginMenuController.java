@@ -89,6 +89,9 @@ public class LoginMenuController {
         }
         App.setCurrentMap(null);
         user.setStayLoggedIn(true);
+        Map.loadMaps();
+        Map.removeEndedMaps();
+        Map.removeMapIfExists();
         App.setCurrentUser(user);
         for(Map map:Map.getAllMaps()){
             if(map.getCharacterUsername().equals(username)) {
