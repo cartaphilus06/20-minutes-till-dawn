@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.Models.Ability.Ability;
 import com.tilldawn.Models.Ability.DefaultAbility;
+import com.tilldawn.Models.Ability.Vitality;
 import com.tilldawn.Models.CollisionRect;
 import com.tilldawn.Models.Enums.Hero;
 import com.tilldawn.Models.Enums.Weapon;
@@ -70,6 +71,7 @@ public class Character {
     }
     public void setAbility(Ability ability) {
         this.ability = ability;
+        if(ability instanceof Vitality) setCurrentHp(getHP()+1);
     }
     public boolean getAutoReload() {
         return autoReload;

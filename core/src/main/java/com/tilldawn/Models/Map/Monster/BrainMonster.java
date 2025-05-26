@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tilldawn.Models.AssetManager;
 
 public class BrainMonster extends Monster {
     @JsonIgnore
     private Animation<TextureRegion> animation;
+    private Animation<TextureRegion> deathAnimation;
     public BrainMonster() {}
     public BrainMonster(float worldX, float worldY) {
         super(worldX, worldY);
@@ -19,6 +21,7 @@ public class BrainMonster extends Monster {
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles = TextureRegion.split(monsterTexture, getWidth(), getHeight());
         animation=new Animation<>(0.2f, tiles[0]);
+        deathAnimation= AssetManager.getDeathAnimation();
         this.sprite=new Sprite(tiles[0][0]);
         this.sprite.setSize(getWidth()*2,getHeight()*2);
     }
@@ -27,6 +30,12 @@ public class BrainMonster extends Monster {
         TextureRegion currentFrame=animation.getKeyFrame(stateTime);
         animation.setPlayMode(Animation.PlayMode.LOOP);
         if(isFacingLeft ^ currentFrame.isFlipX()) currentFrame.flip(true, false);
+        sprite.setRegion(currentFrame);
+        super.draw(batch);
+    }
+
+    public void drawDeathAnimation(Batch batch){
+        TextureRegion currentFrame=deathAnimation.getKeyFrame(stateTime, true);
         sprite.setRegion(currentFrame);
         super.draw(batch);
     }
@@ -47,6 +56,7 @@ public class BrainMonster extends Monster {
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles = TextureRegion.split(monsterTexture, getWidth(), getHeight());
         animation=new Animation<>(0.2f, tiles[0]);
+        deathAnimation= AssetManager.getDeathAnimation();
         this.sprite=new Sprite(tiles[0][0]);
         this.sprite.setSize(getWidth()*2,getHeight()*2);
     }

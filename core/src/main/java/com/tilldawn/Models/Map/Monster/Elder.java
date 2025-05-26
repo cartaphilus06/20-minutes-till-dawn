@@ -2,22 +2,34 @@ package com.tilldawn.Models.Map.Monster;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.tilldawn.Models.AssetManager;
 
 public class Elder extends Monster {
+    private Animation<TextureRegion> deathAnimation;
     public Elder() {}
     public Elder(float worldX, float worldY) {
         super(worldX, worldY);
         setHp(400);
         setInternalPath("images/Texture2D/ElderBrain.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
+        deathAnimation= AssetManager.getDeathAnimation();
         this.sprite=new Sprite(monsterTexture);
         this.sprite.setSize(getWidth()*2, getHeight()*2);
     }
 
     public void draw(Batch batch) {
         if(isFacingLeft ^ sprite.isFlipX()) sprite.flip(true, false);
+        super.draw(batch);
+    }
+
+    public void drawDeathAnimation(Batch batch){
+        stateTime=0;
+        TextureRegion currentFrame=deathAnimation.getKeyFrame(stateTime, true);
+        sprite.setRegion(currentFrame);
         super.draw(batch);
     }
 
@@ -35,6 +47,7 @@ public class Elder extends Monster {
     public void reinitializeAssets() {
         setInternalPath("images/Texture2D/ElderBrain.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
+        deathAnimation= AssetManager.getDeathAnimation();
         this.sprite=new Sprite(monsterTexture);
         this.sprite.setSize(getWidth()*2, getHeight()*2);
     }

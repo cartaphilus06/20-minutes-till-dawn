@@ -1,6 +1,7 @@
 package com.tilldawn.Models.Map.Controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.tilldawn.App;
@@ -22,6 +23,7 @@ public class MonsterController {
     private final Map map;
     private final Character character;
     private final ArrayList<Monster> allMonsters;
+    private final ArrayList<Monster> deadMonsters;
     private float brainMonsterSpawnTimer;
     private float elderSpawnTimer;
     private float eyebatSpawnTimer;
@@ -31,10 +33,12 @@ public class MonsterController {
         this.map = map;
         this.character = character;
         allMonsters=map.getMonsters();
+        deadMonsters=new ArrayList<>();
         spawnTrees();
     }
     public void update(){
         drawMonsters(view.getStage().getBatch());
+        drawDeadMonsters(view.getStage().getBatch());
         updateMonsters();
         spawnBrainMonster();
         spawnElder();
@@ -88,16 +92,28 @@ public class MonsterController {
         for(int i=allMonsters.size()-1;i>=0;i--){
             Monster monster=allMonsters.get(i);
             if(monster.getHp()<0) {
+                monster.setStateTime(0);
+                deadMonsters.add(monster);
                 allMonsters.remove(i);
                 map.addExp(new Exp(monster.getX(),monster.getY()));
                 character.setKilledMonsters(character.getKilledMonsters()+1);
             }
             monster.update(Gdx.graphics.getDeltaTime());
         }
+        for(int i=deadMonsters.size()-1;i>=0;i--){
+            Monster monster=deadMonsters.get(i);
+            monster.updateWithoutMove(Gdx.graphics.getDeltaTime());
+            if(monster.getStateTime()>=0.6f) deadMonsters.remove(i);
+        }
     }
     public void drawMonsters(Batch batch){
         for(Monster monster:allMonsters){
             monster.draw(batch);
+        }
+    }
+    public void drawDeadMonsters(Batch batch){
+        for(Monster monster:deadMonsters){
+            monster.drawDeathAnimation(batch);
         }
     }
     public void spawnTrees(){

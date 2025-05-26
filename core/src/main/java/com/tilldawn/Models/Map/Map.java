@@ -22,6 +22,7 @@ public class Map {
     private ArrayList<Exp> allExps=new ArrayList<>();
     private String characterUsername;
     private int score;
+    private int kills;
     public Map(){}
     public Map(int time) {
         this.time = time;
@@ -174,5 +175,11 @@ public class Map {
     }
     public void setScore(int score){
         this.score = score;
+    }
+    public int getKills(){
+        return kills;
+    }
+    public void setKills(int kills){
+        this.kills = kills;
     }
 }

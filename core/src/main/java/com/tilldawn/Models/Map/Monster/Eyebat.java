@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tilldawn.App;
+import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Bullet;
 import com.tilldawn.Models.Map.Character;
 
@@ -17,6 +18,7 @@ public class Eyebat extends Monster {
     @JsonIgnore
     private float shootTimer;
     private Animation<TextureRegion> animation;
+    private Animation<TextureRegion> deathAnimation;
     @JsonIgnore
     private ArrayList<Bullet> bullets=new ArrayList<>();
     public Eyebat() {}
@@ -27,6 +29,7 @@ public class Eyebat extends Monster {
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles=TextureRegion.split(monsterTexture,getWidth(),getHeight());
         animation=new Animation<>(0.2f,tiles[0]);
+        deathAnimation= AssetManager.getDeathAnimation();
         this.sprite=new Sprite(tiles[0][0]);
         this.sprite.setSize(getWidth(),getHeight());
     }
@@ -34,6 +37,12 @@ public class Eyebat extends Monster {
     public void draw(Batch batch){
         TextureRegion currentFrame=animation.getKeyFrame(stateTime, true);
         if(isFacingLeft ^ currentFrame.isFlipX()) currentFrame.flip(true, false);
+        sprite.setRegion(currentFrame);
+        super.draw(batch);
+    }
+    public void drawDeathAnimation(Batch batch){
+        stateTime=0;
+        TextureRegion currentFrame=deathAnimation.getKeyFrame(stateTime, true);
         sprite.setRegion(currentFrame);
         super.draw(batch);
     }
@@ -70,6 +79,7 @@ public class Eyebat extends Monster {
         setInternalPath("images/Texture2D/T_EyeBat.png");
         setTexture(new Texture(Gdx.files.internal(getInternalPath())));
         TextureRegion[][] tiles=TextureRegion.split(monsterTexture,getWidth(),getHeight());
+        deathAnimation= AssetManager.getDeathAnimation();
         animation=new Animation<>(0.2f,tiles[0]);
         this.sprite=new Sprite(tiles[0][0]);
         this.sprite.setSize(getWidth(),getHeight());

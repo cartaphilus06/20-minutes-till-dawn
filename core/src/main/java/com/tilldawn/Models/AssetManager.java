@@ -24,6 +24,8 @@ public class AssetManager {
     private final Music uiClicks;
     private final Music shotSound;
     private final Music reloadSound;
+    private final Texture deathTexture;
+    private final TextureRegion[][] deathTiles;
     private final AssetHelper heart=new AssetHelper(new Texture(Gdx.files.internal("images/Texture2D/T_HeartAnimation.png")),32,32,0.3f);
     private AssetManager(){
         skin=new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
@@ -34,6 +36,8 @@ public class AssetManager {
         shotSound.setVolume(1f);
         reloadSound.setVolume(1f);
         heart.setAnimation();
+        deathTexture=new Texture(Gdx.files.internal("images/Texture2D/T_DeathFX.png"));
+        deathTiles=TextureRegion.split(deathTexture,40,40);
     }
     public static Skin getSkin(){
         return assetManager.skin;
@@ -118,5 +122,8 @@ public class AssetManager {
     }
     public static Texture getEggIcon(){
         return new Texture(Gdx.files.internal("images/Texture2D/T_DragonEgg.png"));
+    }
+    public static Animation<TextureRegion> getDeathAnimation(){
+        return new Animation<>(0.15f,assetManager.deathTiles[0]);
     }
 }

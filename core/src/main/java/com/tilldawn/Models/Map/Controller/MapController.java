@@ -33,6 +33,7 @@ public class MapController {
     private final Texture ammoIcon;
     private BitmapFont ammo;
     private BitmapFont timeLabel;
+    private BitmapFont kills;
 
     public MapController(GameMenu view, Character character, CharacterController characterController, Map map) {
         this.view = view;
@@ -49,6 +50,7 @@ public class MapController {
         setAmmo();
         setPixel();
         setTimeLabel();
+        setKills();
     }
 
     public void update() {
@@ -64,6 +66,7 @@ public class MapController {
         drawAmmo(batch);
         drawTimeLabel(batch);
         drawExps(batch);
+        drawKills(batch);
         handleExps();
         handleWin();
         map.setRemainingTime(map.getRemainingTime()-Gdx.graphics.getDeltaTime());
@@ -105,6 +108,13 @@ public class MapController {
         batch.draw(ammoIcon, x, y, width, height);
         float numberX=x+width;
         ammo.draw(batch,character.getCurrentAmmo()+"/"+character.getMaxAmmo(),numberX,y+40);
+    }
+
+    public void drawKills(Batch batch) {
+        float x=camera.position.x - camera.viewportWidth / 2 + 32;
+        float y=camera.position.y + camera.viewportHeight / 2f - 64 - getBarHeight() - ammoIcon.getHeight()*2f - 10;
+        String kill="KILLS: "+map.getKills();
+        kills.draw(batch, kill, x, y);
     }
 
     public void drawTimeLabel(Batch batch) {
@@ -163,6 +173,13 @@ public class MapController {
         timeLabel=generator.generateFont(parameter);
         generator.dispose();
     }
+    public void setKills(){
+        FreeTypeFontGenerator generator=new FreeTypeFontGenerator(Gdx.files.internal("fonts/PressStart2P.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter=new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size=getLevelSize();
+        kills=generator.generateFont(parameter);
+        generator.dispose();
+    }
     public int getLevelSize(){
         return 32;
     }
@@ -184,6 +201,7 @@ public class MapController {
     public void handleWin(){
         if(map.getRemainingTime()<0){
             character.setScore(character.getScore()+map.getScore());
+            character.setKilledMonsters(character.getKilledMonsters()+map.getKills());
             view.getGame().setScreen(new WinMenu(view.getGame()));
         }
     }

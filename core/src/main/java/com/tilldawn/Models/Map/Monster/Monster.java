@@ -1,8 +1,10 @@
 package com.tilldawn.Models.Map.Monster;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -68,6 +70,9 @@ public abstract class Monster {
         shoot();
         stateTime+=delta;
     }
+    public void updateWithoutMove(float delta){
+        stateTime+=delta;
+    }
     public void move(float targetX, float targetY,float delta) {
         if(this instanceof Tree) return;
         Character character= App.getCurrentUser().getCharacter();
@@ -96,6 +101,15 @@ public abstract class Monster {
         sprite.draw(batch);
     }
     @JsonIgnore
+    public float getStateTime() {
+        return stateTime;
+    }
+    @JsonIgnore
+    public void setStateTime(float stateTime) {
+        this.stateTime = stateTime;
+    }
+    public void drawDeathAnimation(Batch batch){}
+    @JsonIgnore
     public void setTexture(Texture texture){
         monsterTexture = texture;
     }
@@ -104,6 +118,7 @@ public abstract class Monster {
     protected String getInternalPath() {
         return internalPath;
     }
+
     @JsonIgnore
     public Sprite getSprite() {
         return sprite;

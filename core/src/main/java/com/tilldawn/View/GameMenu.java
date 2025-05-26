@@ -18,6 +18,7 @@ import com.tilldawn.Models.AlertGenerator;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.RandomNum;
 import com.tilldawn.Models.User.User;
 
 import java.util.ArrayList;
@@ -289,6 +290,7 @@ public class GameMenu implements Screen, InputProcessor {
         selectAbilityTable=new Table();
         selectAbilityTable.setFillParent(true);
         selectAbilityTable.center();
+        TextButton randomAbility=new TextButton("RANDOM",skin);
         TextButton damager=new TextButton("DAMAGER",skin);
         TextButton speedy=new TextButton("SPEEDY",skin);
         TextButton vitality=new TextButton("VITALITY",skin);
@@ -298,12 +300,12 @@ public class GameMenu implements Screen, InputProcessor {
         for(TextButton button:abilities){
             button.addListener(new ClickListener(){
                 public void clicked(InputEvent event,float x,float y) {
+                    AssetManager.getUiClickSound().play();
                     if(timeAbility){
                         AlertGenerator.showAlert("","ability won't be applied!",stage);
                         return;
                     }
                     abilityTimer=0;
-                    AssetManager.getUiClickSound().play();
                     if(button.getText().toString().equals("DAMAGER") || button.getText().toString().equals("SPEEDY")) {
                         setLastAbility(character.getAbility());
                         timeAbility=true;
@@ -313,8 +315,31 @@ public class GameMenu implements Screen, InputProcessor {
                 }
             });
         }
+        randomAbility.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                AssetManager.getUiClickSound().play();
+                if (timeAbility) {
+                    AlertGenerator.showAlert("", "Ability won't be applied!", stage);
+                    return;
+                }
+                int index = RandomNum.getRandomNumber(0, abilities.length);
+                TextButton selectedButton = abilities[index];
+                String selectedAbility = selectedButton.getText().toString();
+                abilityTimer = 0;
+                if (selectedAbility.equals("DAMAGER") || selectedAbility.equals("SPEEDY")) {
+                    setLastAbility(character.getAbility());
+                    timeAbility = true;
+                }
+                character.setAbility(Ability.getInstance(selectedAbility, character.getAbility()));
+                setLeveledUp(false);
+            }
+        });
+
         ArrayList<TextButton> list=new ArrayList<>(List.of(abilities));
         Collections.shuffle(list,new Random());
+        selectAbilityTable.row();
+        selectAbilityTable.add(randomAbility).width(400).height(60).colspan(2);
         for(int i=0;i<3;i++){
             TextButton button=list.get(i);
             selectAbilityTable.row();
