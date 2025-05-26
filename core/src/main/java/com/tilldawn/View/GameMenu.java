@@ -259,7 +259,7 @@ public class GameMenu implements Screen, InputProcessor {
                 character.setKilledMonsters(map.getKills()+character.getKilledMonsters());
                 map.deleteMap();
                 User.saveUsers();
-                Gdx.app.exit();
+                game.setScreen(new GameOverMenu(game));
             }
         });
         Ability abilities=character.getAbility();

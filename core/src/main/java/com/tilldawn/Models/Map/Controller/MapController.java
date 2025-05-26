@@ -11,10 +11,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
+import com.tilldawn.App;
 import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Exp;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.Map.Monster.BrainMonster;
+import com.tilldawn.Models.Map.Monster.Monster;
+import com.tilldawn.Models.Map.Monster.Tree;
 import com.tilldawn.Models.User.User;
 import com.tilldawn.View.GameMenu;
 import com.tilldawn.View.WinMenu;
@@ -70,6 +75,7 @@ public class MapController {
         drawKills(batch);
         handleExps();
         handleWin();
+        handleAutoAim();
         map.setRemainingTime(map.getRemainingTime()-Gdx.graphics.getDeltaTime());
         stateTime += Gdx.graphics.getDeltaTime();
     }
@@ -208,5 +214,55 @@ public class MapController {
             User.saveUsers();
             view.getGame().setScreen(new WinMenu(view.getGame()));
         }
+    }
+    public void handleAutoAim(){
+        if(Gdx.input.isKeyJustPressed(App.getCurrentUser().getMovingKeys().getAutoAim())){
+            character.setAutoAim(!character.isAutoAim());
+        }
+        if(character.isAutoAim()){
+            ArrayList<Monster> allMonster=map.getAllMonsters();
+            if(allMonster.isEmpty()) return;
+            Monster closest = getClosest(allMonster);
+            if(closest!=null){
+                float monsterWorldX=closest.getX();
+                float monsterWorldY=closest.getY();
+                if(closest instanceof BrainMonster) {
+                    monsterWorldX+=closest.getWidth();
+                    monsterWorldY+=closest.getHeight();
+                } else{
+                    monsterWorldX+=closest.getWidth()/2f;
+                    monsterWorldY+=closest.getHeight()/2f;
+                }
+                Vector3 screenCoords=camera.project(new Vector3(monsterWorldX,monsterWorldY,0));
+                int screenX=(int) screenCoords.x;
+                int screenY=Gdx.graphics.getHeight()-(int)screenCoords.y;
+                Gdx.input.setCursorPosition(screenX,screenY);
+            }
+        }
+    }
+
+    private Monster getClosest(ArrayList<Monster> allMonster) {
+        Monster closest=null;
+        float distance=Float.MAX_VALUE;
+        float cx=character.getX()+character.getHeroWidth()/2f;
+        float cy=character.getY()+character.getHeroHeight()/2f;
+        for(Monster monster: allMonster){
+            if(monster instanceof Tree) continue;
+            float mx=monster.getX();
+            float my=monster.getY();
+            if(monster instanceof BrainMonster) {
+                mx+=monster.getWidth();
+                my+=monster.getHeight();
+            } else{
+                mx+=monster.getWidth()/2f;
+                my+=monster.getHeight()/2f;
+            }
+            float dist2=(cx-mx)*(cx-mx)+(cy-my)*(cy-my);
+            if(dist2<distance){
+                distance=dist2;
+                closest=monster;
+            }
+        }
+        return closest;
     }
 }
