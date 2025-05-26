@@ -10,7 +10,9 @@ import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Map;
 import com.tilldawn.Models.Map.Monster.Monster;
 import com.tilldawn.Models.User.MovingKeys;
+import com.tilldawn.Models.User.User;
 import com.tilldawn.View.GameMenu;
+import com.tilldawn.View.GameOverMenu;
 
 public class CharacterController {
     private static CharacterController characterController;
@@ -118,7 +120,13 @@ public class CharacterController {
     }
     public void handleHp(){
         if(character.getCurrentHp()<=0){
-            //gameOver
+            character.setKilledMonsters(map.getKills()+character.getKilledMonsters());
+            float elapsedTime=map.getTime()-map.getRemainingTime();
+            if(character.getMostSurvival()<elapsedTime) character.setMostSurvival(elapsedTime);
+            map.setScore((int)(map.getKills()*elapsedTime));
+            character.setScore(map.getScore()+character.getScore());
+            User.saveUsers();
+            view.getGame().setScreen(new GameOverMenu(view.getGame()));
         }
     }
     public void handleExp(){

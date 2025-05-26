@@ -41,7 +41,6 @@ public class Eyebat extends Monster {
         super.draw(batch);
     }
     public void drawDeathAnimation(Batch batch){
-        stateTime=0;
         TextureRegion currentFrame=deathAnimation.getKeyFrame(stateTime, true);
         sprite.setRegion(currentFrame);
         super.draw(batch);

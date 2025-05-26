@@ -254,6 +254,9 @@ public class GameMenu implements Screen, InputProcessor {
                 AssetManager.getUiClickSound().play();
                 float elapsedTime=map.getTime()-map.getRemainingTime();
                 if(character.getMostSurvival()<elapsedTime) character.setMostSurvival(elapsedTime);
+                map.setScore(map.getKills()*map.getKills());
+                character.setScore(map.getScore()+character.getScore());
+                character.setKilledMonsters(map.getKills()+character.getKilledMonsters());
                 map.deleteMap();
                 User.saveUsers();
                 Gdx.app.exit();

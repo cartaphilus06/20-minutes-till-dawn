@@ -15,6 +15,7 @@ import com.tilldawn.Models.AssetManager;
 import com.tilldawn.Models.Map.Character;
 import com.tilldawn.Models.Map.Exp;
 import com.tilldawn.Models.Map.Map;
+import com.tilldawn.Models.User.User;
 import com.tilldawn.View.GameMenu;
 import com.tilldawn.View.WinMenu;
 
@@ -200,8 +201,11 @@ public class MapController {
     }
     public void handleWin(){
         if(map.getRemainingTime()<0){
+            map.setScore(map.getKills()*map.getTime());
             character.setScore(character.getScore()+map.getScore());
             character.setKilledMonsters(character.getKilledMonsters()+map.getKills());
+            if(map.getTime()>character.getMostSurvival()) character.setMostSurvival(map.getTime());
+            User.saveUsers();
             view.getGame().setScreen(new WinMenu(view.getGame()));
         }
     }
